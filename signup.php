@@ -1,6 +1,6 @@
 <!-- Bilal section -->
 <?php
-include 'db_connect.php'
+include 'db_config.php'
 if($_SERVER["REQUEST_METHOD"]=="POST") {
 $username= $_POST['Username'];
 $password= $_POST['Password'];
