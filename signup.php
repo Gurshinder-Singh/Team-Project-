@@ -2,8 +2,8 @@
 <?php
 include 'db_config.php'
 if($_SERVER["REQUEST_METHOD"]=="POST") {
-$username= $_POST['Username'];
-$password= $_POST['Password'];
+$username= $_POST['username'];
+$password= $_POST['password'];
 
 
 if($password != $confirm_password){
