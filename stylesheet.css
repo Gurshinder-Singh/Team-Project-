@@ -2,6 +2,7 @@
 h1 
 { 
     font-size: 20px;
+}
 /* General Styles */
 body {
     font-family: Arial, sans-serif;
@@ -144,5 +145,4 @@ footer a {
 
 footer a:hover {
     text-decoration: underline;
-}
 }
