@@ -1,54 +1,99 @@
-
-h1 
-{ 
-    font-size: 20px;
-}
-/* General Styles */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+html, body {
     margin: 0;
     padding: 0;
-    color: #333;
+    height: 130vh; /* Adjusted height */
+    overflow-y: scroll; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    background-color: #5c4033; /* Brown background */
+    font-family: 'Century Gothic', sans-serif; /* Set default font */
+    font-weight: bold; /* Apply bold text globally */
+    position: relative;
 }
 
-header {
+.gold-shape {
+    width: 0;
+    height: 0;
+    border-left: 50vw solid transparent; /* Create diagonal shape */
+    border-right: 0vw solid transparent; /* Ensure it touches the right side of the screen */
+    border-bottom: 130vh solid #d4af37; /* Gold color */
+    position: absolute;
+    top: 0;
+    right: 0; /* Ensure it touches the right side of the screen */
+}
+
+.navbar {
     background-color: #333;
-    color: #fff;
-    padding: 10px 20px;
+    color: white;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    top: 0;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-around;
+    transition: top 0.3s;
+    z-index: 1000; /* Ensure navbar stays above background shapes */
 }
 
-header .logo img {
-    width: 80px;
-    height: auto;
-}
-
-nav a {
-    color: #fff;
+.navbar a {
+    color: white;
     text-decoration: none;
-    margin: 0 10px;
-    padding: 5px 10px;
+    padding: 10px;
+    font-family: 'Century Gothic', sans-serif; /* Set font for navbar links */
+    font-weight: bold; /* Ensure navbar links are bold */
+    text-transform: uppercase; /* Make navbar links uppercase */
 }
 
-nav a:hover, nav a.active {
-    background-color: #555;
-    border-radius: 5px;
-    text-decoration: underline;
+.navbar a.luxus-link {
+    font-size: calc(100% + 5px); /* Increase font size by 5px */
 }
 
-/* Main Content */
-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 120px); /* Account for header and footer */
-    padding: 20px;
+.luxus-text {
+    font-family: 'DM Serif Display', serif; /* Set font for LUXUS text */
+    font-size: 150px;
+    color: white;
+    position: fixed;
+    top: 90px;
+    left: 60px;
+    z-index: 1000; /* Ensure text stays above background shapes */
+    font-weight: normal;
 }
 
-/* Forms */
+.catchphrase-text {
+    font-family: 'DM Serif Display', serif; /* Set font for CATCHPHRASE text */
+    font-size: 35px;
+    color: white;
+    position: fixed;
+    top: 250px; /* Adjusted position */
+    left: 60px;
+    z-index: 1000; /* Ensure text stays above background shapes */
+    font-weight: normal;
+}
+
+.catchphrase2-text {
+    font-family: 'Poppins', sans-serif; /* Set font for CATCHPHRASE2 text */
+    font-size: 28px;
+    color: gold;
+    position: fixed;
+    top: 500px; /* Adjusted position */
+    left: 60px;
+    z-index: 1000; /* Ensure text stays above background shapes */
+    font-weight: 835; /* Increase font-weight for bolder text */
+    font-style: italic;
+}
+
+.catchphrase3-text {
+    font-family: 'Poppins', serif; /* Set font for CATCHPHRASE3 text */
+    font-size: 28px;
+    color: rgb(255, 255, 255);
+    position: fixed;
+    top: 530px; /* Adjusted position */
+    left: 60px;
+    z-index: 1000; /* Ensure text stays above background shapes */
+    font-weight: 400;
+    font-style: italic;
+}
+
+/* Login and Registration Forms */
 .login-form, .registration-form {
     width: 100%;
     max-width: 400px;
@@ -127,22 +172,4 @@ form input[type="submit"]:hover {
 
 .password-container .toggle-password:hover {
     color: #000;
-}
-
-/* Footer */
-footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 10px 20px;
-    position: relative;
-}
-
-footer a {
-    color: #007BFF;
-    text-decoration: none;
-}
-
-footer a:hover {
-    text-decoration: underline;
 }
