@@ -1,13 +1,14 @@
 <?php
-$host = 'localhost'; 
-$db_name = 'cs2team30_db'; 
-$username = 'cs2team30'; 
-$password = 'To9JV8nPTCYwpMh'; 
+$servername = "cs2410-web01pvm.aston.ac.uk";  
+$username = "cs2team30";                      
+$password = "To9JV8nPTCYwpMh";                
+$dbname = "cs2team30_db";                     
 
-try {
-    $conn = new PDO("mysql:host=$host;dbname=$db_name", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
+echo "Connected successfully to the database.";
 ?>

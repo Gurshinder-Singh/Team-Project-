@@ -49,3 +49,4 @@ document.querySelectorAll('.toggle-password').forEach(toggle => {
         }
     });
 });
+
