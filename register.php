@@ -1,24 +1,22 @@
-<!-- Bilal section, BASIC TEMPLATE -->
 <?php
-include 'db_config.php'
-if ($_SERVER["REQUEST_METHOD"]=="POST") {
-$username= $_POST['username'];
-$password= $_POST['password'];
-$email=$_POST['email'];
+include 'db_config.php';
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $password = password_hash($_POST['password'], PASSWORD_BCRYPT); // Hashing the password
 
-$hashed_passoword= password_hash($password);
+    $query = "INSERT INTO users (username, password) VALUES (:username, :password)";
+    $stmt = $conn->prepare($query);
 
-$sql = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$hashed_password')";
-
-
-if (mysqli_query($conn,$sql){
-    echo "registration successful"
+    try {
+        $stmt->execute(['username' => $username, 'password' => $password]);
+        echo "Registration successful. <a href='login.html'>Login here</a>";
+    } catch (PDOException $e) {
+        if ($e->getCode() == 23000) { // Integrity constraint violation: 1062 Duplicate entry
+            echo "Username already exists. <a href='signup.html'>Try again</a>";
+        } else {
+            echo "Error: " . $e->getMessage();
+        }
+    }
 }
-    else {
-    echo "Error" . mysqli_error($conn);
-}
-
-mysqli_close($conn);
-
 ?>
