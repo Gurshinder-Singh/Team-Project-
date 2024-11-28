@@ -6,105 +6,63 @@
     <title>Inventory Management</title>
 </head>
 <body>
-
- <nav class="navbar">
-        <a href="loyalty_manager.html">Loyalty Manager</a>
-        <a href="feedback_manager.html">Feedback Manager</a>
-        <a href="inventory_management.html">Inventory Management</a>
-    </nav>
-
-
     <h1>Inventory Management</h1>
-    <p>Welcome to the Inventory Management page. This section allows you to track and update your inventory.</p>
 
     <h2>Current Inventory</h2>
-    <!-- Display a table of current inventory items -->
     <table border="1" style="width: 100%; text-align: left;">
         <thead>
             <tr>
                 <th>Product ID</th>
                 <th>Product Name</th>
-                <th>Stock Quantity</th>
+                <th>Description</th>
                 <th>Price</th>
+                <th>Category ID</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            <!-- Example Row 1 -->
-            <tr>
-                <td>101</td>
-                <td>Product A</td>
-                <td>50</td>
-                <td>$20.00</td>
-                <td>
-                    <!-- Update stock quantity form -->
-                    <form action="#" method="post" style="display: inline;">
-                        <input type="hidden" name="product-id" value="101">
-                        <label for="update-quantity">Update Quantity:</label>
-                        <input type="number" id="update-quantity" name="update-quantity" min="0" required>
-                        <button type="submit">Update</button>
-                    </form>
-                    <!-- Delete product form -->
-                    <form action="#" method="post" style="display: inline;">
-                        <input type="hidden" name="delete-product-id" value="101">
-                        <button type="submit" style="color: red;">Delete</button>
-                    </form>
-                </td>
-            </tr>
-
-            <!-- Example Row 2 -->
-            <tr>
-                <td>102</td>
-                <td>Product B</td>
-                <td>30</td>
-                <td>$15.00</td>
-                <td>
-                    <!-- Update stock quantity form -->
-                    <form action="#" method="post" style="display: inline;">
-                        <input type="hidden" name="product-id" value="102">
-                        <label for="update-quantity">Update Quantity:</label>
-                        <input type="number" id="update-quantity" name="update-quantity" min="0" required>
-                        <button type="submit">Update</button>
-                    </form>
-                    <!-- Delete product form -->
-                    <form action="#" method="post" style="display: inline;">
-                        <input type="hidden" name="delete-product-id" value="102">
-                        <button type="submit" style="color: red;">Delete</button>
-                    </form>
-                </td>
-            </tr>
-
-            <!-- Additional rows will be dynamically added from the backend -->
+            <?php if (!empty($products)): ?>
+                <?php foreach ($products as $product): ?>
+          <tr>
+                        <td><?= $product['product_id']; ?></td>
+                        <td><?= htmlspecialchars($product['name']); ?></td>
+                        <td><?= htmlspecialchars($product['description']); ?></td>
+                        <td><?= htmlspecialchars($product['price']); ?></td>
+                        <td><?= htmlspecialchars($product['category_id']); ?></td>
+                        <td>
+                            <!-- Update Form -->
+                            <form action="inventory_management.php" method="post" style="display: inline;">
+                                <input type="hidden" name="product_id" value="<?= $product['product_id']; ?>">
+                                <input type="text" name="description" placeholder="Update Description" required>
+                                <button type="submit" name="update-product">Update</button>
+                            </form>
+                            <!-- Delete Form -->
+                            <form action="inventory_management.php" method="post" style="display: inline;">
+                                <input type="hidden" name="product_id" value="<?= $product['product_id']; ?>">
+                                <button type="submit" name="delete-product" style="color: red;">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="6">No products found.</td>
+                </tr>
+            <?php endif; ?>
         </tbody>
     </table>
 
-    <h2>Add New Inventory Item</h2>
-    <form action="#" method="post">
-        <label for="product-name">Product Name:</label>
-        <input type="text" id="product-name" name="product-name" required><br><br>
-
-        <label for="product-price">Price:</label>
-        <input type="number" id="product-price" name="product-price" min="0" step="0.01" required><br><br>
-
-        <label for="product-quantity">Stock Quantity:</label>
-        <input type="number" id="product-quantity" name="product-quantity" min="0" required><br><br>
-
-        <button type="submit">Add Product</button>
+    <h2>Add New Product</h2>
+    <form action="inventory_management.php" method="post">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required><br><br>
+        <label for="description">Description:</label>
+        <input type="text" name="description" id="description"><br><br>
+        <label for="price">Price:</label>
+        <input type="number" name="price" id="price" step="0.01" required><br><br>
+        <label for="category_id">Category ID:</label>
+        <input type="number" name="category_id" id="category_id" required><br><br>
+        <button type="submit" name="add-product">Add Product</button>
     </form>
-
-    <h2>Generate Inventory Report</h2>
-    <p>Click the button below to generate a downloadable inventory report.</p>
-    <!-- Button for generating inventory report -->
-    <form action="#" method="post">
-        <button type="submit">Generate Report</button>
-    </form>
-
-    <h3>Search Inventory</h3>
-    <form action="#" method="post">
-        <label for="search-product">Search by Product Name:</label>
-        <input type="text" id="search-product" name="search-product" placeholder="Enter product name to search">
-        <button type="submit">Search</button>
-    </form>
-
 </body>
 </html>
