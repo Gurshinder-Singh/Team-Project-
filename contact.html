@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us Form</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="faq.html">FAQs</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="form-section">
+            <h2>We’d Love to Hear From You!</h2>
+            <p>Have questions, feedback, or just want to say hi? Fill out the form below, and we’ll get back to you soon.</p>
+
+            <form action="action_page.php" method="post">
+                <!-- Input for First Name -->
+                <label for="first-name">First Name</label>
+                <input type="text" id="first-name" name="firstname" placeholder="Enter your first name" required>
+
+                <!-- Input for Last Name -->
+                <label for="last-name">Last Name</label>
+                <input type="text" id="last-name" name="lastname" placeholder="Enter your last name" required>
+
+                <!-- Dropdown for Country Selection -->
+                <label for="country-select">Your Country</label>
+                <select id="country-select" name="country" required>
+                    <option value="">Please select</option>
+                    <option value="australia">Australia</option>
+                    <option value="canada">Canada</option>
+                    <option value="USA">United States</option>
+                    <option value="UK">United Kingdom</option>
+                </select>
+
+                <!-- Text Area for Message -->
+                <label for="message">Your Message</label>
+                <textarea id="message" name="subject" placeholder="Write your message here..." rows="6" required></textarea>
+
+                <!-- Submit Button -->
+                <button type="submit">Send Message</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
