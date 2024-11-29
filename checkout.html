@@ -1,3 +1,4 @@
+<!-- Bilal Section -->
 <!DOCTYPE html>
 <html lang="en">
 <meta charset="UTF-8">
@@ -6,20 +7,18 @@
 
 <body>
 <style>
-body{
-  background-color:white;
+body {
+  background-color: white;
 }
-
 </style>
-
 
 <div>
   <div>
     <div>
-      <form action="checkout.php" method="post">
+      <form id="checkout" action="checkout.php" method="post">
         <div>
           <div>
-          <h3>Payment Method</h3>
+            <h3>Payment Method</h3>
           </div>
           
           <label for="firstname">First Name:</label>
@@ -75,11 +74,11 @@ body{
         <label>
           <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
         </label>
-        <button type="submit">Submit Payment</button>
+        <button type="button" onclick="submitFormAndRedirect()">Submit Payment</button>
       </form>
     </div>
   </div>
-  
+
   <div>
     <h3>Accepted Payment Methods</h3>
     <div>
@@ -93,6 +92,16 @@ body{
     </div>
   </div>
 </div>
+
+<script>
+function submitFormAndRedirect() {
+  const form = document.getElementById('checkout');
+  form.submit(); // Submit the form
+  setTimeout(() => {
+    window.location.href = "order_confirmation_page.html"; // Redirect to the confirmation page
+  }, 10); // Slight delay to ensure form submission is processed
+}
+</script>
 
 </body>
 </html>
