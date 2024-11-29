@@ -1,1 +1,1 @@
-<!-- PHP Page to store checkout details into database , BILAL/SOHAIL PART --!>
+<!-- PHP Page to store checkout details into database , BILAL PART --!>
