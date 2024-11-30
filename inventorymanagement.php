@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <th>Product Name</th>
                 <th>Description</th>
                 <th>Price</th>
-                <th>Actions</th>
+                <th>Edit</th>
             </tr>
         </thead>
         <tbody>
