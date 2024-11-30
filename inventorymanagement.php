@@ -17,16 +17,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $name = $_POST['name'];
         $description = $_POST['description'];
         $price = $_POST['price'];
-        $category_id = $_POST['category_id'];
 
         try {
-            $sql = "INSERT INTO products (name, description, price, category_id) VALUES (:name, :description, :price, :category_id)";
+            $sql = "INSERT INTO products (name, description, price) VALUES (:name, :description, :price)";
             $stmt = $conn->prepare($sql);
             $stmt->execute([
                 ':name' => $name,
                 ':description' => $description,
-                ':price' => $price,
-                ':category_id' => $category_id
+                ':price' => $price
             ]);
             header("Location: inventory_management.php"); // Reload the page
             exit;
@@ -93,7 +91,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <th>Product Name</th>
                 <th>Description</th>
                 <th>Price</th>
-                <th>Category ID</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -105,7 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <td><?= htmlspecialchars($product['name']); ?></td>
                         <td><?= htmlspecialchars($product['description']); ?></td>
                         <td><?= htmlspecialchars($product['price']); ?></td>
-                        <td><?= htmlspecialchars($product['category_id']); ?></td>
                         <td>
                             <!-- Update Form -->
                             <form action="inventory_management.php" method="post" style="display: inline;">
@@ -125,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php endforeach; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="6">No products found.</td>
+                    <td colspan="5">No products found.</td>
                 </tr>
             <?php endif; ?>
         </tbody>
@@ -139,8 +135,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="text" name="description" id="description"><br><br>
         <label for="price">Price:</label>
         <input type="number" name="price" id="price" step="0.01" required><br><br>
-        <label for="category_id">Category ID:</label>
-        <input type="number" name="category_id" id="category_id" required><br><br>
         <button type="submit" name="add-product">Add Product</button>
     </form>
 </body>
