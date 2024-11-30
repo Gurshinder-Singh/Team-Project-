@@ -10,7 +10,7 @@ try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch(PDOException $ex) {
     error_log("Failed to connect to the database: " . $ex->getMessage());
-    die("Connection error, please try again later.");
+    die("Connection error: " . $ex->getMessage());
 }
 ?>
 
