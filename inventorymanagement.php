@@ -35,16 +35,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Handle updating product quantity
+    // Handle updating product details
     if (isset($_POST['update-product'])) {
         $product_id = $_POST['product_id'];
+        $name = $_POST['name'];
         $description = $_POST['description'];
+        $price = $_POST['price'];
 
         try {
-            $sql = "UPDATE products SET description = :description WHERE product_id = :product_id";
+            $sql = "UPDATE products SET name = :name, description = :description, price = :price WHERE product_id = :product_id";
             $stmt = $conn->prepare($sql);
             $stmt->execute([
+                ':name' => $name,
                 ':description' => $description,
+                ':price' => $price,
                 ':product_id' => $product_id
             ]);
             header("Location: inventory_management.php"); // Reload the page
@@ -96,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <tbody>
             <?php if (!empty($products)): ?>
                 <?php foreach ($products as $product): ?>
-          <tr>
+                    <tr>
                         <td><?= $product['product_id']; ?></td>
                         <td><?= htmlspecialchars($product['name']); ?></td>
                         <td><?= htmlspecialchars($product['description']); ?></td>
@@ -106,7 +110,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <!-- Update Form -->
                             <form action="inventory_management.php" method="post" style="display: inline;">
                                 <input type="hidden" name="product_id" value="<?= $product['product_id']; ?>">
-                                <input type="text" name="description" placeholder="Update Description" required>
+                                <input type="text" name="name" placeholder="Update Name" value="<?= htmlspecialchars($product['name']); ?>" required>
+                                <input type="text" name="description" placeholder="Update Description" value="<?= htmlspecialchars($product['description']); ?>" required>
+                                <input type="number" name="price" placeholder="Update Price" value="<?= htmlspecialchars($product['price']); ?>" step="0.01" required>
                                 <button type="submit" name="update-product">Update</button>
                             </form>
                             <!-- Delete Form -->
