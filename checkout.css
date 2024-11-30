@@ -1,1 +1,110 @@
 <!-- css for checkout(payment method page) --!>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+}
+
+.checkout-container {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: flex-start; 
+  max-width: 1200px; 
+  margin: 40px auto; 
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+ 
+}
+
+.checkout-form, .cart-section {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.checkout-form {
+  flex: 2; 
+  margin-right: 20px; 
+}
+
+.cart-section {
+  flex: 1; 
+}
+
+h1, h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.submit-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submit-btn:hover {
+  background-color: #45a049;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+
+.cart-item-details {
+  flex: 1;
+}
+
+.cart-item-name {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.cart-item-price {
+  font-size: 14px;
+  color: #555;
+}
+
+.cart-total {
+  font-weight: bold;
+  text-align: right;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .checkout-container {
+      flex-direction: column; 
+  }
+
+  .checkout-form {
+      margin-right: 0;
+      margin-bottom: 20px;
+  }
+}
