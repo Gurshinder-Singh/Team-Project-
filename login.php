@@ -1,26 +1,42 @@
 <?php
-require 'includes/db.php'; 
 session_start();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = trim($_POST['username']);
-    $password = trim($_POST['password']);
+// Database connection
+$host = 'localhost';
+$dbname = 'cs2team30_db';
+$username = 'cs2team30';
+$password = 'To9JV8nPTCYwpMh';
 
-    // gets user from the database
-    $sql = "SELECT * FROM users WHERE email = :email";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([':email' => $email]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+try {
+    $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    if ($user && password_verify($password, $user['password'])) {
-        // set session variables
-        $_SESSION['user_id'] = $user['user_id'];
-        $_SESSION['email'] = $user['email'];
-        header('Location: welcome.php');
-        exit;
-    } else {
-        $error = "Invalid email or password!";
+    // Check if form data is submitted
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        // Query to get the user data by email
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email");
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Check if user exists and password is correct
+        if ($user && password_verify($password, $user['password'])) {
+            // Store user info in session
+            $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['email'] = $user['email'];
+
+            // Redirect to welcome.php
+            header("Location: welcome.html");
+            exit();
+        } else {
+            echo "Invalid email or password.";
+        }
     }
+} catch (PDOException $e) {
+    die("Connection failed: " . $e->getMessage());
 }
 ?>
-
