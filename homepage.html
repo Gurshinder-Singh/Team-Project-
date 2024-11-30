@@ -24,14 +24,29 @@
     <!-- Fixed catchphrase3 text -->
     <div class="catchphrase3-text">LET OUR EXPERTS FIND YOUR FIT</div>
 
-    <!-- Navigation bar -->
-    <div class="navbar" id="navbar">
-        <a href="#menu">MENU</a>
-        <a href="#search">SEARCH</a>
-        <a href="#LUXUS" class="luxus-link">LUXUS</a>
-        <a href="#wishlist">WISHLIST</a>
-        <a href="#cart">CART</a>
-    </div>
+   <!-- Navigation bar -->
+<div class="navbar" id="navbar">
+    <a href="#menu">HOME</a>
+    <a href="#search">SEARCH</a>
+    <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
+    <a href="#wishlist">PROFILE</a>
+    <a href="#cart">BASKET</a>
+</div>
+
+<!-- CSS -->
+<style>
+    .navbar {
+        height: 50px; /* Set your desired navbar height */
+        display: flex;
+        align-items: center;
+    }
+
+    .navbar img {
+        height: 170%; /* Adjust this percentage to make the image bigger */
+        max-height: 170%;
+    }
+</style>
+
 
     <script>
         let prevScrollpos = window.pageYOffset;
