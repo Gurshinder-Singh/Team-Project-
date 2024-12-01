@@ -49,3 +49,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "Invalid request.";
 }
 ?>
+<!-- LOGIN PAGE HTML-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+     <!-- Navigation bar -->
+<div class="navbar" id="navbar">
+    <a href="#menu">HOME</a>
+    <a href="#search">SEARCH</a>
+    <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
+    <a href="#wishlist">PROFILE</a>
+    <a href="#cart">BASKET</a>
+</div>
+<style>
+    .navbar {
+        height: 50px; /* Set your desired navbar height */
+        display: flex;
+        align-items: center;
+    }
+
+    .navbar img {
+        height: 170%; /* Adjust this percentage to make the image bigger */
+        max-height: 170%;
+    }
+</style>
+
+    <!-- Login Container -->
+    <div class="login-container">
+        <h1>Login</h1>
+        <form method="POST" action="login.php">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required>
+
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+        <div class="signup-link">
+            <p>Don't have an account? <a href="sign_up.html">Sign Up</a></p>
+            <a href="change_password.html">Change Password</a>
+
+        </div>
+    </div>
+</body>
+</html>
