@@ -47,6 +47,16 @@ html, body {
     font-size: calc(100% + 5px); /* Increase font size by 5px */
 }
 
+.navbar {
+    height: 50px; /* Set your desired navbar height */
+    display: flex;
+    align-items: center;
+}
+
+.navbar img {
+    height: 170%; /* Adjust this percentage to make the image bigger */
+    max-height: 170%;
+}
 .luxus-text {
     font-family: 'DM Serif Display', serif; /* Set font for LUXUS text */
     font-size: 150px;
@@ -93,18 +103,7 @@ html, body {
     font-style: italic;
 }
 
-/* Login and Registration Forms */
-/* Login Form */
-.
-
-/* Overall Container */
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #4b2e2e; /* Rich brown background color */
-    font-family: 'Arial', sans-serif;
-    color: #333;
-}
+/* Login and Sign-up Forms */
 
 /* Login Container */
 .login-container {
