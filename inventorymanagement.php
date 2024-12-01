@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':description' => $description,
                 ':price' => $price,
             ]);
-            header("Location: inventory_management.php");
+            header("Location: inventorymanagement.php");
             exit;
         } catch (PDOException $e) {
             die("Error adding product: " . $e->getMessage());
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':price' => $price,
                 ':product_id' => $product_id,
             ]);
-            header("Location: inventory_management.php");
+            header("Location: inventorymanagement.php");
             exit;
         } catch (PDOException $e) {
             die("Error updating product: " . $e->getMessage());
@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $sql = "DELETE FROM products WHERE product_id = :product_id";
             $stmt = $conn->prepare($sql);
             $stmt->execute([':product_id' => $product_id]);
-            header("Location: inventory_management.php");
+            header("Location: inventorymanagement.php");
             exit;
         } catch (PDOException $e) {
             die("Error deleting product: " . $e->getMessage());
@@ -112,14 +112,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <td><?= htmlspecialchars($product['description']); ?></td>
                         <td><?= htmlspecialchars($product['price']); ?></td>
                         <td>
-                            <form action="inventory_management.php" method="post" style="display: inline;">
+                            <form action="inventorymanagement.php" method="post" style="display: inline;">
                                 <input type="hidden" name="product_id" value="<?= $product['product_id']; ?>">
                                 <input type="text" name="name" value="<?= htmlspecialchars($product['name']); ?>" required>
                                 <input type="text" name="description" value="<?= htmlspecialchars($product['description']); ?>" required>
                                 <input type="number" name="price" value="<?= htmlspecialchars($product['price']); ?>" step="0.01" required>
                                 <button type="submit" name="update-product">Update</button>
                             </form>
-                            <form action="inventory_management.php" method="post" style="display: inline;">
+                            <form action="inventorymanagement.php" method="post" style="display: inline;">
                                 <input type="hidden" name="product_id" value="<?= $product['product_id']; ?>">
                                 <button type="submit" name="delete-product" style="color: red;">Delete</button>
                             </form>
@@ -135,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </table>
 
     <h2>Add New Product</h2>
-    <form action="inventory_management.php" method="post">
+    <form action="inventorymanagement.php" method="post">
         <label for="name">Name:</label>
         <input type="text" name="name" id="name" required><br><br>
         <label for="description">Description:</label>
