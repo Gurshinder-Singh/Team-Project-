@@ -16,7 +16,7 @@ require 'db.php';
 </head>
 <body>
 <div class="navbar" id="navbar">
-    <a href="#menu">HOME</a>
+    <a href="homepage.php">HOME</a>
     <a href="loyalty_manager.html">Loyalty Manager</a>
     <a href="feedback_manager.html">Feedback Manager</a>
     <a href="inventorymanagement.php">Inventory Management</a>
