@@ -37,7 +37,7 @@ session_start();
     <a href="#wishlist">PROFILE</a>
     <a href="#cart">BASKET</a>
     <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-            <a href="inventorymanagement.php">Inventory</a>
+            <a href="admin_page.php">ADMIN</a>
         <?php endif; ?>
 </div>
 
