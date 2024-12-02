@@ -34,8 +34,10 @@ session_start();
     <a href="#menu">HOME</a>
     <a href="#search">SEARCH</a>
     <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
-    <a href="#wishlist">PROFILE</a>
-    <a href="#cart">BASKET</a>
+    <?php if (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']): ?>
+        <a href="#wishlist">PROFILE</a>
+    <?php endif; ?>
+        <a href="#cart">BASKET</a>
     <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
             <a href="admin_page.php">ADMIN</a>
         <?php endif; ?>
