@@ -35,7 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Handle updating a product
     if (isset($_POST['update-product'])) {
         $product_id = $_POST['product_id'];
         $name = trim($_POST['name']);
@@ -62,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Handle deleting a product
     if (isset($_POST['delete-product'])) {
         $product_id = $_POST['product_id'];
 
