@@ -1,24 +1,27 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $firstName = htmlspecialchars(trim($_POST['firstname']));
-    $lastName = htmlspecialchars(trim($_POST['lastname']));
-    $country = htmlspecialchars(trim($_POST['country']));
-    $message = htmlspecialchars(trim($_POST['subject']));
+    $email = htmlspecialchars(trim($_POST['email']));
+    $customerNumber = htmlspecialchars(trim($_POST['customer-number']));
+    $message = htmlspecialchars(trim($_POST['message']));
 
-    $to = "email"; 
-    $subject = "New Message from $firstName $lastName";
+   
+    $to = "email";
+    $subject = "New Message from Contact Us Form";
+
+    
     $body = "You have received a new message.\n\n" .
-            "Name: $firstName $lastName\n" .
-            "Country: $country\n\n" .
+            "Email Address: $email\n" .
+            ($customerNumber ? "Customer Number: $customerNumber\n" : "") . 
             "Message:\n$message";
 
-    $headers = "From: noreply@cs2410-web01pvm.aston.ac.uk\r\n"; 
+    $headers = "From: noreply@cs2410-web01pvm.aston.ac.uk"; 
+
     if (mail($to, $subject, $body, $headers)) {
-        echo "<p>Thank you for your message, $firstName. We’ll get back to you soon!</p>";
-    header("refresh:3;url=contact.html");
+        echo "<p>Thank you for your message. We’ll get back to you soon!</p>";
+        header("refresh:3;url=contact.html");
     } else {
         echo "<p>Sorry, your message could not be sent. Please try again later.</p>";
-    header("refresh:3;url=contact.html");
+        header("refresh:3;url=contact.html");
     }
 } else {
     header("Location: contact.html");
