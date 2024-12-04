@@ -1,29 +1,73 @@
+/* General Form Styling */
 input[type=text], select, textarea {
-    width: 100%; 
-    padding: 12px;  
-    border: 1px solid #ccc; 
-    border-radius: 4px; 
-    box-sizing: border-box;
-    margin-top: 6px; 
-    margin-bottom: 16px; 
-    resize: vertical
+  width: 100%; /* Full width for responsiveness */
+  padding: 12px; /* Comfortable padding */
+  border: 1px solid #A68961; /* Subtle gold border for elegance */
+  border-radius: 6px; /* Slightly rounded corners for a softer look */
+  box-sizing: border-box; /* Ensure consistent sizing */
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical; /* Allow only vertical resizing for textareas */
+  background-color: #F9F6F1; /* Light beige background */
+  color: #5C4033; /* Rich brown text color */
+  font-size: 16px;
+}
+
+input[type=submit] {
+  background-color: #C0A57B; /* Warm beige for button background */
+  color: #FFFFFF; /* White text for contrast */
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px; /* Larger font for importance */
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth interaction */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+input[type=submit]:hover {
+  background-color: #A68961; /* Darker hover effect */
+  transform: translateY(-2px); /* Subtle lift */
+}
+
+input[type=submit]:active {
+  transform: translateY(1px); /* Pressed effect */
+}
+
+/* Container for the Form */
+.container {
+  border-radius: 8px; /* Softer edges for the container */
+  background-color: #5C4033; /* Deep brown background */
+  color: #FFFFFF; /* White text */
+  padding: 25px; /* Generous padding for a spacious layout */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  font-family: 'Lora', serif; /* Elegant font choice */
+  line-height: 1.6; /* Comfortable line spacing */
+}
+
+/* Labels for Inputs */
+label {
+  font-size: 18px; /* Clear and readable label size */
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: block;
+  color: #F0C987; /* Gold text for labels */
+}
+
+/* Textarea Styling */
+textarea {
+  height: 150px; /* Default height for text areas */
+  line-height: 1.5; /* Comfortable spacing for text */
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  input[type=text], select, textarea, input[type=submit] {
+      font-size: 14px; /* Adjust font size for smaller screens */
   }
 
-  input[type=submit] {
-    background-color: #04AA6D;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  input[type=submit]:hover {
-    background-color: #45a049;
-  }
-  
   .container {
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
+      padding: 20px;
   }
+}
