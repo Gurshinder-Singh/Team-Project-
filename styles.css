@@ -1,13 +1,21 @@
 /* General Styling */
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Lora', serif; /* A warm and inviting font */
     margin: 0;
+    background-color: #5C4033; /* Deep brown background tone */
+    color: #ffffff; /* White text for better readability */
+    line-height: 1.6; /* Increased line spacing for comfort */
+    font-size: 18px; /* Slightly larger text for readability */
 }
 
-/* Navigation Styling */
+/* Navigation Bar Styling */
 header {
-    background: #333;
-    padding: 10px 0;
+    background: linear-gradient(to right, #A68961, #5C4033); /* Gradient for premium feel */
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
 }
 
 .nav-links {
@@ -19,98 +27,157 @@ header {
 }
 
 .nav-links li {
-    margin: 0 15px;
+    margin: 0 20px;
 }
 
 .nav-links a {
     text-decoration: none;
-    color: white;
+    color: #FFFFFF; 
     font-weight: bold;
+    font-size: 18px;
+    letter-spacing: 1px; 
+    transition: color 0.3s ease, transform 0.2s ease; 
 }
 
 .nav-links a:hover {
-    color: #04AA6D;
+    color: #F0C987; 
+    transform: scale(1.1); 
 }
 
-/* About Page Styling */
+.nav-links a:focus {
+    outline: 2px solid #F0C987;    
+    outline-offset: 4px;
+}
+
+
+button, .button {
+    background-color: #C0A57B; 
+    color: #FFFFFF; 
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px; 
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+button:hover, .button:hover {
+    background-color: #A68961; 
+    transform: translateY(-2px); 
+}
+
+button:active, .button:active {
+    transform: translateY(1px); 
+}
+
 .about-section {
     padding: 50px;
     text-align: center;
-    background-color: #474e5d;
-    color: white;
+    background-color: #6B4A37; 
+    color: #ffffff;
+    border-top: 5px solid #F0C987; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
+
+.about-section h1, .about-section h2 {
+    color: #F0C987; 
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px; 
+}
+
+.about-section p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
 
 .column {
-    float: left;
-    width: 33.3%;
+    background-color: #835C44;
+    border-radius: 12px; 
+    overflow: hidden;
     margin-bottom: 16px;
-    padding: 0 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    margin: 8px;
+.column:hover {
+    transform: scale(1.03); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
 }
 
-.container {
-    padding: 0 16px;
+.card img {
+    border-bottom: 3px solid #A68961; 
+    border-radius: 8px 8px 0 0; 
+    transition: opacity 0.3s ease;
 }
 
-.container::after, .row::after {
-    content: "";
-    clear: both;
-    display: table;
+.card img:hover {
+    opacity: 0.9; 
 }
 
-.title {
-    color: grey;
-}
 
-.button {
-    border: none;
-    outline: 0;
-    display: inline-block;
-    padding: 8px;
-    color: white;
-    background-color: #000;
+footer {
     text-align: center;
-    cursor: pointer;
-    width: 100%;
+    background-color: #5C4033; 
+    padding: 30px;
+    color: #F0C987; 
+    font-size: 16px;
 }
 
-.button:hover {
-    background-color: #555;
+footer a {
+    color: #F0C987; 
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
 }
 
-/* Contact Page Styling */
-input[type=text], select, textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    margin-top: 6px;
-    margin-bottom: 16px;
-    resize: vertical;
+footer a:hover {
+    color: #FFFFFF; 
 }
 
-input[type=submit] {
-    background-color: #04AA6D;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+.continue-shopping {
+    display: inline-block;
+    margin: 20px auto;
+    padding: 15px 30px;
+    background-color: #F0C987;
+    color: #5C4033; 
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-input[type=submit]:hover {
-    background-color: #45a049;
+.continue-shopping:hover {
+    background-color: #A68961;
+    transform: translateY(-3px); 
 }
 
-/* Responsive Design */
-@media screen and (max-width: 650px) {
+
+a:focus, button:focus {
+    outline: 3px solid #F0C987;
+    outline-offset: 2px;
+}
+
+@media screen and (max-width: 768px) {
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-links li {
+        margin: 10px 0;
+    }
+
+    .about-section {
+        padding: 30px;
+    }
+
     .column {
-        width: 100%;
-        display: block;
+        width: 100%; 
     }
 }
+
