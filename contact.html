@@ -1,13 +1,13 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us Form</title>
+    <title>Contact Us - LUXUS</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Website Header -->
+    <!-- Navigation Bar -->
     <header>
         <nav>
             <ul class="nav-links">
@@ -18,29 +18,26 @@
         </nav>
     </header>
 
-    <main>
-        <!-- Contact Form Section -->
-        <section class="form-section">
-            <h2>We’d Love to Hear From You!</h2>
-            <p>Have questions, feedback, or just want to say hello? Fill out the form below, and we’ll respond within 1-2 business days. Your input matters to us!</p>
+    <!-- Contact Section -->
+    <section class="form-section">
+        <h1>Contact Us</h1>
+        <p>We’d love to hear from you! If you have questions, feedback, or need assistance, please use the form below to get in touch with us. Our team will respond within 1-2 business days.</p>
+        <form action="action_page.php" method="post">
+            <!-- Email Address -->
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" placeholder="e.g., example@example.com" required>
 
-            <form action="action_page.php" method="post">
-                <!-- Input for Email Address -->
-                <label for="email">Email Address:</label>
-                <input type="email" id="email" name="email" placeholder="e.g., johnathan.smith13@gmail.com" required>
+            <!-- Subject -->
+            <label for="subject">Subject:</label>
+            <input type="text" id="subject" name="subject" placeholder="What can we help you with?" required>
 
-                <!-- Input for Customer Number -->
-                <label for="customer-number">Customer Number (optional):</label>
-                <input type="text" id="customer-number" name="customer-number" placeholder="Enter your customer number">
+            <!-- Message -->
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" placeholder="Write your message here..." rows="6" required></textarea>
 
-                <!-- Text Area for Message -->
-                <label for="message">Your Message:</label>
-                <textarea id="message" name="message" placeholder="How can we help you?" rows="6" required></textarea>
-
-                <!-- Submit Button -->
-                <button type="submit">Send Message</button>
-            </form>
-        </section>
-    </main>
+            <!-- Submit Button -->
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
 </body>
 </html>
