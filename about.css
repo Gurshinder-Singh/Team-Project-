@@ -1,68 +1,87 @@
+/* Base Styling */
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-  }
-  
-  html {
-    box-sizing: border-box;
-  }
-  
-  *, *:before, *:after {
-    box-sizing: inherit;
-  }
-  
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background-color: #5C4033; /* Deep brown for a rich background */
+  color: #ffffff; /* White text for contrast */
+}
+
+/* Column Layout for Team Section */
+.column {
+  float: left;
+  width: 33.3%; /* Equal-width columns */
+  margin-bottom: 16px;
+  padding: 0 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth interactions */
+}
+
+.column:hover {
+  transform: scale(1.05); /* Subtle zoom effect on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+}
+
+/* Card Styling */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  margin: 8px;
+  background-color: #835C44; /* Warm brown background */
+  border-radius: 10px; /* Rounded edges for a softer appearance */
+}
+
+/* About Section */
+.about-section {
+  padding: 50px;
+  text-align: center;
+  background-color: #6B4A37; /* Slightly lighter brown */
+  color: #FFFFFF; /* White text for contrast */
+  border-top: 5px solid #F0C987; /* Gold accent */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.about-section h1, .about-section h2 {
+  color: #F0C987; /* Gold for section headings */
+  margin-bottom: 20px;
+  text-transform: uppercase; /* Bold uppercase for emphasis */
+  letter-spacing: 1px;
+}
+
+.about-section p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+/* Button Styling */
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 12px 20px;
+  color: #FFFFFF;
+  background-color: #A68961; /* Warm beige */
+  text-align: center;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button:hover {
+  background-color: #835C44; /* Slightly darker on hover */
+  transform: translateY(-2px);
+}
+
+.button:active {
+  transform: translateY(1px); /* Pressed effect */
+}
+
+/* Responsive Design */
+@media screen and (max-width: 650px) {
   .column {
-    float: left;
-    width: 33.3%;
-    margin-bottom: 16px;
-    padding: 0 8px;
-  }
-  
-  .card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    margin: 8px;
-  }
-  
-  .about-section {
-    padding: 50px;
-    text-align: center;
-    background-color: #474e5d;
-    color: white;
-  }
-  
-  .container {
-    padding: 0 16px;
-  }
-  
-  .container::after, .row::after {
-    content: "";
-    clear: both;
-    display: table;
-  }
-  
-  .title {
-    color: grey;
-  }
-  
-  .button {
-    border: none;
-    outline: 0;
-    display: inline-block;
-    padding: 8px;
-    color: white;
-    background-color: #000;
-    text-align: center;
-    cursor: pointer;
-    width: 100%;
-  }
-  
-  .button:hover {
-    background-color: #555;
-  }
-  
-  @media screen and (max-width: 650px) {
-    .column {
-      width: 100%;
+      width: 100%; /* Full-width columns for smaller screens */
       display: block;
-    }
   }
+
+  .about-section {
+      padding: 30px;
+  }
+}
