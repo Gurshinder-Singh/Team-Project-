@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +16,6 @@
     <link rel="stylesheet" href="checkout.css">
 </head>
 <body>
-
 <style>
 body {
   font-family: Arial, sans-serif;
@@ -25,7 +33,6 @@ body {
   padding: 20px;
   background: #fff;
   border-radius: 10px;
- 
 }
 
 .checkout-form, .cart-section {
@@ -87,7 +94,6 @@ h1, h2 {
   margin-bottom: 15px;
 }
 
-
 .cart-item-details {
   flex: 1;
 }
@@ -97,7 +103,7 @@ h1, h2 {
   font-weight: bold;
 }
 
-.cart-item-price {
+.cart-item-price, .cart-item-quantity {
   font-size: 14px;
   color: #555;
 }
@@ -117,10 +123,10 @@ h1, h2 {
       margin-right: 0;
       margin-bottom: 20px;
   }
-}
+}   
 </style>
+
 <div class="checkout-container">
-   
     <div class="checkout-form">
         <h1>Payment Method</h1>
         <form id="checkout" action="checkout.php" method="post" onsubmit="handleFormSubmit(event)">
@@ -185,7 +191,6 @@ h1, h2 {
                 </div>
             </section>
 
-           
             <section class="checkout-section">
                 <div class="form-group">
                     <label for="payment-method">Payment Method:</label>
@@ -212,52 +217,45 @@ h1, h2 {
                 </div>
             </section>
 
-          
             <button type="submit" class="submit-btn">Submit Payment</button>
-          </div>
         </form>
-   
+    </div>
 
-    
+    <
     <div class="cart-section">
         <h2>Your Cart</h2>
-       
-        <div class="cart-item">
-            <div class="cart-item-details">
-                <p class="cart-item-name">Item 1</p>
-                <p class="cart-item-price">$10.00</p>
-            </div>
-        </div>
+        
+        <?php
+        
+        if (!empty($_SESSION['cart'])) {
+            foreach ($_SESSION['cart'] as $item) {
+                echo "<div class='cart-item'>
+                        <div class='cart-item-details'>
+                            <p class='cart-item-name'>{$item['name']}</p>
+                            <b><p class='cart-item-quantity'>Quantity: {$item['quantity']}</p></b>
+                            <p class='cart-item-price'>£" . number_format($item['price'], 2) . "</p>
+                        </div>
+                    </div>";
+            }
 
-        <div class="cart-item">
-            <div class="cart-item-details">
-                <p class="cart-item-name">Item 2</p>
-                <p class="cart-item-price">$15.00</p>
-            </div>
-        </div>
-
-        <div class="cart-total">Total: $25.00</div>
+            
+            $total = 0;
+            foreach ($_SESSION['cart'] as $item) {
+                $total += $item['quantity'] * $item['price'];
+            }
+            echo "<div class='cart-total'>Total: £" . number_format($total, 2) . "</div>";
+        } else {
+            echo "<p>Your cart is empty.</p>";
+        }
+        ?>
     </div>
 </div>
 
 <script>
-
-
-
-
 function handleFormSubmit(event) {
-    
     event.preventDefault();
-
-   
-
-   
     const form = document.getElementById("checkout");
-
-    
     form.submit();  
-
-   
     setTimeout(function() {
         window.location.href = "Order_Confirmation_Page.html";  
     }, 1);  
