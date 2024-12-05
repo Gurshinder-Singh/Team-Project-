@@ -1,0 +1,138 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 130vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: #5c4033; /* Same brown background */
+    font-family: 'Century Gothic', sans-serif;
+    font-weight: bold;
+    position: relative;
+}
+
+.gold-shape {
+    width: 0;
+    height: 0;
+    border-left: 50vw solid transparent;
+    border-bottom: 130vh solid #d4af37;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.navbar {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    display: flex;
+    justify-content: space-around;
+    z-index: 1000;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    font-family: 'Century Gothic', sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.container {
+    margin-top: 100px; /* Push content below navbar */
+    padding: 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fff; /* White background for profile */
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.container h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #222;
+    margin-bottom: 20px;
+}
+
+.container p {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.container h2 {
+    font-size: 20px;
+    color: #222;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+form label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+    display: block;
+}
+
+form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input:focus {
+    border-color: #d4af37;
+    box-shadow: 0 0 5px rgba(212, 175, 55, 0.4);
+    outline: none;
+}
+
+form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+form button:hover {
+    background-color: #555;
+    transform: scale(1.02);
+}
+
+.message {
+    text-align: center;
+    font-size: 14px;
+    color: #d9534f; /* Red for error messages */
+    margin-bottom: 20px;
+}
+
+.message.success {
+    color: #5cb85c; /* Green for success messages */
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    form input,
+    form button {
+        font-size: 14px;
+    }
+}

@@ -1,4 +1,3 @@
-@ -0,0 +1,50 @@
 // Password Strength Indicator
 const passwordField = document.getElementById('password');
 const passwordStrength = document.getElementById('password-strength');
@@ -23,13 +22,15 @@ if (passwordField && passwordStrength) {
 const confirmPasswordField = document.getElementById('confirm-password');
 const form = document.querySelector('form');
 const errorMessage = document.createElement('p');
+errorMessage.style.color = 'red';
+errorMessage.style.display = 'none';
+form.appendChild(errorMessage);
 
 if (confirmPasswordField) {
     confirmPasswordField.addEventListener('input', () => {
         if (passwordField.value !== confirmPasswordField.value) {
             errorMessage.textContent = 'Passwords do not match!';
             errorMessage.style.display = 'block';
-            form.appendChild(errorMessage);
         } else {
             errorMessage.style.display = 'none';
         }
@@ -49,4 +50,3 @@ document.querySelectorAll('.toggle-password').forEach(toggle => {
         }
     });
 });
-

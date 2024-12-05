@@ -221,7 +221,7 @@ h1, h2 {
         </form>
     </div>
 
-    <
+    <!-- Cart Section -->
     <div class="cart-section">
         <h2>Your Cart</h2>
         

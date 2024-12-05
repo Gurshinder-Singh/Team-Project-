@@ -37,9 +37,9 @@ session_start();
             <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
         </button>
         <div class="dropdown-content">
-            <a href="about_us.html">About Us</a>
-            <a href="contact_us.html">Contact Us</a>
-            <a href="faqs.html">FAQs</a>
+            <a href="about.php">About Us</a>
+            <a href="contact.php">Contact Us</a>
+            <a href="FAQ.php">FAQs</a>
         </div>
     </div>
     <a href="homepage.php">HOME</a>

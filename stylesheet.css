@@ -6,9 +6,15 @@ html, body {
     overflow-y: scroll; /* Enable vertical scrolling */
     overflow-x: hidden; /* Prevent horizontal scrolling */
     background-color: #5c4033; /* Brown background */
+    background-size: fill;
     font-family: 'Century Gothic', sans-serif; /* Set default font */
     font-weight: bold; /* Apply bold text globally */
     position: relative;
+}
+
+h1 {
+    font-family: 'Century Gothic', sans-serif; /* Set default font */
+    font-weight: bold; /* Apply bold text globally */
 }
 
 /* Gold Shape Background */
