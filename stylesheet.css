@@ -6,9 +6,10 @@ html, body {
     overflow-y: scroll; /* Enable vertical scrolling */
     overflow-x: hidden; /* Prevent horizontal scrolling */
     background-color: #5C4033; /* Brown background */
-    font-family: 'Century Gothic', sans-serif; /* Set default font */
-    font-weight: bold; /* Apply bold text globally */
+    font-family: 'Century Gothic', sans-serif; /* Elegant font */
+    font-weight: bold;
     position: relative;
+    color: #FFFFFF; /* Default white text */
 }
 
 /* Navigation Bar */
@@ -74,6 +75,28 @@ button:active, .button:active {
     transform: translateY(1px); /* Subtle press effect */
 }
 
+/* About Section */
+.about-section {
+    padding: 50px;
+    text-align: center;
+    background-color: #6B4A37; /* Slightly lighter brown */
+    color: #ffffff;
+    border-top: 5px solid #F0C987; /* Gold accent */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Depth */
+}
+
+.about-section h1, .about-section h2 {
+    color: #F0C987; /* Gold headings */
+    margin-bottom: 20px;
+    text-transform: uppercase; /* For a bold statement */
+    letter-spacing: 1px;
+}
+
+.about-section p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
 /* FAQ Section */
 h2 {
     color: #F0C987; /* Gold headings for FAQ */
@@ -114,7 +137,7 @@ form label {
     font-weight: bold;
     margin-bottom: 8px;
     display: block;
-    color: #F0C987;
+    color: #F0C987; /* Gold text for labels */
 }
 
 form input, form textarea {
@@ -154,6 +177,26 @@ form button:hover {
     transform: translateY(-3px);
 }
 
+/* Footer */
+footer {
+    text-align: center;
+    background-color: #5C4033;
+    padding: 30px;
+    color: #F0C987;
+    font-size: 16px;
+}
+
+footer a {
+    color: #F0C987; /* Gold color for links */
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #FFFFFF; /* White on hover */
+}
+
 /* Responsive Design */
 @media screen and (max-width: 768px) {
     .nav-links {
@@ -164,5 +207,14 @@ form button:hover {
     .nav-links li {
         margin: 10px 0;
     }
+
+    .about-section {
+        padding: 30px;
+    }
+
+    ul li {
+        font-size: 16px; /* Smaller text for mobile */
+    }
 }
+
 
