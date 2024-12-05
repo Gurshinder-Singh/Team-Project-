@@ -1,3 +1,4 @@
+/* General Styles */
 html, body {
     margin: 0;
     padding: 0;
@@ -10,53 +11,65 @@ html, body {
     position: relative;
 }
 
+/* Gold Shape Background */
 .gold-shape {
     width: 0;
     height: 0;
     border-left: 50vw solid transparent; /* Create diagonal shape */
-    border-right: 0vw solid transparent; /* Ensure it touches the right side of the screen */
     border-bottom: 130vh solid #d4af37; /* Gold color */
     position: absolute;
     top: 0;
     right: 0; /* Ensure it touches the right side of the screen */
 }
 
+/* Navigation Bar Styles */
 .navbar {
-    background-color: #333;
-    color: white;
-    padding: 10px;
+    height: 100px; /* Set your desired navbar height */
+    display: flex;
+    align-items: center;
     position: fixed;
     width: 100%;
     top: 0;
-    display: flex;
-    justify-content: space-around;
-    transition: top 0.3s;
+    background-color: #363636;
+    transition: top 0.3s ease-in-out;
+    will-change: transform; /* Use hardware acceleration */
     z-index: 1000; /* Ensure navbar stays above background shapes */
 }
 
 .navbar a {
-    color: white;
-    text-decoration: none;
-    padding: 10px;
-    font-family: 'Century Gothic', sans-serif; /* Set font for navbar links */
-    font-weight: bold; /* Ensure navbar links are bold */
+    padding: 0 15px; /* Add some padding around the links */
+    text-decoration: none; /* Remove underline from links */
+    color: black; /* Set link color */
+    font-weight: bold; /* Optional: Make the text bold */
     text-transform: uppercase; /* Make navbar links uppercase */
 }
 
-.navbar a.luxus-link {
-    font-size: calc(100% + 5px); /* Increase font size by 5px */
-}
-
-.navbar {
-    height: 50px; /* Set your desired navbar height */
-    display: flex;
-    align-items: center;
+.navbar a:hover {
+    color: gray; /* Change link color on hover */
 }
 
 .navbar img {
-    height: 170%; /* Adjust this percentage to make the image bigger */
-    max-height: 170%;
+    height: 100%; /* Adjust this percentage to make the image bigger */
+    max-height: 100%;
+    margin-left: center; /* Push the logo to the right if needed */
 }
+
+/* Image Container Styles */
+.image-container {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+}
+
+.image-container img {
+    width: 650px; /* Adjust the width to make the image smaller */
+    height: auto; /* Maintain the aspect ratio */
+    position: absolute;
+    left: 800px; /* Move the image 320 pixels to the right */
+    top: 100px;
+}
+
+/* Text Styles */
 .luxus-text {
     font-family: 'DM Serif Display', serif; /* Set font for LUXUS text */
     font-size: 150px;
@@ -104,8 +117,6 @@ html, body {
 }
 
 /* Login and Sign-up Forms */
-
-/* Login Container */
 .login-container {
     background: #fff; /* White background for the form */
     padding: 30px;
@@ -117,7 +128,6 @@ html, body {
     text-align: center;
 }
 
-/* Login Heading */
 .login-container h1 {
     font-size: 24px;
     margin-bottom: 20px;
@@ -125,7 +135,6 @@ html, body {
     font-weight: bold;
 }
 
-/* Form Labels */
 form label {
     font-size: 14px;
     font-weight: bold;
@@ -137,7 +146,6 @@ form label {
     margin: 10px auto 5px; /* Center labels within form */
 }
 
-/* Form Inputs */
 form input {
     width: 90%;
     max-width: 300px; /* Input width constrained */
@@ -152,14 +160,12 @@ form input {
     display: block;
 }
 
-/* Input Focus Effect */
 form input:focus {
     border-color: #d4af37; /* Gold border when focused */
     box-shadow: 0 0 5px rgba(212, 175, 55, 0.4); /* Subtle gold glow */
     outline: none;
 }
 
-/* Form Button */
 form button {
     width: 90%;
     max-width: 300px; /* Button width matches inputs */
@@ -176,13 +182,11 @@ form button {
     display: block;
 }
 
-/* Button Hover */
 form button:hover {
     background-color: #555; /* Lighter dark hover effect */
     transform: scale(1.02); /* Gentle zoom on hover */
 }
 
-/* Signup Link */
 .signup-link p {
     font-size: 14px;
     color: #555;
@@ -199,7 +203,6 @@ form button:hover {
     text-decoration: underline; /* Underline on hover for emphasis */
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .login-container {
         margin: 60px auto; /* Adjust margin for smaller screens */
@@ -213,7 +216,6 @@ form button:hover {
     }
 }
 
-
 /* Fade-in animation for the login form */
 @keyframes fadeIn {
     from {
@@ -222,139 +224,33 @@ form button:hover {
     }
     to {
         opacity: 1;
-
-
-
-
-/*Products page*/
-.productGrid{
-    display:flex;
-    flex-wrap:wrap;
-    gap:50px;
-    justify-content: center;
-    align-items: stretch;
-    margin-top: 200px;
-    resize: both;
-}
-/*Product Card*/
-.productCard{
-    width:50%;
-    max-width: 300px;
-    max-height: 600px;
-    border-radius:20px;
-    box-shadow: 5px 5px 5px 5px #15140f;
-    margin: auto;
-    background-color:none;
-    text-align:center;
-    align-items: stretch;
-}
-
-
-.productImage img{
-    width: 40%;
-    height: 20%;
-    object-fit:contain;
-    border-radius: 50px;
-    align-content: center;
-}
-
-.productImage:hover img{
-    transform:scale(1.2);
-}
-
-
-a:link{
-    text-decoration: none;
-    font-size:relative;
-    font-weight:bold;
-    margin-top:30px;
-    margin-bottom:none;
-    font-size: relative;
-    align-items: left;
-    padding: 5px 0 5px 0;
-}
-
-a:hover{
-    text-decoration: underline;
-    color:black;
-}
-
-a:visited{
-    color:black;
-}
-
-
-.productPrice{
-    font-size:small;
-    font-weight:bold;
-    text-align:center;
-    margin-bottom:none;
-}
-
-.productCategoryLink{
-    margin: 10px;
-}
-
-.productCard button {
-    padding:10px 20px;
-    margin:6px;
-    background-color:none;
-    border:none;
-    margin-bottom: none;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    transition-duration:0.3s;
-  }
-
-.productCard button:hover{
-    background-color: #d4af37;
-    color:#fff;
-}
-
-.dropdownFilter,.sortBy{
-    position: relative;
-    display: inline-block;
-}
-
-.dropbtn {
-    border:none;
-    padding:16px;
-    margin:0;
-}
-
-.filterOptions,.sort{
-    display: none;
-    position: absolute;
-}
-
-.filterOptions a,.sort a{
-    display: none;
-    padding:16px;
-}
-
-.dropdownFilter:hover .filterOptions{
-    display: block;
-}
-
-.sortBy:hover .sort{
-    display: block;
-}
-
-.search{
-    float: right;
-    background-color:none ;
-    border:none;
-    padding: 1em;
-    margin-left: 0;
-}
-
-.sortBy{
-    float:right;
-    border: radius 0.2em;
-}
         transform: translateY(0);
     }
 }
 
-/* Password Container */
+header {
+    background: #333;
+    padding: 10px 0;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    margin: 0 15px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: rgb(96, 96, 96);
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    color: #04AA6D;
+}
