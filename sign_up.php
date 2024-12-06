@@ -1,20 +1,14 @@
 <?php
-// Include database connection
-require_once 'db.php';
-
-// Initialize error and success messages
+require_once 'db.php'; //DATABASE CONNECTION
 $error = '';
 $success = '';
 
-// Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get form data
     $name = trim($_POST['name']);
     $email = trim($_POST['email']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
-    // Validation
     if (empty($name) || empty($email) || empty($password) || empty($confirm_password)) {
         $error = "All fields are required.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -22,82 +16,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($password !== $confirm_password) {
         $error = "Passwords do not match.";
     } else {
-        // Check if email already exists
-        $sql = "SELECT email FROM users WHERE email = :email";
+        $sql = "SELECT COUNT(*) FROM users WHERE email = :email";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':email', $email);
-        $stmt->execute();
 
-        if ($stmt->fetch()) {
-            $error = "An account with this email already exists.";
-        } else {
-            // Hash the password and insert user into the database
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO users (name, email, password) VALUES (:name, :email, :password)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':name', $name);
-            $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':password', $hashed_password);
+        try {
+            $stmt->execute();
+            $emailExists = $stmt->fetchColumn();
 
-            if ($stmt->execute()) {
-                $success = "Registration successful! You can now log in.";
+            if ($emailExists > 0) {
+                $error = "An account with this email already exists.";
             } else {
-                $error = "Something went wrong. Please try again.";
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                $sql = "INSERT INTO users (name, email, password) VALUES (:name, :email, :password)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(':name', $name);
+                $stmt->bindParam(':email', $email);
+                $stmt->bindParam(':password', $hashed_password);
+
+                if ($stmt->execute()) {
+                    $success = "Registration successful! You can now log in.";
+                } else {
+                    $error = "Something went wrong. Please try again.";
+                }
             }
+        } catch (PDOException $e) {
+            $error = "Database error: " . $e->getMessage();
         }
     }
 }
 ?>
-<?php
-// Include database connection
-require_once 'db.php';
-
-// Initialize error and success messages
-$error = '';
-$success = '';
-
-// Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get form data
-    $name = trim($_POST['name']);
-    $email = trim($_POST['email']);
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
-
-    // Validation
-    if (empty($name) || empty($email) || empty($password) || empty($confirm_password)) {
-        $error = "All fields are required.";
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error = "Invalid email format.";
-    } elseif ($password !== $confirm_password) {
-        $error = "Passwords do not match.";
-    } else {
-        // Check if email already exists
-        $sql = "SELECT email FROM users WHERE email = :email";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
-
-        if ($stmt->fetch()) {
-            $error = "An account with this email already exists.";
-        } else {
-            // Hash the password and insert user into the database
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO users (name, email, password) VALUES (:name, :email, :password)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':name', $name);
-            $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':password', $hashed_password);
-
-            if ($stmt->execute()) {
-                $success = "Registration successful! You can now log in.";
-            } else {
-                $error = "Something went wrong. Please try again.";
-            }
-        }
-    }
-}
-?>
+<!--  HTML START -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -107,44 +56,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
+ <!-- NAVIGATION BAR -->
+<div class="navbar" id="navbar">
+    <div class="dropdown">
+        <button class="dropbtn">
+            <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
+        </button>
+        <div class="dropdown-content">
+            <a href="about.php">About Us</a>
+            <a href="contact.php">Contact Us</a>
+            <a href="FAQ.php">FAQs</a>
+        </div>
+    </div>
+    <a href="homepage.php">HOME</a>
+    <a href="search.php">SEARCH</a>
+    <div class="navbar-logo">
+        <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
+    </div>
+    <?php if (isset($_SESSION['user_id'])): ?>
+        <a href="profile.php">PROFILE</a>
+        <a href="logout.php">LOGOUT</a>
+    <?php else: ?>
+        <a href="login.php">LOGIN</a>
+    <?php endif; ?>
+    <a href="checkout.php">BASKET</a>
+    <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+        <a href="admin_page.php">ADMIN</a>
+    <?php endif; ?>
+</div>
 
-    <!-- Navigation bar -->
-    <div class="navbar" id="navbar">
-        <div class="dropdown">
-            <button class="dropbtn">
-                <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
-            </button>
-            <div class="dropdown-content">
-                <a href="about.php">About Us</a>
-                <a href="contact.php">Contact Us</a>
-                <a href="FAQ.php">FAQs</a>
-            </div>
-        </div>
-        <a href="homepage.php">HOME</a>
-        <a href="search.php">SEARCH</a>
-        <div class="navbar-logo">
-            <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
-        </div>
-        <?php if (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']): ?>
-            <a href="profile.html">PROFILE</a>
-        <?php endif; ?>
-        <a href="checkout.php">BASKET</a>
-        <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-            <a href="admin_page.php">ADMIN</a>
-        <?php endif; ?>
     </div>
 
     <div class="login-container">
         <h1>Sign Up</h1>
-
-        <!-- Show error message -->
         <?php if (!empty($error)): ?>
-            <div style="color: red;"><?php echo $error; ?></div>
+            <div style="color: red;"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
-
-        <!-- Show success message -->
         <?php if (!empty($success)): ?>
-            <div style="color: green;"><?php echo $success; ?></div>
+            <div style="color: green;"><?php echo htmlspecialchars($success); ?></div>
         <?php endif; ?>
 
         <form method="POST" action="sign_up.php">
@@ -165,6 +114,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <p>Already have an account? <a href="login.php">Login</a></p>
     </div>
+</body>
+</html>
+
 
     <script>
         let prevScrollpos = window.pageYOffset;
@@ -181,11 +133,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     document.getElementById("navbar").style.top = "-50px";
                 }
                 prevScrollpos = currentScrollPos;
-            }, 100); // Adjust the debounce delay as necessary
+            }, 100); 
         }
     </script>
 
-    <!-- Updated CSS -->
+
     <style>
     .navbar {
         height: 75px; /* Set your desired navbar height */
@@ -292,3 +244,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </body>
 </html>
+
+<!-- E N D -->
