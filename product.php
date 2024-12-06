@@ -165,7 +165,7 @@
                 <div class="productImage"><img
                         src="https://www.watchshop.com/images/products/86581802_h.jpg"
                         alt="Product Image">
-                    <a class="productLink" href="">
+                    <a class="productLink" href="Product details.hmtl">
                         <h3 itemprop="productName">Seiko Presage Watch</h3>
                     </a>
                 </div>
@@ -179,7 +179,7 @@
                 <div class="productImage"><img
                         src="https://www.watchshop.com/images/products/75408472_l.jpg"
                         alt="Product Image">
-                    <a class="productLink" href="">
+                    <a class="productLink" href="Product details.html">
                         <h3 itemprop="productName">Tissot Gentleman 40mm Watch</h3>
                     </a>
                 </div>
