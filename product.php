@@ -161,20 +161,34 @@
     </header>
 
     <div class="productGrid"> <!-- connect to database, product details should be filled out on the product card -->
-        <div class="productCard">
-            <div class="productImage">
-                <img src="" alt="Product Image">
-                <a class="productLink" href="">
-                    <h3 itemprop="productName"></h3>
-                </a>
+       <div class="productCard">
+                <div class="productImage"><img
+                        src="https://www.watchshop.com/images/products/86581802_h.jpg"
+                        alt="Product Image">
+                    <a class="productLink" href="">
+                        <h3 itemprop="productName">Seiko Presage Watch</h3>
+                    </a>
+                </div>
+                <p class="productPrice">£960</p>
+                <div class="buttons">
+                    <button class="addToCart">Add to cart</button>
+                    <button class="saveToWishlist">Save to wishlist</button>
+                </div>
             </div>
-            <p class="productPrice"></p>
-            <div class="filterTags"></div>
-            <div class="buttons">
-                <button class="addToCart">Add to cart</button>
-                <button class="saveToWishlist">Save to wishlist</button>
+            <div class="productCard">
+                <div class="productImage"><img
+                        src="https://www.watchshop.com/images/products/75408472_l.jpg"
+                        alt="Product Image">
+                    <a class="productLink" href="">
+                        <h3 itemprop="productName">Tissot Gentleman 40mm Watch</h3>
+                    </a>
+                </div>
+                <p class="productPrice">£1200</p>
+                <div class="buttons">
+                    <button class="addToCart">Add to cart</button>
+                    <button class="saveToWishlist">Save to wishlist</button>
+                </div>
             </div>
-        </div>
     </div>
 
     <footer>
