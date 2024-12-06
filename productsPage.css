@@ -1,4 +1,4 @@
-.navbar {
+/* .navbar {
     background-color: #333;
     color: white;
     padding: 10px;
@@ -207,3 +207,57 @@
 
 
 }
+ */
+
+.navbar {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    display: flex;
+    justify-content: space-around;
+    transition: top 0.3s;
+    z-index: 1000; /* Ensure navbar stays above background shapes */
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    font-family: 'Century Gothic', sans-serif; /* Set font for navbar links */
+    font-weight: bold; /* Ensure navbar links are bold */
+    text-transform: uppercase; /* Make navbar links uppercase */
+}
+
+.navbar a.luxus-link {
+    font-size: calc(100% + 5px); /* Increase font size by 5px */
+}
+
+.navbar {
+    height: 50px; /* Set your desired navbar height */
+    display: flex;
+    align-items: center;
+}
+
+.navbar img {
+    height: 170%; /* Adjust this percentage to make the image bigger */
+    max-height: 170%;
+}
+
+/*Abida*/
+.productGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    justify-content: center;
+    align-items: stretch;
+    margin-top: 200px;
+    resize: both;
+}
+
+/*Product Card*/
+.productCard {
+    width: 50%;
+    max
