@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Luxus Product Catalogue</title>
-    <link rel="stylesheet" href="Stylesheet.css">
+    <link rel="stylesheet" href="stylesheet.css">
     <script defer src="script.js"></script>
 </head>
 
