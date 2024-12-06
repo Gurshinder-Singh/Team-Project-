@@ -1,45 +1,39 @@
 <?php
-require_once 'db.php'; 
+require_once 'db.php'; //DATABASE CONNECTION
 session_start();
-$is_admin_page = false; // Default: not an admin page
-include 'navbar.php';
-$error = ''; // Initialize an empty error message
+$is_admin_page = false; // IS ADMIN ?
+$error = ''; 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email']);
     $password = $_POST['password'];
 
-    // Validate input
-    if (empty($email) || empty($password)) {
+ if (empty($email) || empty($password)) {
         $error = "Both fields are required.";
     } else {
         try {
-            // Check for admin account
             $stmt = $conn->prepare("SELECT * FROM admin_log WHERE email = :email");
             $stmt->bindParam(':email', $email);
             $stmt->execute();
             $admin = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($admin && $password === $admin['password']) { // Check admin password directly (hash recommended)
+            if ($admin && $password === $admin['password']) { 
                 $_SESSION['user_id'] = $admin['id'];
                 $_SESSION['username'] = $admin['email'];
-                $_SESSION['is_admin'] = true; // Set admin session flag
+                $_SESSION['is_admin'] = true;
                 header("Location: homepage.php");
                 exit();
             }
-
-            // Check for regular user account
             $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email");
             $stmt->bindParam(':email', $email, PDO::PARAM_STR);
             $stmt->execute();
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($user && password_verify($password, $user['password'])) {
-                // Start user session
                 $_SESSION['user_id'] = $user['user_id'];
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['name'] = $user['name'];
-                unset($_SESSION['is_admin']); // Ensure this is unset for non-admins
+                unset($_SESSION['is_admin']); 
                 header("Location: homepage.php");
                 exit();
             } else {
@@ -52,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
+   <!-- HTML START -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
  
-<!-- Navigation bar -->
+<!-- NAVIGATION BAR -->
    
 <div class="navbar" id="navbar">
     <div class="dropdown">
@@ -80,20 +75,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="navbar-logo">
         <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
     </div>
-    <?php if (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']): ?>
-        <a href="profile.html">PROFILE</a>
+    <?php if (isset($_SESSION['user_id'])): ?>
+        <a href="profile.php">PROFILE</a>
+        <a href="logout.php">LOGOUT</a>
+    <?php else: ?>
+        <a href="login.php">LOGIN</a>
     <?php endif; ?>
     <a href="checkout.php">BASKET</a>
     <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
         <a href="admin_page.php">ADMIN</a>
     <?php endif; ?>
 </div>
-
-
-
-
-    
-</div>
+    <!-- NAVIGATION BAR END! -->
 
     <script>
         let prevScrollpos = window.pageYOffset;
@@ -110,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     document.getElementById("navbar").style.top = "-50px";
                 }
                 prevScrollpos = currentScrollPos;
-            }, 100); // Adjust the debounce delay as necessary
+            }, 100); 
         }
     </script>
     
@@ -225,7 +218,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 </style>
 
-    <!-- Login Container -->
+    <!-- LOGIN FORM -->
     <div class="login-container">
         <h1>Login</h1>
         <?php if (!empty($error)): ?>
@@ -246,3 +239,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </body>
 </html>
+   <!-- E N D -->
