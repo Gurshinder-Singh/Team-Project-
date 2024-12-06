@@ -392,3 +392,53 @@ header {
     float:right;
     border: radius 0.2em;
 }
+
+/*cart*/
+table{
+    position: fixed;
+    margin: 80px auto;
+    text-align: center;
+    padding-top: 10px;
+    width: 100%;
+    box-shadow: 0 10px 10px 0 black;
+    border-radius: 1px;
+    border-collapse: collapse;  
+    font-weight:bold;
+}
+
+
+th,td{
+    padding:10px;
+    border:1px solid #363636;
+}
+
+tr:nth-child(even){
+    background-color:rgb(201, 200, 198);
+}
+
+tr:hover{
+    background-color: rgb(147, 145, 145);
+}
+
+th,tfoot{
+    background-color:#363636;
+    color:white;
+    padding: 10px 5px;
+    text-align: left;
+}
+
+.checkoutBtn{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right:0;
+    border:none;
+    padding:16px;
+    margin:0;
+    background-color: #363636;
+    color: white;
+}
+
+.checkoutBtn:hover{
+    background-color: gray;
+}
