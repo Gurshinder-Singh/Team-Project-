@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([
                 ':name' => $name,
                 ':description' => $description,
-                ':price' => "£" . $price,
+                ':price' => $price,
                 ':image' => $imageDestination,
                 ':brand' => $brand,
                 ':color' => $color,
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([
                 ':name' => $name,
                 ':description' => $description,
-                ':price' => "£" . $price,
+                ':price' => $price,
                 ':image' => $imageDestination,
                 ':brand' => $brand,
                 ':color' => $color,
@@ -162,14 +162,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         button:hover { 
             background-color: #45a049; 
         } 
-        button[type="submit"][style="color: red;"] {
-            background-color: red; 
-            color: white;
-        }
-        </style>
+    </style>
     <title>Inventory Management</title>
 </head>
-<body id=inventorymanagment>
+<body>
     <div class="navbar">
         <a href="#menu">HOME</a>
         <a href="#search">SEARCH</a>
@@ -183,8 +179,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <h1>Inventory Management</h1>
 
-   
-           
     <h2>Add New Product</h2>
     <form action="inventorymanagement.php" method="post" enctype="multipart/form-data">
         <label for="name">Name:</label>
@@ -202,5 +196,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit" name="add-product">Add Product</button>
     </form>
 </body>
-        
 </html>
