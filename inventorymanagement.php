@@ -166,6 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background-color: red; 
             color: white;
         }
+        </style>
     <title>Inventory Management</title>
 </head>
 <body id=inventorymanagment>
