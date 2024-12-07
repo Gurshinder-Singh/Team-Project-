@@ -108,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="stylesheet.css">
     <title>Inventory Management</title>
 </head>
-<body>
+<body id=inventorymanagment>
     <div class="navbar">
         <a href="#menu">HOME</a>
         <a href="#search">SEARCH</a>
