@@ -196,3 +196,169 @@
 </body>
 
 </html>
+
+<style>
+    .navbar {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    display: flex;
+    justify-content: space-around;
+    transition: top 0.3s;
+    z-index: 1000; /* Ensure navbar stays above background shapes */
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    font-family: 'Century Gothic', sans-serif; /* Set font for navbar links */
+    font-weight: bold; /* Ensure navbar links are bold */
+    text-transform: uppercase; /* Make navbar links uppercase */
+}
+
+.navbar a.luxus-link {
+    font-size: calc(100% + 5px); /* Increase font size by 5px */
+}
+
+.navbar {
+    height: 50px; /* Set your desired navbar height */
+    display: flex;
+    align-items: center;
+}
+
+.navbar img {
+    height: 170%; /* Adjust this percentage to make the image bigger */
+    max-height: 170%;
+}
+
+
+
+/*Abida*/
+.productGrid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:50px;
+    justify-content: center;
+    align-items: stretch;
+    margin-top: 200px;
+    resize: both;
+}
+/*Product Card*/
+.productCard{
+    width:50%;
+    max-width: 300px;
+    max-height: 600px;
+    border-radius:20px;
+    box-shadow: 5px 5px 5px 5px #15140f;
+    margin: auto;
+    background-color:none;
+    text-align:center;
+    align-items: stretch;
+}
+
+
+.productImage img{
+    width: 40%;
+    height: 20%;
+    object-fit:contain;
+    border-radius: 50px;
+    align-content: center;
+}
+
+.productImage:hover img{
+    transform:scale(1.2);
+}
+
+.productLink:hover{
+    text-decoration: underline;
+    color:black;
+}
+
+.productLink:visited{
+    color:black;
+}
+
+
+.productPrice{
+    font-size:small;
+    font-weight:bold;
+    text-align:center;
+    margin-bottom:none;
+}
+
+.productLink{
+    text-decoration: none;
+    font-size:relative;
+    font-weight:bold;
+    margin-top:30px;
+    margin-bottom:none;
+    font-size: relative;
+    align-items: left;
+    padding: 5px 0 5px 0;
+}
+
+.productCard button,.singleProduct button {
+    padding:10px 20px;
+    margin:6px;
+    background-color:none;
+    border:none;
+    margin-bottom: none;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    transition-duration:0.3s;
+  }
+
+.productCard button:hover, .singleProduct button:hover{
+    background-color: #d4af37;
+    color:#fff;
+}
+
+.dropdownFilter,.sortBy{
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    border:none;
+    padding:16px;
+    margin:0;
+}
+
+.filterOptions,.sort{
+    display: none;
+    position: absolute;
+}
+
+.filterOptions a,.sort a{
+    display: none;
+    padding:16px;
+}
+
+.dropdownFilter:hover .filterOptions{
+    display: block;
+}
+
+.sortBy:hover .sort{
+    display: block;
+}
+
+.search{
+    float: right;
+    background-color:none ;
+    border:none;
+    padding: 1em;
+    margin-left: 0;
+}
+
+.sortBy{
+    float:right;
+    border: radius 0.2em;
+}
+
+}
+</style>
