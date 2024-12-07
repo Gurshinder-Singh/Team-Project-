@@ -105,68 +105,87 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <style> 
-        body { 
-            font-family: Arial, sans-serif; 
-            margin: 0; 
-            padding: 0; 
-            background-color: #f9f9f9;
-        } 
-        .navbar { 
-            background-color: #333; 
-            overflow: hidden; 
-        } 
-        .navbar a {
-            float: left;
-            display: block; 
-            color: #f2f2f2; 
-            text-align: center; 
-            padding: 14px 20px; 
-            text-decoration: none; 
-        } 
-        .navbar 
-        a:hover { 
-            background-color: #ddd; 
-            color: black; 
-        }
-        h1, h2, h3 { 
-            color: #333; 
-            padding: 10px; 
-        } 
-        table { 
-            width: 100%; 
-            border-collapse: collapse;
-            margin: 20px 0; 
-        } 
-        table, th, td {
-            border: 1px solid #ddd;
-        } 
-        th, td { 
-            padding: 8px; 
-            text-align: left; 
-        } 
-        th 
-        { background-color: 
-            #f2f2f2; 
-        }
-        form {
-            margin: 10px 0; 
-        } 
-        button {
-            background-color: #4CAF50; 
-            color: white; 
-            border: none; 
-            padding: 10px 20px; 
-            cursor: pointer; 
-        } 
-        button:hover { 
-            background-color: #45a049; 
-        } 
-        button[type="submit"][style="color: red;"] {
-            background-color: red; 
-            color: white;
-        }
-        </style>
+<style> 
+    body { 
+        font-family: Arial, sans-serif; 
+        margin: 0; 
+        padding: 0; 
+        background-color: #f9f9f9;
+    } 
+    .navbar { 
+        background-color: #333; 
+        overflow: hidden; 
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 10px;
+    } 
+    .navbar a {
+        color: #f2f2f2; 
+        text-align: center; 
+        padding: 14px 20px; 
+        text-decoration: none; 
+    } 
+    .navbar a:hover { 
+        background-color: #ddd; 
+        color: black; 
+    }
+    h1, h2, h3 { 
+        color: #333; 
+        padding: 10px; 
+        text-align: center;
+    } 
+    table { 
+        width: 80%; 
+        margin: 20px auto;
+        border-collapse: collapse;
+    } 
+    table, th, td {
+        border: 1px solid #ddd;
+    } 
+    th, td { 
+        padding: 8px; 
+        text-align: left; 
+    } 
+    th { 
+        background-color: #f2f2f2; 
+    }
+    form {
+        width: 50%;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    form label {
+        display: block;
+        margin-bottom: 8px;
+    }
+    form input, form button {
+        width: 100%;
+        padding: 12px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    button {
+        background-color: #4CAF50; 
+        color: white; 
+        border: none; 
+        padding: 10px 20px; 
+        cursor: pointer; 
+    } 
+    button:hover { 
+        background-color: #45a049; 
+    }
+    button[type="submit"][style="color: red;"] {
+        background-color: red; 
+        color: white;
+    }
+</style>
+
     <title>Inventory Management</title>
 </head>
 <body id=inventorymanagment>
