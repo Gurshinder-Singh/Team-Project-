@@ -123,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h1>Inventory Management</h1>
 
     <h2>Current Inventory</h2>
-    <table border="1" style="width: 80%; margin: 0 auto; text-align: left; border-collapse: collapse;">
+    <table class="inventory-table" border="1" style="width: 80%; margin: 0 auto; text-align: left; border-collapse: collapse;">
         <thead>
             <tr>
                 <th>Product ID</th>
@@ -169,7 +169,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
         </tbody>
     </table>
-
+           
     <h2>Add New Product</h2>
     <form action="inventorymanagement.php" method="post" enctype="multipart/form-data">
         <label for="name">Name:</label>
@@ -187,4 +187,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit" name="add-product">Add Product</button>
     </form>
 </body>
+        
 </html>
