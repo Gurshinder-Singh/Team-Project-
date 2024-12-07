@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([
                 ':name' => $name,
                 ':description' => $description,
-                ':price' => $price,
+                ':price' => "£" . $price,
                 ':image' => $imageDestination,
                 ':brand' => $brand,
                 ':color' => $color,
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([
                 ':name' => $name,
                 ':description' => $description,
-                ':price' => $price,
+                ':price' => "£" . $price,
                 ':image' => $imageDestination,
                 ':brand' => $brand,
                 ':color' => $color,
@@ -105,70 +105,71 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-   <style> 
-    body { 
-        font-family: Arial, sans-serif; 
-        margin: 0; 
-        padding: 0; 
-        background-color: #f9f9f9;
-    } 
-    .navbar { 
-        background-color: #333; 
-        overflow: hidden; 
-    } 
-    .navbar a {
-        float: left;
-        display: block; 
-        color: #f2f2f2; 
-        text-align: center; 
-        padding: 14px 20px; 
-        text-decoration: none; 
-    } 
-    .navbar a:hover { 
-        background-color: #ddd; 
-        color: black; 
-    }
-    h1, h2, h3 { 
-        color: #333; 
-        padding: 10px; 
-    } 
-    table { 
-        width: 100%; 
-        border-collapse: collapse;
-        margin: 20px 0; 
-        position: fixed;
-        z-index: 1;
-    } 
-    table, th, td {
-        border: 1px solid #ddd;
-    } 
-    th, td { 
-        padding: 8px; 
-        text-align: left; 
-    } 
-    th { 
-        background-color: #f2f2f2; 
-    }
-    form {
-        margin: 10px 0; 
-        z-index: 2;
-        position: relative;
-    } 
-    button {
-        background-color: #4CAF50; 
-        color: white; 
-        border: none; 
-        padding: 10px 20px; 
-        cursor: pointer; 
-    } 
-    button:hover { 
-        background-color: #45a049; 
-    } 
-</style>
-
+    <style> 
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #f9f9f9;
+        } 
+        .navbar { 
+            background-color: #333; 
+            overflow: hidden; 
+        } 
+        .navbar a {
+            float: left;
+            display: block; 
+            color: #f2f2f2; 
+            text-align: center; 
+            padding: 14px 20px; 
+            text-decoration: none; 
+        } 
+        .navbar 
+        a:hover { 
+            background-color: #ddd; 
+            color: black; 
+        }
+        h1, h2, h3 { 
+            color: #333; 
+            padding: 10px; 
+        } 
+        table { 
+            width: 100%; 
+            border-collapse: collapse;
+            margin: 20px 0; 
+        } 
+        table, th, td {
+            border: 1px solid #ddd;
+        } 
+        th, td { 
+            padding: 8px; 
+            text-align: left; 
+        } 
+        th 
+        { background-color: 
+            #f2f2f2; 
+        }
+        form {
+            margin: 10px 0; 
+        } 
+        button {
+            background-color: #4CAF50; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            cursor: pointer; 
+        } 
+        button:hover { 
+            background-color: #45a049; 
+        } 
+        button[type="submit"][style="color: red;"] {
+            background-color: red; 
+            color: white;
+        }
+        </style>
     <title>Inventory Management</title>
 </head>
-<body>
+<body id=inventorymanagment>
     <div class="navbar">
         <a href="#menu">HOME</a>
         <a href="#search">SEARCH</a>
@@ -182,6 +183,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <h1>Inventory Management</h1>
 
+   
+           
     <h2>Add New Product</h2>
     <form action="inventorymanagement.php" method="post" enctype="multipart/form-data">
         <label for="name">Name:</label>
@@ -199,4 +202,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit" name="add-product">Add Product</button>
     </form>
 </body>
+        
 </html>
