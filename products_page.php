@@ -71,7 +71,7 @@
                 <?php endif; ?>
             </div>
         </nav>
-
+        <!-- search bar -->
         <div class="search">
             <input type="text" placeholder="Search for a product..." />
         </div>
