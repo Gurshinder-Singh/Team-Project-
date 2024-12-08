@@ -165,7 +165,7 @@
                         src="https://www.watchshop.com/images/products/86581802_h.jpg"
                         alt="Product Image">
                     <a class="productLink" href="productDetails.hmtl">
-                        <h3 itemprop="productName">Seiko Presage Watch</h3>
+                        <h3 itemprop="productName">Tag Heuer Connected Calibre E4</h3>
                     </a>
                 </div>
                 <p class="productPrice">£960</p>
