@@ -14,5 +14,5 @@ window.onscroll = function() {
             document.getElementById("navbar").style.top = "-50px";
         }
         prevScrollpos = currentScrollPos;
-    }, 100); // Adjust the debounce delay as necessary
+    }, 100); 
 };

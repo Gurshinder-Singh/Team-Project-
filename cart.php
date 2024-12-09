@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-
+// If the cart is empty
 if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
     echo "Your cart is empty.";
     exit;
@@ -15,7 +15,32 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Your Cart</title>
     <link rel="stylesheet" href="stylesheet.css">
-
+<div class="navbar" id="navbar">
+    <div class="dropdown">
+        <button class="dropbtn">
+            <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
+        </button>
+        <div class="dropdown-content">
+            <a href="about.php">About Us</a>
+            <a href="contact.php">Contact Us</a>
+            <a href="FAQ.php">FAQs</a>
+        </div>
+    </div>
+    <a href="homepage.php">HOME</a>
+    <a href="products_page.php">PRODUCTS</a>
+    <div class="navbar-logo">
+        <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
+    </div>
+    <?php if (isset($_SESSION['user_id'])): ?>
+        <a href="profile.php">PROFILE</a>
+        <a href="logout.php">LOGOUT</a>
+    <?php elseif (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']): ?>
+        <a href="login.php">LOGIN</a>
+    <?php endif; ?>
+    <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+        <a href="admin_page.php">ADMIN</a>
+    <?php endif; ?>
+</div>
     <style>
         h2 {
             color: rgb(0, 0, 0);
@@ -187,40 +212,35 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
         .goToCheckoutBtn:hover {
             background-color: grey;
         }
+		
     </style>
 
 </head>
 <body>
 	
-        <div class="navbar">
-        <a href="homepage.php">HOME</a>
-        <a href="products_page.php">PRODUCTS</a>
-        <a href="checkout.php">BASKET</a>
-        <a href="admin_page.php">ADMIN</a>
-    </div>
     
     <h1>Your Cart</h1>
 
     <table class="cartTable">
         <thead>
             <tr>
-                <th>Product</th> 
-                <th>Price</th>   
-                <th>Quantity</th>
-                <th>Total</th>    
+                <th>Product</th> <!-- Kept Product Column -->
+                <th>Price</th>   <!-- Kept Price Column -->
+                <th>Quantity</th> <!-- Kept Quantity Column -->
+                <th>Total</th>    <!-- Kept Total Column -->
             </tr>
         </thead>
         <tbody>
             <?php foreach ($_SESSION['cart'] as $item): ?>
                 <tr>
-                    <td><?= htmlspecialchars($item['name']); ?></td>
-                    <td><?= htmlspecialchars($item['price']); ?></td> 
-                    <td><?= $item['quantity']; ?></td> 
-                    <td><?= $item['price'] * $item['quantity']; ?></td> 
+                    <td><?= htmlspecialchars($item['name']); ?></td> <!-- Product Name -->
+                    <td><?= htmlspecialchars($item['price']); ?></td> <!-- Product Price -->
+                    <td><?= $item['quantity']; ?></td> <!-- Product Quantity -->
+                    <td><?= $item['price'] * $item['quantity']; ?></td> <!-- Total for Product -->
                 </tr>
             <?php endforeach; ?>
         </tbody>
-        <a href="checkout.php" class="checkoutButton">Proceed to Checkout</a>
+       <h1> <a href="checkout.php" class="checkoutButton">Proceed to Checkout</a></h1>
     </table>
 
     <div class="cartTotal">

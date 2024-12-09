@@ -8,7 +8,7 @@ if (isset($_POST['product_id'], $_POST['quantity'])) {
 
     
     if (is_numeric($quantity) && $quantity > 0) {
-        
+       
         foreach ($_SESSION['cart'] as &$item) {
             if ($item['product_id'] == $product_id) {
                 
@@ -18,7 +18,7 @@ if (isset($_POST['product_id'], $_POST['quantity'])) {
         }
     }
 
-
+    
     header("Location: cart.php");
     exit();
 } else {

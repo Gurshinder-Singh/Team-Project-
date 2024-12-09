@@ -231,7 +231,7 @@ try {
                     document.getElementById("navbar").style.top = "-50px";
                 }
                 prevScrollpos = currentScrollPos;
-            }, 100);
+            }, 100); // Adjust the debounce delay as necessary
         }
     </script>
 
@@ -266,7 +266,7 @@ try {
 
     <h1>Product Catalogue</h1>
                 <div id="filterSortBar">
-            <form method="post" action="products_page.php"> 
+            <form method="post" action="products_page.php"> <!-- Set your action script for processing the filter -->
                 <div class="dropdownFilter">
                     <button class="dropbutton">Colour &#8595</button>
                     <div class="filterOptions">
@@ -362,10 +362,11 @@ try {
         <?php foreach ($products as $product): ?>
             <div class="productCard">
                 <div class="productImage">
-                    <img src="<?= htmlspecialchars($product['image']); ?>">
+                    <img src="<?= htmlspecialchars($product['image']); ?>" alt="<?= htmlspecialchars($product['name']); ?>">
                 </div>
                 <a class="productLink" href="productDetails.php?id=<?= $product['product_id']; ?>">
                     <h3><?= htmlspecialchars($product['name']); ?></h3>
+                    <p><?= $product['description']; ?></p>
                 </a>
                 <p class="productPrice"><?= htmlspecialchars($product['price']); ?></p>
                 <form method="POST" action="add_to_cart.php">
@@ -388,7 +389,7 @@ try {
 
 
     <footer>
-       
+        <!-- Add footer content here -->
     </footer>
     
 </body>

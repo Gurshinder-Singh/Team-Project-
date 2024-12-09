@@ -301,6 +301,10 @@ color:white;
       background-color: #d4af37;
       color: white;
   }
+.productCard #description{
+font-size:32px;
+color:white;
+}
   
 .dropdownFilter,.sortBy{
     position: relative;
