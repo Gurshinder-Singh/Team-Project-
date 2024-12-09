@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
    
     $to = "email";
-    $subject = "New Message from Contact Us Form";
+    $subject = " Message from Customer";
 
     
     $body = "You have received a new message.\n\n" .
@@ -18,13 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (mail($to, $subject, $body, $headers)) {
         echo "<p>Thank you for your message. We’ll get back to you soon!</p>";
-        header("refresh:3;url=contact.html");
+        header("refresh:3;url=contact.php");
     } else {
         echo "<p>Sorry, your message could not be sent. Please try again later.</p>";
-        header("refresh:3;url=contact.html");
+        header("refresh:3;url=contact.php");
     }
 } else {
-    header("Location: contact.html");
+    header("Location: contact.php");
     exit;
 }
 ?>
