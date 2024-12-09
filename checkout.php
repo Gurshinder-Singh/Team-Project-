@@ -11,17 +11,134 @@ if (!isset($_SESSION['cart'])) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Method</title>
-    <link rel="stylesheet" href="checkout.css">
-</head>
-<body>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Luxus Product Catalogue</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="stylesheet.css"/>
 <style>
+      h2 {
+    color: rgb(0, 0, 0);
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+h2:hover {
+    color: rgb(0, 0, 0);
+}
+
+section {
+    padding: 10px 20px;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100% - 75px);
+    padding-top: 75px;
+}
+
+main {
+    text-align: center;
+}
+
+.navbar {
+    height: 75px;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    background-color: #363636;
+    transition: top 0.3s ease-in-out;
+    will-change: transform;
+}
+
+.navbar a, 
+.navbar-logo {
+    color: white;
+    text-decoration: none;
+    padding: 14px 20px;
+    flex: 1;
+    text-align: center;
+}
+
+.navbar-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    max-width: 200px;
+}
+
+.navbar-logo img {
+    height: 95px;
+    width: auto;
+    margin: 0 auto;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    flex: 1;
+}
+
+.dropbtn {
+    background-color: #363636;
+    color: white;
+    padding: 14px 20px;
+    width: 70px;
+    height: 70px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-icon {
+    height: 50px;
+    width: auto;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #363636;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    transition: transform 0.3s ease-in-out;
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f5f5f5;
 }
 
 .checkout-container {
@@ -31,7 +148,6 @@ body {
   max-width: 1200px; 
   margin: 40px auto; 
   padding: 20px;
-  background: #fff;
   border-radius: 10px;
 }
 
@@ -39,7 +155,8 @@ body {
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  background-color: #fff;
+  background-color: #363636;
+  color:white;
 }
 
 .checkout-form {
@@ -48,12 +165,13 @@ body {
 }
 
 .cart-section {
-  flex: 1; 
+  flex: 1; color:white;
 }
 
 h1, h2 {
   font-size: 20px;
   margin-bottom: 20px;
+color:white;
 }
 
 .form-group {
@@ -64,6 +182,7 @@ h1, h2 {
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
+  color:white;
 }
 
 .form-group input, .form-group select {
@@ -72,11 +191,19 @@ h1, h2 {
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 5px;
+text-align:center;
+align-elements:center;
+}
+.form-group select{
+    max-width: 300px;  
+    margin: 10px auto; 
+    box-sizing: border-box;
+    display: block;
 }
 
 .submit-btn {
-  background-color: #4CAF50;
-  color: white;
+  background-color: white;
+  color: #363636;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -85,7 +212,7 @@ h1, h2 {
 }
 
 .submit-btn:hover {
-  background-color: #45a049;
+  background-color: gold;
 }
 
 .cart-item {
@@ -98,6 +225,7 @@ h1, h2 {
   flex: 1;
 }
 
+
 .cart-item-name {
   font-size: 14px;
   font-weight: bold;
@@ -105,13 +233,14 @@ h1, h2 {
 
 .cart-item-price, .cart-item-quantity {
   font-size: 14px;
-  color: #555;
+  color: white;
 }
 
 .cart-total {
   font-weight: bold;
   text-align: right;
   margin-top: 20px;
+color:white;
 }
 
 @media (max-width: 768px) {
@@ -124,7 +253,60 @@ h1, h2 {
       margin-bottom: 20px;
   }
 }   
-</style>
+    </style>
+</head>
+
+<header>
+    <!-- Navigation bar -->
+   <div class="navbar" id="navbar">
+    <div class="dropdown">
+       <button class="dropbtn">
+            <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
+        </button>
+        <div class="dropdown-content">
+            <a href="about.php">About Us</a>
+            <a href="contact.php">Contact Us</a>
+            <a href="FAQ.php">FAQs</a>
+        </div>
+    </div>
+    <a href="homepage.php">HOME</a>
+    <a href="products_page.php">PRODUCTS</a>
+    <div class="navbar-logo">
+        <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
+    </div>
+    <?php if (isset($_SESSION['user_id'])): ?>
+        <a href="profile.php">PROFILE</a>
+        <a href="logout.php">LOGOUT</a>
+    <?php else: ?>
+        <a href="login.php">LOGIN</a>
+    <?php endif; ?>
+    <a href="cart.php">BASKET</a>
+    <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+        <a href="admin_page.php">ADMIN</a>
+    <?php endif; ?>
+</div>
+
+
+    <script>
+        let prevScrollpos = window.pageYOffset;
+        let debounce;
+
+        window.onscroll = function() {
+            clearTimeout(debounce);
+
+            debounce = setTimeout(function() {
+                let currentScrollPos = window.pageYOffset;
+                if (prevScrollpos > currentScrollPos) {
+                    document.getElementById("navbar").style.top = "0";
+                } else {
+                    document.getElementById("navbar").style.top = "-50px";
+                }
+                prevScrollpos = currentScrollPos;
+            }, 100); 
+        }
+    </script>
+
+<body>
 
 <div class="checkout-container">
     <div class="checkout-form">
@@ -221,7 +403,7 @@ h1, h2 {
         </form>
     </div>
 
-    <!-- Cart Section -->
+    <
     <div class="cart-section">
         <h2>Your Cart</h2>
         
