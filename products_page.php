@@ -1,4 +1,16 @@
-<?php session_start(); // Start the session ?>
+<?php
+session_start(); 
+require 'db.php'; 
+
+try {
+    $sql = "SELECT product_id, name, description, price, image, brand, color FROM products";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Error fetching products: " . $e->getMessage());
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,107 +18,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Luxus Product Catalogue</title>
-    <link rel="stylesheet" href="productsPage.css"/>
     <style>
-        h2 {
-            color: rgb(0, 0, 0); 
-            text-decoration: underline;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-
-        h2:hover {
-            color: rgb(0, 0, 0); 
-        }
-
-        section {
-            padding: 10px 20px; 
-        }
-
-        body, html {
-            height: 100%; /* Ensure the body takes full height */
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
             margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
         }
 
-        .main-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Center horizontally */
-            justify-content: center; /* Center vertically */
-            height: calc(100% - 75px); /* Subtract navbar height */
-            padding-top: 75px; /* Push down content to be below navbar */
-        }
-
-        main {
-            text-align: center; /* Center text within main */
-        }
-
+        /* Navbar */
         .navbar {
-            height: 75px; /* Set your desired navbar height */
+            height: 75px;
             display: flex;
             align-items: center;
             position: fixed;
             top: 0;
+            width: 100%;
             background-color: #363636;
-            transition: top 0.3s ease-in-out;
-            will-change: transform; /* Use hardware acceleration */
+            z-index: 1000;
         }
 
-        .navbar a, 
+        .navbar a,
         .navbar-logo {
-            color: white; /* Set text color to white for links */
+            color: white;
             text-decoration: none;
             padding: 14px 20px;
-            flex: 1; /* Ensure each item takes equal space */
-            text-align: center; /* Center text within buttons */
-        }
-
-        .navbar-logo {
-            display: flex; /* Ensure image aligns in the center */
-            justify-content: center;
-            align-items: center;
-            position: relative; /* Position the container relative for absolute centering */
-            max-width: 200px; /* Ensure the container space remains the same */
+            flex: 1;
+            text-align: center;
         }
 
         .navbar-logo img {
-            height: 95px; /* Increase the image size */
-            width: auto; /* Maintain aspect ratio */
-            margin: 0 auto; /* Center the image within its container */
+            height: 60px;
+            margin: 0 auto;
         }
 
         .dropdown {
             position: relative;
             display: inline-block;
-            flex: 1;
         }
 
         .dropbtn {
-            background-color: #363636; /* Match the navbar color */
+            background-color: #363636;
             color: white;
             padding: 14px 20px;
-            width: 70px; /* Set the container width */
-            height: 70px; /* Set the container height */
             border: none;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .menu-icon {
-            height: 50px; /* Adjust the height for the menu icon */
-            width: auto; /* Maintain aspect ratio */
         }
 
         .dropdown-content {
             display: none;
             position: absolute;
-            background-color: #363636; /* Match the navbar color */
+            background-color: #363636;
             min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
             z-index: 1;
-            transition: transform 0.3s ease-in-out; /* Add transition for smooth movement */
         }
 
         .dropdown-content a {
@@ -114,7 +80,6 @@
             padding: 12px 16px;
             text-decoration: none;
             display: block;
-            text-align: left;
         }
 
         .dropdown-content a:hover {
@@ -125,9 +90,103 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
+
+        /* Page Title */
+        h1 {
+            margin-top: 100px;
+            text-align: center;
+        }
+
+        /* Product Grid */
+        .productGrid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        /* Product Card */
+        .productCard {
+            width: calc(33.33% - 30px);
+            max-width: 300px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            text-align: center;
+            padding: 15px;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        .productCard:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .productImage img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .productImage:hover img {
+            transform: scale(1.05);
+        }
+
+        .productLink {
+            text-decoration: none;
+            color: #363636;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .productLink:hover {
+            color: #d4af37;
+        }
+
+        .productPrice {
+            font-size: 16px;
+            color: #5c4033;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        /* Buttons */
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+        }
+
+        .buttons button {
+            padding: 8px 15px;
+            border: none;
+            background-color: #d4af37;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+        }
+
+        .buttons button:hover {
+            background-color: #5c4033;
+        }
+
+        .buttons button:active {
+            transform: translateY(1px);
+        }
     </style>
 </head>
-<header>
+
+<body>
     <!-- Navigation bar -->
     <div class="navbar" id="navbar">
         <div class="dropdown">
@@ -154,27 +213,7 @@
         <?php endif; ?>
     </div>
 
-    <script>
-        let prevScrollpos = window.pageYOffset;
-        let debounce;
-
-        window.onscroll = function() {
-            clearTimeout(debounce);
-
-            debounce = setTimeout(function() {
-                let currentScrollPos = window.pageYOffset;
-                if (prevScrollpos > currentScrollPos) {
-                    document.getElementById("navbar").style.top = "0";
-                } else {
-                    document.getElementById("navbar").style.top = "-50px";
-                }
-                prevScrollpos = currentScrollPos;
-            }, 100); // Adjust the debounce delay as necessary
-        }
-    </script>
-</header>
-    <body>
-        <h1>Product Catalogue</h1>
+    <h1>Product Catalogue</h1>
         <!-- search bar -->
         <div class="search">
             <input type="text" placeholder="Search for a product..." />
@@ -262,36 +301,27 @@
             </form>
         </div>
 
-
-    <div class="productGrid"> <!-- connect to database, product details should be filled out on the product card -->
-       <div class="productCard">
-                <div class="productImage"><img
-                        src="https://www.watchshop.com/images/products/86581802_h.jpg"
-                        alt="Product Image">
-                    <a class="productLink" href="productDetails.hmtl">
-                        <h3 itemprop="productName">Tag Heuer Connected Calibre E4</h3>
+    <!-- Product Grid -->
+    <div class="productGrid">
+        <?php if (!empty($products)): ?>
+            <?php foreach ($products as $product): ?>
+                <div class="productCard">
+                    <div class="productImage">
+                        <img src="<?= htmlspecialchars($product['image']); ?>" alt="<?= htmlspecialchars($product['name']); ?>">
+                    </div>
+                    <a class="productLink" href="productDetails.php?id=<?= $product['product_id']; ?>">
+                        <h3><?= htmlspecialchars($product['name']); ?></h3>
                     </a>
+                    <p class="productPrice"><?= htmlspecialchars($product['price']); ?></p>
+                    <div class="buttons">
+                        <button class="addToCart">Add to cart</button>
+                        <button class="saveToWishlist">Save to wishlist</button>
+                    </div>
                 </div>
-                <p class="productPrice">£960</p>
-                <div class="buttons">
-                    <button class="addToCart">Add to cart</button>
-                    <button class="saveToWishlist">Save to wishlist</button>
-                </div>
-            </div>
-            <div class="productCard">
-                <div class="productImage"><img
-                        src="https://www.watchshop.com/images/products/75408472_l.jpg"
-                        alt="Product Image">
-                    <a class="productLink" href="productDetails.html">
-                        <h3 itemprop="productName">Tissot Gentleman 40mm Watch</h3>
-                    </a>
-                </div>
-                <p class="productPrice">£1200</p>
-                <div class="buttons">
-                    <button class="addToCart">Add to cart</button>
-                    <button class="saveToWishlist">Save to wishlist</button>
-                </div>
-            </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p style="text-align: center;">No products found.</p>
+        <?php endif; ?>
     </div>
 
     <footer>
@@ -300,5 +330,3 @@
 </body>
 
 </html>
-
-
