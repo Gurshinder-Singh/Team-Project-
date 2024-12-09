@@ -23,7 +23,7 @@
             </div>
         </div>
         <a href="homepage.php">HOME</a>
-        <a href="search.php">SEARCH</a>
+        <a href="products_page.php">PRODUCTS</a>
         <div class="navbar-logo">
             <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
         </div>
