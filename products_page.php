@@ -198,7 +198,7 @@
         </div>
 
         <div id="filterSortBar">
-            <form method="post" action="your_filter_processing_script.php"> <!-- Set your action script for processing the filter -->
+            <form method="post" action="products_page.php"> <!-- Set your action script for processing the filter -->
                 <div class="dropdownFilter">
                     <button class="dropbutton">Colour &#8595</button>
                     <div class="filterOptions">
