@@ -1,16 +1,32 @@
 <?php
-session_start(); 
-require 'db.php'; 
+session_start();
+require 'db.php';
+
+$search = isset($_POST['search']) ? $_POST['search'] : '';
+
+// SQL injection prevention
+$search = htmlspecialchars($search);
 
 try {
-    $sql = "SELECT product_id, name, description, price, image, brand, color FROM products";
+    // SQL qUery Search filter
+    $sql = "SELECT DISTINCT product_id, name, image FROM products";
+
+    if (!empty($search)) {
+        $sql .= " WHERE name LIKE :search OR description LIKE :search";
+    }
     $stmt = $conn->prepare($sql);
+    
+    if (!empty($search)) {
+        $stmt->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
+    }
+    
     $stmt->execute();
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     die("Error fetching products: " . $e->getMessage());
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -223,7 +239,7 @@ try {
 
     <h1>Product Catalogue</h1>
                 <div id="filterSortBar">
-            <form method="post" action="your_filter_processing_script.php"> <!-- Set your action script for processing the filter -->
+            <form method="post" action="products_page.php"> <!-- Set your action script for processing the filter -->
                 <div class="dropdownFilter">
                     <button class="dropbutton">Colour &#8595</button>
                     <div class="filterOptions">
@@ -285,8 +301,12 @@ try {
                 </div>
                             <!-- search bar -->
         <div class="search">
-            <input type="text" placeholder="Search for a product..." />
-        </div>
+    <form method="post" action="products_page.php">
+        <input type="text" name="search" placeholder="Search for a product..." value="<?= htmlspecialchars($search); ?>">
+        <button type="submit">Search</button>
+    </form>
+</div>
+
         <div class="sortBy">
             <button class="dropbutton">Sort By: &#8595</button>
             <div class="sort">
@@ -305,11 +325,6 @@ try {
             </div>
         </div>
 
-
-                <input type="submit" value="Filter">
-            </form>
-        </div>
-
     <!-- Product Grid -->
     <div class="productGrid">
         <?php if (!empty($products)): ?>
@@ -321,16 +336,16 @@ try {
                     <a class="productLink" href="productDetails.php?id=<?= $product['product_id']; ?>">
                         <h3><?= htmlspecialchars($product['name']); ?></h3>
                     </a>
-                    <p class="productPrice"><?= htmlspecialchars($product['price']); ?></p>
+                    <p class="productPrice"><?= $product['price']; ?></p>
                     <div class="buttons">
                         <button class="addToCart">Add to cart</button>
                         <div class="buttons">
                         <form action="add_to_cart.php" method="POST">
-                        <input type="hidden" name="product_id" value="<?= htmlspecialchars($product['product_id']); ?>">
-                        <input type="hidden" name="name" value="<?= htmlspecialchars($product['name']); ?>">
-                        <input type="hidden" name="description" value="<?= htmlspecialchars($product['description']); ?>">
-                        <input type="hidden" name="price" value="<?= htmlspecialchars($product['price']); ?>">
-                        <input type="hidden" name="image" value="<?= htmlspecialchars($product['image']); ?>">
+                        <input type="hidden" name="product_id" value="<?= $product['product_id']; ?>">
+                        <input type="hidden" name="name" value="<?= $product['name']; ?>">
+                        <input type="hidden" name="description" value="<?= $product['description']; ?>">
+                        <input type="hidden" name="price" value="<?= $product['price']; ?>">
+                        <input type="hidden" name="image" value="<?= $product['image']; ?>">
                         <button type="submit" class="addToCart">Add to Cart</button>
                     </form>
             </div>
