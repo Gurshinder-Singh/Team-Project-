@@ -11,7 +11,6 @@ try {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Add Product Logic
     if (isset($_POST['add-product'])) {
         $name = trim($_POST['name']);
         $description = trim($_POST['description']);
@@ -54,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Update Product Logic
     if (isset($_POST['update-product'])) {
         $product_id = $_POST['product_id'];
         $name = trim($_POST['name']);
@@ -228,7 +226,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <td><?= htmlspecialchars($product['name']); ?></td>
                         <td><?= htmlspecialchars($product['description']); ?></td>
                         <td><?= htmlspecialchars($product['price']); ?></td>
-                        <td><img src="<?= htmlspecialchars($product['image']); ?>" alt="Product Image"></td>
+                        <td><img src="<?= htmlspecialchars($product['image']); ?>"></td>
                         <td><?= htmlspecialchars($product['brand']); ?></td>
                         <td><?= htmlspecialchars($product['color']); ?></td>
                         <td>
