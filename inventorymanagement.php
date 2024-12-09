@@ -199,7 +199,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="navbar">
         <a href="homepage.php">HOME</a>
-        <a href="products.php">PRODUCTS</a>
+        <a href="products_page.php">PRODUCTS</a>
         <a href="checkout.php">BASKET</a>
         <a href="admin_page.php">ADMIN</a>
     </div>
