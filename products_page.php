@@ -325,14 +325,13 @@ try {
                     <div class="buttons">
                         <button class="addToCart">Add to cart</button>
                         <div class="buttons">
-                        <form action="add_to_cart.php" method="POST">
-                        <input type="hidden" name="product_id" value="<?= htmlspecialchars($product['product_id']); ?>">
-                        <input type="hidden" name="name" value="<?= htmlspecialchars($product['name']); ?>">
-                        <input type="hidden" name="description" value="<?= htmlspecialchars($product['description']); ?>">
-                        <input type="hidden" name="price" value="<?= htmlspecialchars($product['price']); ?>">
-                        <input type="hidden" name="image" value="<?= htmlspecialchars($product['image']); ?>">
-                        <button type="submit" class="addToCart">Add to Cart</button>
-                    </form>
+                    <form method="POST" action="add_to_cart.php">
+                    <input type="hidden" name="product_id" value="<?= $product['product_id']; ?>">
+                    <input type="hidden" name="name" value="<?= htmlspecialchars($product['name']); ?>">
+                    <input type="hidden" name="price" value="<?= htmlspecialchars($product['price']); ?>">
+                    <input type="hidden" name="description" value="<?= htmlspecialchars($product['description']); ?>">
+                    <button class="addToCart" type="submit">Add to cart</button>
+                </form>
             </div>
               <button class="saveToWishlist">Save to wishlist</button>
                     </div>
