@@ -11,6 +11,7 @@ try {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Add Product Logic
     if (isset($_POST['add-product'])) {
         $name = trim($_POST['name']);
         $description = trim($_POST['description']);
@@ -31,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if (empty($name) || empty($description) || !is_numeric($price) || $price < 0 || empty($brand) || empty($color)) {
-            die("All fields are required, and price must be a non-negative number.");
+            die("Fill all fields, and price has to be positive.");
         }
 
         try {
@@ -53,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
+    // Update Product Logic
     if (isset($_POST['update-product'])) {
         $product_id = $_POST['product_id'];
         $name = trim($_POST['name']);
@@ -68,12 +70,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $imageDestination = "asset/" . $imageName;
 
             if (!move_uploaded_file($imageTmpPath, $imageDestination)) {
-                die("Error saving the uploaded image.");
+                die("Image uploading error.");
             }
         }
 
         if (empty($product_id) || empty($name) || empty($description) || !is_numeric($price) || $price < 0 || empty($brand) || empty($color)) {
-            die("All fields are required, and price must be a non-negative number.");
+            die("Fill all fields, and price has to be positive.");
         }
 
         try {
@@ -96,6 +98,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             die("Error updating product: " . $e->getMessage());
         }
     }
+
+    if (isset($_POST['delete-product'])) {
+        $product_id = $_POST['product_id'];
+
+        try {
+            $sql = "DELETE FROM products WHERE product_id = :product_id";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            header("Location: inventorymanagement.php");
+            exit;
+        } catch (PDOException $e) {
+            die("Error deleting product: " . $e->getMessage());
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -103,114 +121,86 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-<style>
-    body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f9f9f9;
-}
-
-.navbar {
-    background-color: #333;
-    overflow: hidden;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px;
-}
-
-.navbar a {
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 20px;
-    text-decoration: none;
-}
-
-.navbar a:hover {
-    background-color: #ddd;
-    color: black;
-}
-
-h1, h2, h3 {
-    color: #333;
-    padding: 10px;
-    text-align: center;
-}
-
-table {
-    width: 80%;
-    margin: 20px auto;
-    border-collapse: collapse;
-}
-
-table, th, td {
-    border: 1px solid #ddd;
-}
-
-th, td {
-    padding: 8px;
-    text-align: left;
-}
-
-th {
-    background-color: #f2f2f2;
-}
-
-form {
-    width: 50%;
-    margin: 40px auto; /* Ensures it is separated from the table */
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-form label {
-    display: block;
-    margin-bottom: 8px;
-}
-
-form input, form button {
-    width: 100%;
-    padding: 12px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-button[type="submit"][style="color: red;"] {
-    background-color: red;
-    color: white;
-}
-
-</style>
     <title>Inventory Management</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+        }
+
+        .inventory-table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        .inventory-table th, .inventory-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        .inventory-table th {
+            background-color: #f2f2f2;
+        }
+
+        .inventory-table img {
+            max-width: 50px;
+            height: auto;
+        }
+
+        form {
+            text-align: center;
+            width: 60%;
+            margin: 20px auto;
+        }
+
+        form input, form button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            width: 80%;
+        }
+
+        form button {
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #555;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
 </head>
-<body id="inventorymanagement">
+<body>
     <div class="navbar">
-        <a href="#menu">HOME</a>
-        <a href="#search">SEARCH</a>
-        <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
-        <?php if (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']): ?>
-            <a href="#wishlist">PROFILE</a>
-        <?php endif; ?>
-        <a href="#cart">BASKET</a>
+        <a href="homepage.php">HOME</a>
+        <a href="products.php">PRODUCTS</a>
+        <a href="checkout.php">BASKET</a>
         <a href="admin_page.php">ADMIN</a>
     </div>
 
@@ -238,7 +228,7 @@ button[type="submit"][style="color: red;"] {
                         <td><?= htmlspecialchars($product['name']); ?></td>
                         <td><?= htmlspecialchars($product['description']); ?></td>
                         <td><?= htmlspecialchars($product['price']); ?></td>
-                        <td><img src="<?= htmlspecialchars($product['image']); ?>" alt="Product Image" width="50"></td>
+                        <td><img src="<?= htmlspecialchars($product['image']); ?>" alt="Product Image"></td>
                         <td><?= htmlspecialchars($product['brand']); ?></td>
                         <td><?= htmlspecialchars($product['color']); ?></td>
                         <td>
@@ -252,6 +242,10 @@ button[type="submit"][style="color: red;"] {
                                 <input type="text" name="brand" value="<?= htmlspecialchars($product['brand']); ?>" required>
                                 <input type="text" name="color" value="<?= htmlspecialchars($product['color']); ?>" required>
                                 <button type="submit" name="update-product">Update</button>
+                            </form>
+                            <form action="inventorymanagement.php" method="post" style="display: inline;">
+                                <input type="hidden" name="product_id" value="<?= $product['product_id']; ?>">
+                                <button type="submit" name="delete-product" style="color: red;">Delete</button>
                             </form>
                         </td>
                     </tr>
@@ -267,17 +261,17 @@ button[type="submit"][style="color: red;"] {
     <h2>Add New Product</h2>
     <form action="inventorymanagement.php" method="post" enctype="multipart/form-data">
         <label for="name">Name:</label>
-        <input type="text" name="name" id="name" required><br><br>
+        <input type="text" name="name" id="name" required>
         <label for="description">Description:</label>
-        <input type="text" name="description" id="description" required><br><br>
+        <input type="text" name="description" id="description" required>
         <label for="price">Price:</label>
-        <input type="number" name="price" id="price" step="0.01" required><br><br>
+        <input type="number" name="price" id="price" step="0.01" required>
         <label for="image">Image:</label>
-        <input type="file" name="image" id="image" required><br><br>
+        <input type="file" name="image" id="image" required>
         <label for="brand">Brand:</label>
-        <input type="text" name="brand" id="brand" required><br><br>
+        <input type="text" name="brand" id="brand" required>
         <label for="color">Color:</label>
-        <input type="text" name="color" id="color" required><br><br>
+        <input type="text" name="color" id="color" required>
         <button type="submit" name="add-product">Add Product</button>
     </form>
 </body>
