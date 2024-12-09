@@ -1,17 +1,21 @@
 <?php
 session_start();
-require ('db.php');
-if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
-    $total = 0;
+
+
+if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
+    echo "Your cart is empty.";
+    exit;
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Basket</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Your Cart</title>
     <link rel="stylesheet" href="stylesheet.css">
-    <script defer src="script.js"></script>
+
     <style>
         h2 {
             color: rgb(0, 0, 0);
@@ -184,122 +188,54 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
             background-color: grey;
         }
     </style>
+
 </head>
 <body>
-<header>
-    <h1>Cart</h1>
-    <nav>
-        <div class="navbar" id="navbar">
-            <div class="dropdown">
-                <button class="dropbtn">
-                    <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
-                </button>
-                <div class="dropdown-content">
-                    <a href="about.php">About Us</a>
-                    <a href="contact.php">Contact Us</a>
-                    <a href="FAQ.php">FAQs</a>
-                </div>
-            </div>
-            <a href="homepage.php">HOME</a>
-            <a href="search.php">SEARCH</a>
-            <div class="navbar-logo">
-                <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
-            </div>
-            <?php if (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']): ?>
-                <a href="profile.html">PROFILE</a>
-            <?php endif; ?>
-            <a href="checkout.php">BASKET</a>
-            <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-                <a href="admin_page.php">ADMIN</a>
-            <?php endif; ?>
-        </div>
-    </nav>
-</header>
+	
+        <div class="navbar">
+        <a href="homepage.php">HOME</a>
+        <a href="products_page.php">PRODUCTS</a>
+        <a href="checkout.php">BASKET</a>
+        <a href="admin_page.php">ADMIN</a>
+    </div>
+    
+    <h1>Your Cart</h1>
 
-<script>
-    let prevScrollpos = window.pageYOffset;
-    let debounce;
-
-    window.onscroll = function() {
-        clearTimeout(debounce);
-
-        debounce = setTimeout(function() {
-            let currentScrollPos = window.pageYOffset;
-            if (prevScrollpos > currentScrollPos) {
-                document.getElementById("navbar").style.top = "0";
-            } else {
-                document.getElementById("navbar").style.top = "-75px";
-            }
-            prevScrollpos = currentScrollPos;
-        }, 100);
-    }
-</script>
-
-<main>
-    <table id="buyItems">
+    <table class="cartTable">
         <thead>
             <tr>
-                <th>Item</th>
-                <th>Description</th>
+                <th>Product</th> 
+                <th>Price</th>   
                 <th>Quantity</th>
-                <th>Price</th>
-                <th>Total</th>
-                <th>Action</th>
+                <th>Total</th>    
             </tr>
         </thead>
         <tbody>
-            <?php
-            foreach ($_SESSION['cart'] as $item) {
-                $item_total = $item['price'] * $item['quantity'];
-                $total += $item_total;
-                ?>
+            <?php foreach ($_SESSION['cart'] as $item): ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($item['name']); ?></td>
-                    <td><?php echo htmlspecialchars($item['description']); ?></td>
-                    <td>
-                        <form action="update_quantity.php" method="POST">
-                            <input type="hidden" name="product_id" value="<?php echo $item['product_id']; ?>">
-                            <input type="number" name="quantity" value="<?php echo $item['quantity']; ?>" min="1" max="99">
-                            <button type="submit">Update</button>
-                        </form>
-                    </td>
-                    <td>£<?php echo number_format($item['price'], 2); ?></td>
-                    <td>£<?php echo number_format($item_total, 2); ?></td>
-                    <td>
-                        <form action="remove_from_cart.php" method="POST">
-                            <input type="hidden" name="product_id" value="<?php echo $item['product_id']; ?>">
-                            <button type="submit">Remove</button>
-                        </form>
-                    </td>
+                    <td><?= htmlspecialchars($item['name']); ?></td>
+                    <td><?= htmlspecialchars($item['price']); ?></td> 
+                    <td><?= $item['quantity']; ?></td> 
+                    <td><?= $item['price'] * $item['quantity']; ?></td> 
                 </tr>
-                <?php
-            }
-            ?>
+            <?php endforeach; ?>
         </tbody>
-        <tfoot>
-            <tr>
-                <td>Total</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>£<?php echo number_format($total, 2); ?></td>
-                <td></td>
-            </tr>
-        </tfoot>
+        <a href="checkout.php" class="checkoutButton">Proceed to Checkout</a>
     </table>
-    <form action="checkout.php" method="POST">
-        <button type="submit" class="goToCheckoutBtn">Proceed to Checkout</button>
-    </form>
-</main>
 
-<footer>
-</footer>
+    <div class="cartTotal">
+        <p>Total: 
+            <?php 
+                $total = 0;
+                foreach ($_SESSION['cart'] as $item) {
+                    $total += $item['price'] * $item['quantity'];
+                }
+                echo "£" . $total;
+            ?>
+        </p>
+    </div>
+
+    
 
 </body>
 </html>
-
-<?php
-} else {
-    echo "<p>Your cart is empty. <a href='index.php'>Continue shopping</a></p>";
-}
-?>
