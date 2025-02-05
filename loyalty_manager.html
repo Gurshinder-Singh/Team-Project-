@@ -3,110 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loyalty Manager</title>
+    <title>Admin - Loyalty Manager</title>
+    <link rel="stylesheet" href="stylesheet.css"> 
 </head>
 <body>
 
- <nav class="navbar">
-        <a href="loyalty_manager.html">Loyalty Manager</a>
-        <a href="feedback_manager.html">Feedback Manager</a>
-        <a href="inventory_management.html">Inventory Management</a>
-    </nav>
+<nav class="navbar">
+    <a href="admin_loyalty_manager.php">Loyalty Manager</a>
+    <a href="admin_feedback_manager.php">Feedback Manager</a>
+    <a href="admin_inventory_management.php">Inventory Management</a>
+</nav>
 
+<h1>Loyalty Manager</h1>
+<p>Manage customer loyalty points, discounts, rewards, and rules.</p>
 
-    <h1>Loyalty Manager</h1>
-    <p>Manage loyalty points, discounts, rewards, and rules for customers:</p>
+<!-- Section to Update Customer Loyalty -->
+<h2>Update Customer Loyalty</h2>
+<form method="post">
+    <!-- BACKEND: Populate customer dropdown  -->
+    <label for="customer-id">Customer ID:</label>
+    <select id="customer-id" name="customer_id" required>
+        <option value="">Select a Customer</option>
+    </select><br><br>
 
-    <h2>Customer Loyalty Management</h2>
-    <form action="#" method="post">
-        <label for="customer-id">Customer ID:</label>
-        <input type="text" id="customer-id" name="customer-id" required><br><br>
+    <label for="points">Loyalty Points:</label>
+    <input type="number" id="points" name="points" min="0" required><br><br>
 
-        <label for="points">Loyalty Points:</label>
-        <!-- Prevent negative points with min="0" -->
-        <input type="number" id="points" name="points" min="0" required><br><br>
+    <label for="discount">Discount Percentage:</label>
+    <input type="number" id="discount" name="discount" min="0" max="100" required><br><br>
 
-        <label for="discount">Discount Percentage:</label>
-        <!-- Prevent negative discount with min="0" -->
-        <input type="number" id="discount" name="discount" min="0" max="100" required><br><br>
+    <label for="reward">Reward Description:</label>
+    <textarea id="reward" name="reward" required></textarea><br><br>
 
-        <label for="reward">Reward Description:</label>
-        <textarea id="reward" name="reward" required></textarea><br><br>
+    <button type="submit">Update Loyalty</button>
+</form>
 
-        <button type="submit">Update Loyalty Information</button>
-    </form>
+<!-- Section to Display Existing Customer Loyalty Data -->
+<h3>Customer Loyalty Information</h3>
+<table border="1" style="width: 100%; text-align: left;">
+    <thead>
+        <tr>
+            <th>Customer ID</th>
+            <th>Loyalty Points</th>
+            <th>Discount</th>
+            <th>Reward</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="customer-loyalty-table">
+        <!-- BACKEND: Loyalty data insert here  -->
+    </tbody>
+</table>
 
-    <h3>View Loyalty Information</h3>
-    <table border="1" style="width: 100%; text-align: left;">
-        <thead>
-            <tr>
-                <th>Customer ID</th>
-                <th>Loyalty Points</th>
-                <th>Discount</th>
-                <th>Reward</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Example Row 1 -->
-            <tr>
-                <td>123</td>
-                <td>500</td>
-                <td>10%</td>
-                <td>Free Shipping</td>
-                <td>
-                    <!-- Edit Loyalty Information Form -->
-                    <form action="#" method="post" style="display: inline;">
-                        <input type="hidden" name="customer-id" value="123">
-                        <button type="submit">Edit</button>
-                    </form>
-                    <!-- Delete Loyalty Information Form -->
-                    <form action="#" method="post" style="display: inline;">
-                        <input type="hidden" name="delete-customer-id" value="123">
-                        <button type="submit" style="color: red;">Delete</button>
-                    </form>
-                </td>
-            </tr>
+<h3>Add New Loyalty Rule</h3>
+<form method="post">
+    <label for="order-amount">Order Amount Threshold:</label>
+    <input type="number" id="order-amount" name="order_amount" min="0" required><br><br>
 
-            <!-- Example Row 2 -->
-            <tr>
-                <td>456</td>
-                <td>300</td>
-                <td>5%</td>
-                <td>Discount on Next Purchase</td>
-                <td>
-                    <!-- Edit Loyalty Information Form -->
-                    <form action="#" method="post" style="display: inline;">
-                        <input type="hidden" name="customer-id" value="456">
-                        <button type="submit">Edit</button>
-                    </form>
-                    <!-- Delete Loyalty Information Form -->
-                    <form action="#" method="post" style="display: inline;">
-                        <input type="hidden" name="delete-customer-id" value="456">
-                        <button type="submit" style="color: red;">Delete</button>
-                    </form>
-                </td>
-            </tr>
+    <label for="loyalty-points">Loyalty Points Awarded:</label>
+    <input type="number" id="loyalty-points" name="loyalty_points" min="0" required><br><br>
 
-        </tbody>
-    </table>
+    <label for="rule-description">Rule Description:</label>
+    <textarea id="rule-description" name="rule_description" required></textarea><br><br>
 
-    <!-- New Loyalty Points Rule Addition Section -->
-    <h3>Add New Loyalty Points Rule</h3>
-    <form action="#" method="post">
-        <label for="order-amount">Order Amount Threshold:</label>
-        <!-- Prevent negative threshold -->
-        <input type="number" id="order-amount" name="order-amount" min="0" required><br><br>
+    <label for="start-date">Start Date:</label>
+    <input type="date" id="start-date" name="start_date" required><br><br>
 
-        <label for="loyalty-points">Loyalty Points Awarded:</label>
-        <!-- Prevent negative points -->
-        <input type="number" id="loyalty-points" name="loyalty-points" min="0" required><br><br>
+    <label for="end-date">End Date:</label>
+    <input type="date" id="end-date" name="end_date" required><br><br>
 
-        <label for="rule-description">Rule Description:</label>
-        <textarea id="rule-description" name="rule-description" required></textarea><br><br>
+    <button type="submit">Add Rule</button>
+</form>
 
-        <button type="submit">Add Rule</button>
-    </form>
+<h3>Existing Loyalty Rules</h3>
+<table border="1" style="width: 100%; text-align: left;">
+    <thead>
+        <tr>
+            <th>Order Amount</th>
+            <th>Loyalty Points</th>
+            <th>Description</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+        </tr>
+    </thead>
+    <tbody id="loyalty-rules-table">
+        <!-- BACKEND: Loyalty rules will be inserted here dynamically -->
+    </tbody>
+</table>
+
+<!-- JavaScript to Fetch and Populate Data -->
+
+    // BACKEND: Fetch customer loyalty data from the server
+    // Populate the customer dropdown and loyalty table
+
+    // BACKEND: Fetch loyalty rules data from the server
+    // Populate the loyalty rules table
+
 
 </body>
 </html>
