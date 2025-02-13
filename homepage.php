@@ -180,20 +180,25 @@ session_start();
             <a href="FAQ.php">FAQs</a>
         </div>
     </div>
-    <a href="homepage.php">HOME</a>
-    <a href="products_page.php">PRODUCTS</a>
+    <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+        <a href="admin_home.php">HOME</a>
+        <a href="loyalty_manager.php">LOYALTY MANAGER</a>
+    <?php else: ?>
+        <a href="homepage.php">HOME</a>
+        <a href="products_page.php">PRODUCTS</a>
+    <?php endif; ?>
     <div class="navbar-logo">
         <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
     </div>
+    <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+        <a href="feedback_manager.php">FEEDBACK MANAGER</a>
+        <a href="inventory_manager.php">INVENTORY MANAGER</a>
+    <?php endif; ?>
     <?php if (isset($_SESSION['user_id'])): ?>
         <a href="profile.php">PROFILE</a>
         <a href="logout.php">LOGOUT</a>
     <?php elseif (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']): ?>
         <a href="login.php">LOGIN</a>
-    <?php endif; ?>
-    <a href="checkout.php">BASKET</a>
-    <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-        <a href="admin_page.php">ADMIN</a>
     <?php endif; ?>
 </div>
 
