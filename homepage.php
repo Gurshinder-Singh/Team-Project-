@@ -169,6 +169,7 @@ session_start();
 
     <div class="content">
 
+    
 <div class="navbar" id="navbar">
     <div class="dropdown">
         <button class="dropbtn">
@@ -181,8 +182,8 @@ session_start();
         </div>
     </div>
     <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-        <a href="admin_home.php">HOME</a>
-        <a href="loyalty_manager.php">LOYALTY MANAGER</a>
+        <a href="homepage.php">HOME</a>
+        <a href="loyalty_manager.html">LOYALTY MANAGER</a>
     <?php else: ?>
         <a href="homepage.php">HOME</a>
         <a href="products_page.php">PRODUCTS</a>
@@ -191,8 +192,8 @@ session_start();
         <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
     </div>
     <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-        <a href="feedback_manager.php">FEEDBACK MANAGER</a>
-        <a href="inventory_manager.php">INVENTORY MANAGER</a>
+        <a href="feedback_manager.html">FEEDBACK MANAGER</a>
+        <a href="inventorymanagement.php">INVENTORY MANAGER</a>
     <?php endif; ?>
     <?php if (isset($_SESSION['user_id'])): ?>
         <a href="profile.php">PROFILE</a>
@@ -200,7 +201,10 @@ session_start();
     <?php elseif (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']): ?>
         <a href="login.php">LOGIN</a>
     <?php endif; ?>
+    <a href="logout.php">LOGOUT</a>
+
 </div>
+
 
     <script>
         let prevScrollpos = window.pageYOffset;
