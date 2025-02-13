@@ -1,0 +1,51 @@
+/* Feedback Page Styling */
+.feedback-container {
+    max-width: 750px;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+    margin: 25px auto;
+    text-align: center;
+}
+
+/* Feedback Form Styling */
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #5C4033;
+    border-radius: 5px;
+    margin-top: 5px;
+    font-size: 16px;
+}
+
+/* Button Styling */
+button {
+    background-color: #5C4033;
+    color: #ffffff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #A68961;
+    transform: translateY(-2px);
+}
+
+/* Customer Feedback Section */
+.feedback-list {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.feedback-entry {
+    background: #e3e3e3;
+    padding: 15px;
+    margin: 8px 0;
+    border-radius: 6px;
+    font-size: 16px;
+}
