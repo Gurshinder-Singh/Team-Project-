@@ -6,10 +6,56 @@
     <title>Customer Feedback | LUXUS</title>
     <link rel="stylesheet" href="stylesheet.css">
     <link rel="stylesheet" href="feedback.css">
+    <style>
+        /* Star Rating System Fix */
+        .star-rating {
+            display: flex;
+            justify-content: center;
+            font-size: 30px;
+            cursor: pointer;
+            gap: 5px;
+        }
+        .star {
+            font-size: 30px;
+            color: transparent;
+            text-shadow: 0 0 0 black;
+            transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
+        }
+        .star.selected {
+            color: gold;
+            text-shadow: 0 0 0 gold;
+        }
+
+        /* Fixed and Scrollable Comment Box */
+        textarea {
+            width: 100%;
+            height: 100px;
+            border: 2px solid #5C4033;
+            border-radius: 5px;
+            resize: none;
+            background-color: #f9f9f9;
+            color: #333;
+            font-size: 16px;
+            padding: 10px;
+            overflow-y: auto;
+        }
+
+        /* Customer Reviews Section */
+        .feedback-list {
+            margin-top: 20px;
+            text-align: left;
+            background: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .feedback-entry {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+    </style>
 </head>
 <body>
-
-    <!-- Navigation Bar -->
     <header>
         <nav>
             <ul class="nav-links">
@@ -21,30 +67,90 @@
         </nav>
     </header>
 
-    <!-- Feedback Section -->
     <div class="feedback-container">
-        <h1>Your Opinion Matters</h1>
-        <p>Help us improve by sharing your thoughts on our watches and service!</p>
+        <h1>We Appreciate Your Thoughts</h1>
+        <p>Your insights help us improve. Let us know what you love and where we can do better.</p>
         
         <form id="feedbackForm" action="feedback_handler.php" method="post">
-            <label for="userName">Your Name:</label>
-            <input type="text" id="userName" name="userName" required><br><br>
+            <label for="userName">Full Name:</label>
+            <input type="text" id="userName" name="userName" required placeholder="Enter your name here"><br><br>
             
-            <label for="rating">Rate Us (1-5):</label>
-            <input type="number" id="rating" name="rating" min="1" max="5" required><br><br>
+            <label for="rating">Rate Your Experience:</label>
+            <div class="star-rating">
+                <span class="star" data-value="1">&#9733;</span>
+                <span class="star" data-value="2">&#9733;</span>
+                <span class="star" data-value="3">&#9733;</span>
+                <span class="star" data-value="4">&#9733;</span>
+                <span class="star" data-value="5">&#9733;</span>
+                <input type="hidden" id="rating" name="rating" required>
+            </div>
+            <br>
             
             <label for="comment">Your Feedback:</label>
-            <textarea id="comment" name="comment" required></textarea><br><br>
+            <textarea id="comment" name="comment" required placeholder="Share your experience with us."></textarea><br><br>
             
-            <button type="submit">Submit Feedback</button>
+            <button type="submit">Submit Review</button>
         </form>
 
         <h2>What Our Customers Say</h2>
         <div class="feedback-list" id="feedbackList">
-            <!-- Feedback entries will appear here -->
+            <div class="feedback-entry"><strong>James L.</strong> (Rated: 5 ⭐) <br> "Amazing work! My watch feels rich and premium."</div>
+            <div class="feedback-entry"><strong>Sophia M.</strong> (Rated: 4 ⭐) <br> "The design is flawless, but the strap does need to be a bit more comfortable."</div>
+            <div class="feedback-entry"><strong>Daniel K.</strong> (Rated: 5 ⭐) <br> "Perfect watch for every occasion. I love the attention to detail in this watch!"</div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            console.log("Feedback system is now active.");
+
+            const stars = document.querySelectorAll(".star");
+            const ratingInput = document.getElementById("rating");
+            const feedbackForm = document.getElementById("feedbackForm");
+            const feedbackList = document.getElementById("feedbackList");
+
+            stars.forEach(star => {
+                star.addEventListener("click", function () {
+                    let value = this.getAttribute("data-value");
+
+                    // Toggle selection
+                    if (star.classList.contains("selected")) {
+                        stars.forEach(s => s.classList.remove("selected"));
+                        ratingInput.value = "";
+                    } else {
+                        stars.forEach(s => s.classList.remove("selected"));
+                        
+                        for (let i = 0; i < value; i++) {
+                            stars[i].classList.add("selected");
+                        }
+                        ratingInput.value = value;
+                    }
+                });
+            });
+
+            feedbackForm.addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                let userName = document.getElementById("userName").value.trim();
+                let rating = ratingInput.value;
+                let comment = document.getElementById("comment").value.trim();
+
+                if (!userName || !rating || !comment) {
+                    alert("Please complete all fields before submitting.");
+                    return;
+                }
+
+                let feedbackEntry = document.createElement("div");
+                feedbackEntry.classList.add("feedback-entry");
+                feedbackEntry.innerHTML = `<strong>${userName}</strong> (Rated: ${rating} ⭐)<br> ${comment}`;
+
+                feedbackList.appendChild(feedbackEntry);
+                feedbackForm.reset();
+                ratingInput.value = "";
+                stars.forEach(s => s.classList.remove("selected"));
+            });
+        });
+    </script>
 </body>
 </html>
+
