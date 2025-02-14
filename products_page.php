@@ -3,19 +3,34 @@ session_start();
 require 'db.php';
 
 $search = isset($_POST['search']) ? $_POST['search'] : '';
+$sort = isset($_POST['sort']) ? $_POST['sort'] : 'name_asc'; // sorting
 
-// SQL injection prevention
 $search = htmlspecialchars($search);
+$allowedSortOptions = [
+    'name_asc' => 'name ASC',
+    'name_desc' => 'name DESC',
+    'price_asc' => 'price ASC',
+    'price_desc' => 'price DESC'
+];
+
+// Default sorting
+$orderBy = $allowedSortOptions[$sort] ?? 'name ASC';
 
 try {
-    // SQL query search filter
+    // Base SQL query
     $sql = "SELECT DISTINCT product_id, name, description, price, image FROM products";
 
+    // Add search filter
     if (!empty($search)) {
         $sql .= " WHERE name LIKE :search OR description LIKE :search";
     }
+
+    // Add sorting
+    $sql .= " ORDER BY $orderBy";
+
     $stmt = $conn->prepare($sql);
 
+    // Bind search parameter if provided
     if (!empty($search)) {
         $stmt->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
     }
@@ -25,7 +40,11 @@ try {
 } catch (PDOException $e) {
     die("Error fetching products: " . $e->getMessage());
 }
-?>
+
+
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
