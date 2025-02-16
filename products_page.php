@@ -369,12 +369,16 @@ try {
                 </a>
                 <p class="productPrice"><?= htmlspecialchars($product['price']); ?></p>
                 <form method="POST" action="add_to_cart.php">
-                    <input type="hidden" name="product_id" value="<?= $product['product_id']; ?>">
-                    <input type="hidden" name="name" value="<?= htmlspecialchars($product['name']); ?>">
-                    <input type="hidden" name="price" value="<?= htmlspecialchars($product['price']); ?>">
-                    <input type="hidden" name="description" value="<?= htmlspecialchars($product['description']); ?>">
-                    <button class="addToCart" type="submit">Add to cart</button>
-                </form>
+   					<input type="hidden" name="product_id" value="<?= $product['product_id']; ?>">
+    				<input type="hidden" name="name" value="<?= htmlspecialchars($product['name']); ?>">
+    				<input type="hidden" name="price" value="<?= htmlspecialchars($product['price']); ?>">
+    				<input type="hidden" name="description" value="<?= htmlspecialchars($product['description']); ?>">
+    				<?php if ($product['stock'] > 0): ?>
+        				<button class="addToCart" type="submit">Add to cart</button>
+    				<?php else: ?>
+        				<button class="addToCart" type="button" disabled style="background-color: gray;">Out of Stock</button>
+    				<?php endif; ?>
+				</form>
                 <div class="buttons">
                     <button class="saveToWishlist">Save to wishlist</button>
                 </div>
