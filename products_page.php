@@ -364,9 +364,8 @@ try {
                 <div class="productImage">
                     <img src="<?= htmlspecialchars($product['image']); ?>" alt="<?= htmlspecialchars($product['name']); ?>">
                 </div>
-                <a class="productLink" href="productDetails.php?id=<?= $product['product_id']; ?>">
+                <a class="productLink" href="product_details.php?id=<?= $product['product_id']; ?>">
                     <h3><?= htmlspecialchars($product['name']); ?></h3>
-                    <p><?= $product['description']; ?></p>
                 </a>
                 <p class="productPrice"><?= htmlspecialchars($product['price']); ?></p>
                 <form method="POST" action="add_to_cart.php">
