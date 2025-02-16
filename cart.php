@@ -1,9 +1,50 @@
 <?php
 session_start();
 
-// If the cart is empty
-if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
-    echo "Your cart is empty.";
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+if (!isset($_SESSION['user_id'])) {
+}
+
+if (isset($_POST['update_quantity'])) {
+    $productName = $_POST['product_name'];
+    $newQuantity = intval($_POST['new_quantity']);
+
+    if ($newQuantity > 0) {
+        foreach ($_SESSION['cart'] as &$item) {
+            if ($item['name'] === $productName) {
+                $item['quantity'] = $newQuantity;
+                break;
+            }
+        }
+        unset($item);
+    }
+
+    header('Location: cart.php');
+    exit;
+}
+
+if (isset($_POST['remove_product'])) {
+    $productNameToRemove = $_POST['product_name'];
+
+    foreach ($_SESSION['cart'] as $key => $item) {
+        if ($item['name'] === $productNameToRemove) {
+            unset($_SESSION['cart'][$key]);
+            break;
+        }
+    }
+
+    $_SESSION['cart'] = array_values($_SESSION['cart']);
+    
+    header('Location: cart.php');
+    exit;
+}
+
+if (isset($_POST['clear_cart'])) {
+    unset($_SESSION['cart']);
+    header('Location: cart.php');
     exit;
 }
 ?>
@@ -15,32 +56,33 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Your Cart</title>
     <link rel="stylesheet" href="stylesheet.css">
-<div class="navbar" id="navbar">
-    <div class="dropdown">
-        <button class="dropbtn">
-            <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
-        </button>
-        <div class="dropdown-content">
-            <a href="about.php">About Us</a>
-            <a href="contact.php">Contact Us</a>
-            <a href="FAQ.php">FAQs</a>
+    <div class="navbar" id="navbar">
+        <div class="dropdown">
+            <button class="dropbtn">
+                <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
+            </button>
+            <div class="dropdown-content">
+                <a href="about.php">About Us</a>
+                <a href="contact.php">Contact Us</a>
+                <a href="FAQ.php">FAQs</a>
+            </div>
         </div>
+        <a href="homepage.php">HOME</a>
+        <a href="products_page.php">PRODUCTS</a>
+        <div class="navbar-logo">
+            <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
+        </div>
+        <?php if (isset($_SESSION['user_id'])): ?>
+            <a href="profile.php">PROFILE</a>
+            <a href="logout.php">LOGOUT</a>
+        <?php elseif (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']): ?>
+            <a href="login.php">LOGIN</a>
+        <?php endif; ?>
+        <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+            <a href="admin_page.php">ADMIN</a>
+        <?php endif; ?>
+        <a href="checkout.php">BASKET</a>
     </div>
-    <a href="homepage.php">HOME</a>
-    <a href="products_page.php">PRODUCTS</a>
-    <div class="navbar-logo">
-        <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
-    </div>
-    <?php if (isset($_SESSION['user_id'])): ?>
-        <a href="profile.php">PROFILE</a>
-        <a href="logout.php">LOGOUT</a>
-    <?php elseif (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']): ?>
-        <a href="login.php">LOGIN</a>
-    <?php endif; ?>
-    <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-        <a href="admin_page.php">ADMIN</a>
-    <?php endif; ?>
-</div>
     <style>
         h2 {
             color: rgb(0, 0, 0);
@@ -162,100 +204,238 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
             display: block;
         }
 
-        table {
-            position: fixed;
-            margin: 80px auto;
+table.cartTable {
+    position: relative;
+    margin: 80px auto;
+    text-align: center;
+    padding-top: 10px;
+    width: 100%;
+    max-width: 1200px;
+    box-shadow: 0 10px 10px 0 black;
+    border-radius: 1px;
+    border-collapse: collapse;
+    font-weight: bold;
+    background-color: white;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #363636;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: rgb(201, 200, 198);
+}
+
+tr:hover {
+    background-color: grey;
+}
+
+th, tfoot {
+    background-color: #363636;
+    color: white;
+    padding: 10px 5px;
+    text-align: left;
+}
+
+th:nth-child(1), td:nth-child(1) {
+    width: 30%;
+}
+
+th:nth-child(2), td:nth-child(2) {
+    width: 20%;
+}
+
+th:nth-child(3), td:nth-child(3) {
+    width: 20%;
+}
+
+th:nth-child(4), td:nth-child(4) {
+    width: 20%;
+}
+
+th:nth-child(5), td:nth-child(5) {
+    width: 10%;
+}
+        .buttons-container {
+            display: flex;
+            justify-content: flex-start;
+            margin: 20px;
+        }
+
+        .cartTotal {
+            background-color: #363636;
+            color: white;
             text-align: center;
-            padding-top: 10px;
-            width: 97%;
-            box-shadow: 0 10px 10px 0 black;
-            border-radius: 1px;
-            border-collapse: collapse;
-            font-weight: bold;
-            background-color: white;
-        }
-
-        th, td {
             padding: 10px;
-            border: 1px solid #363636;
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
         }
 
-        tr:nth-child(even) {
-            background-color: rgb(201, 200, 198);
-        }
-
-        tr:hover {
-            background-color: grey;
-        }
-
-        th, tfoot {
-            background-color: #363636;
+        .checkoutButton {
+            background-color: #4CAF50;
             color: white;
-            padding: 10px 5px;
-            text-align: left;
-        }
-
-        .goToCheckoutBtn {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
             border: none;
-            padding: 32px;
-            margin: 0;
-            background-color: #363636;
+            border-radius: 5px;
+            display: inline-block;
+            margin-left: 10px;
+            text-decoration: none;
+        }
+
+        .checkoutButton:hover {
+            background-color: #45a049;
+        }
+
+        .clearCartButton {
+            background-color: red;
             color: white;
-            max-width: 1000px;
-            margin-left: 230px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
         }
 
-        .goToCheckoutBtn:hover {
-            background-color: grey;
+        .clearCartButton:hover {
+            background-color: darkred;
         }
-		
+
+.updateButton {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.updateButton:hover {
+    background-color: #45a049;
+}
+
+input[type="number"] {
+    width: 50px;
+    padding: 5px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+    background-color: #f9f9f9;
+}
+
+input[type="number"]:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
+.backToProductsButton {
+    background-color: #008CBA;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    display: inline-block;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.backToProductsButton:hover {
+    background-color: #007BB5;
+}
+
+.removeButton {
+    background-color: red;
+    color: white;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.removeButton:hover {
+    background-color: darkred;
+}
     </style>
-
 </head>
 <body>
-	
-    
-    <h1>Your Cart</h1>
 
-    <table class="cartTable">
-        <thead>
+<h1>Your Cart</h1>
+
+<div class="buttons-container">
+    <div class="buttons-container">
+        <a href="products_page.php" class="backToProductsButton">Back to Products</a>
+    </div>
+    <form method="POST" action="cart.php">
+        <button type="submit" name="clear_cart" class="clearCartButton">Clear Cart</button>
+    </form>
+	<a href="checkout.php" class="checkoutButton">Proceed to Checkout</a>
+
+</div>
+ <table class="cartTable">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php if (empty($_SESSION['cart'])): ?>
             <tr>
-                <th>Product</th> <!-- Kept Product Column -->
-                <th>Price</th>   <!-- Kept Price Column -->
-                <th>Quantity</th> <!-- Kept Quantity Column -->
-                <th>Total</th>    <!-- Kept Total Column -->
+                <td colspan="5" style="text-align: center;">Your cart is empty.</td>
             </tr>
-        </thead>
-        <tbody>
+        <?php else: ?>
             <?php foreach ($_SESSION['cart'] as $item): ?>
-                <tr>
-                    <td><?= htmlspecialchars($item['name']); ?></td> <!-- Product Name -->
-                    <td><?= htmlspecialchars($item['price']); ?></td> <!-- Product Price -->
-                    <td><?= $item['quantity']; ?></td> <!-- Product Quantity -->
-                    <td><?= $item['price'] * $item['quantity']; ?></td> <!-- Total for Product -->
+                <tr id="row-<?= htmlspecialchars($item['name']); ?>">
+                    <td><?= htmlspecialchars($item['name']); ?></td>
+                    <td><?= htmlspecialchars($item['price']); ?></td>
+                    <td>
+                        <form method="POST" action="cart.php" style="display: inline;">
+                            <input type="hidden" name="product_name" value="<?= htmlspecialchars($item['name']); ?>">
+                            <input type="number" name="new_quantity" value="<?= $item['quantity']; ?>" min="1" max="50" style="width: 50px;">
+                            <button type="submit" name="update_quantity">Update</button>
+                        </form>
+                    </td>
+                    <td>£<?= number_format(floatval(str_replace('£', '', $item['price'])) * $item['quantity'], 2); ?></td>
+                    <td>
+                        <form method="POST" action="cart.php" style="display: inline;">
+                            <input type="hidden" name="product_name" value="<?= htmlspecialchars($item['name']); ?>">
+                            <button type="submit" name="remove_product" class="removeButton">Remove</button>
+                        </form>
+                    </td>
                 </tr>
             <?php endforeach; ?>
-        </tbody>
-       <h1> <a href="checkout.php" class="checkoutButton">Proceed to Checkout</a></h1>
-    </table>
+        <?php endif; ?>
+    </tbody>
+</table>
 
-    <div class="cartTotal">
-        <p>Total: 
-            <?php 
-                $total = 0;
-                foreach ($_SESSION['cart'] as $item) {
-                    $total += $item['price'] * $item['quantity'];
-                }
-                echo "£" . $total;
-            ?>
-        </p>
-    </div>
-
-    
+<div class="cartTotal">
+    <p>Total: 
+        <?php 
+            $total = 0;
+            foreach ($_SESSION['cart'] as $item) {
+                $price = floatval(str_replace('£', '', $item['price']));
+                $total += $price * $item['quantity'];
+            }
+            echo "£" . number_format($total, 2);
+        ?>
+    </p>
+</div>
 
 </body>
 </html>
