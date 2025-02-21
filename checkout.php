@@ -10,6 +10,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['confirm_checkout'])) 
     try {
         $conn->beginTransaction();
 
+        $total_price = 0;
+        foreach ($_SESSION['cart'] as $item) {
+            $price = floatval(str_replace('£', '', $item['price']));
+            $total_price += $price * $item['quantity'];
+        }
+
+        $user_id = $_SESSION['user_id'];
+        $status = 'Pending';
+
+        $stmt = $conn->prepare("INSERT INTO orders (user_id, total_price, status, created_at) 
+                                VALUES (:user_id, :total_price, :status, NOW())");
+        $stmt->execute([
+            ':user_id' => $user_id,
+            ':total_price' => $total_price,
+            ':status' => $status
+        ]);
+
+        $order_id = $conn->lastInsertId();
+
         foreach ($_SESSION['cart'] as $item) {
             if (!isset($item['product_id']) || !isset($item['quantity'])) {
                 die("Error: Cart item data is missing.");
@@ -42,6 +61,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['confirm_checkout'])) 
                 $conn->rollBack();
                 die("Error: Stock update failed.");
             }
+
+            $stmt = $conn->prepare("INSERT INTO order_items (order_id, product_id, price_at_purchase) 
+                                    VALUES (:order_id, :product_id, :price_at_purchase)");
+            $stmt->execute([
+                ':order_id' => $order_id,
+                ':product_id' => $product_id,
+                ':price_at_purchase' => floatval(str_replace('£', '', $item['price']))
+            ]);
         }
 
         unset($_SESSION['cart']);
@@ -56,7 +83,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['confirm_checkout'])) 
         die("Error processing order: " . $e->getMessage());
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -69,6 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['confirm_checkout'])) 
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="stylesheet.css"/>
     <style>
+      
         h2 {
             color: rgb(0, 0, 0);
             text-decoration: underline;
@@ -345,7 +372,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['confirm_checkout'])) 
     <div class="checkout-form">
         <h1>Payment Method</h1>
         <form id="checkout" action="checkout.php" method="post">
-            
             <section class="checkout-section">
                 <div class="form-group">
                     <label for="firstname">First Name:</label>
@@ -438,7 +464,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['confirm_checkout'])) 
 
     <div class="cart-section">
         <h2>Your Cart</h2>
-        
         <?php
         if (!empty($_SESSION['cart'])) {
             $total = 0;
