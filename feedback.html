@@ -4,151 +4,120 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Feedback | LUXUS</title>
-    <link rel="stylesheet" href="stylesheet.css">
-    <link rel="stylesheet" href="feedback.css">
     <style>
-        /* Star Rating System Fix */
-        .star-rating {
-            display: flex;
-            justify-content: center;
-            font-size: 30px;
-            cursor: pointer;
-            gap: 5px;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #5C4033;
+            color: white;
         }
-        .star {
-            font-size: 30px;
-            color: transparent;
-            text-shadow: 0 0 0 black;
-            transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
-        }
-        .star.selected {
-            color: gold;
-            text-shadow: 0 0 0 gold;
-        }
-
-        /* Fixed and Scrollable Comment Box */
-        textarea {
-            width: 100%;
-            height: 100px;
-            border: 2px solid #5C4033;
-            border-radius: 5px;
-            resize: none;
-            background-color: #f9f9f9;
-            color: #333;
-            font-size: 16px;
-            padding: 10px;
-            overflow-y: auto;
-        }
-
-        /* Customer Reviews Section */
-        .feedback-list {
-            margin-top: 20px;
-            text-align: left;
-            background: #fff;
+        nav {
+            background: #6B4A37;
             padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
-        .feedback-entry {
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            margin: 15px;
+        }
+        .container {
+            padding: 40px;
+            max-width: 700px;
+            margin: auto;
+            background: #835C44;
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #F0C987;
+        }
+        input, select, textarea {
+            width: 100%;
             padding: 10px;
-            border-bottom: 1px solid #ccc;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: 1px solid #F0C987;
+            font-size: 16px;
+            background-color: white;
+            color: black;
+        }
+        textarea {
+            resize: none; /* Prevents resizing */
+            height: 120px;
+        }
+        button {
+            background-color: #F0C987;
+            color: black;
+            padding: 12px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: #E0B76A;
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="faq.html">FAQs</a></li>
-                <li><a href="feedback.html">Feedback</a></li>
-            </ul>
-        </nav>
-    </header>
+    <nav>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+        <a href="faq.html">FAQs</a>
+        <a href="reviews.html">Reviews</a>
+    </nav>
 
-    <div class="feedback-container">
-        <h1>We Appreciate Your Thoughts</h1>
-        <p>Your insights help us improve. Let us know what you love and where we can do better.</p>
-        
-        <form id="feedbackForm" action="feedback_handler.php" method="post">
-            <label for="userName">Full Name:</label>
-            <input type="text" id="userName" name="userName" required placeholder="Enter your name here"><br><br>
-            
+    <div class="container">
+        <h1>Customer Feedback</h1>
+        <p>We value your opinion! Let us know what you think about your new watch.</p>
+
+        <form id="feedbackForm">
+            <label for="full_name">Full Name:</label>
+            <input type="text" id="full_name" name="full_name" required placeholder="Enter your name">
+
             <label for="rating">Rate Your Experience:</label>
-            <div class="star-rating">
-                <span class="star" data-value="1">&#9733;</span>
-                <span class="star" data-value="2">&#9733;</span>
-                <span class="star" data-value="3">&#9733;</span>
-                <span class="star" data-value="4">&#9733;</span>
-                <span class="star" data-value="5">&#9733;</span>
-                <input type="hidden" id="rating" name="rating" required>
-            </div>
-            <br>
-            
-            <label for="comment">Your Feedback:</label>
-            <textarea id="comment" name="comment" required placeholder="Share your experience with us."></textarea><br><br>
-            
-            <button type="submit">Submit Review</button>
-        </form>
+            <select id="rating" name="rating" required>
+                <option value="5">⭐⭐⭐⭐⭐</option>
+                <option value="4">⭐⭐⭐⭐</option>
+                <option value="3">⭐⭐⭐</option>
+                <option value="2">⭐⭐</option>
+                <option value="1">⭐</option>
+            </select>
 
-        <h2>What Our Customers Say</h2>
-        <div class="feedback-list" id="feedbackList">
-            <div class="feedback-entry"><strong>James L.</strong> (⭐⭐⭐⭐⭐) <br> "Amazing work! My watch feels rich and premium."</div>
-            <div class="feedback-entry"><strong>Sophia M.</strong> (⭐⭐⭐⭐) <br> "The design is flawless, but the strap does need to be a bit more comfortable."</div>
-            <div class="feedback-entry"><strong>Daniel K.</strong> (⭐⭐⭐⭐⭐) <br> "Perfect watch for every occasion. I love the attention to detail in this watch!"</div>
-        </div>
+            <label for="feedback">Your Review:</label>
+            <textarea id="feedback" name="feedback" required placeholder="Write your review here..."></textarea>
+
+            <button type="submit" name="submit_review">Submit Feedback</button>
+        </form>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            console.log("Feedback system is now active.");
+        document.getElementById("feedbackForm").addEventListener("submit", function (event) {
+            event.preventDefault();
 
-            const stars = document.querySelectorAll(".star");
-            const ratingInput = document.getElementById("rating");
-            const feedbackForm = document.getElementById("feedbackForm");
-            const feedbackList = document.getElementById("feedbackList");
+            let fullName = document.getElementById("full_name").value.trim();
+            let rating = document.getElementById("rating").value;
+            let feedbackText = document.getElementById("feedback").value.trim();
 
-            stars.forEach(star => {
-                star.addEventListener("click", function () {
-                    let value = this.getAttribute("data-value");
+            if (!fullName || !rating || !feedbackText) {
+                alert("Please complete all fields.");
+                return;
+            }
 
-                    // Toggle selection
-                    if (star.classList.contains("selected")) {
-                        stars.forEach(s => s.classList.remove("selected"));
-                        ratingInput.value = "";
-                    } else {
-                        stars.forEach(s => s.classList.remove("selected"));
-                        
-                        for (let i = 0; i < value; i++) {
-                            stars[i].classList.add("selected");
-                        }
-                        ratingInput.value = value;
-                    }
-                });
-            });
+            let newReview = { name: fullName, rating: rating, text: feedbackText };
 
-            feedbackForm.addEventListener("submit", function (event) {
-                event.preventDefault();
+            let storedReviews = JSON.parse(localStorage.getItem("customerReviews")) || [];
+            storedReviews.push(newReview);
+            localStorage.setItem("customerReviews", JSON.stringify(storedReviews));
 
-                let userName = document.getElementById("userName").value.trim();
-                let rating = ratingInput.value;
-                let comment = document.getElementById("comment").value.trim();
-
-                if (!userName || !rating || !comment) {
-                    alert("Please complete all fields before submitting.");
-                    return;
-                }
-
-                let feedbackEntry = document.createElement("div");
-                feedbackEntry.classList.add("feedback-entry");
-                feedbackEntry.innerHTML = `<strong>${userName}</strong> (Rated: ${rating} ⭐)<br> ${comment}`;
-
-                feedbackList.appendChild(feedbackEntry);
-                feedbackForm.reset();
-                ratingInput.value = "";
-                stars.forEach(s => s.classList.remove("selected"));
-            });
+            alert("Thank you for your feedback!");
+            document.getElementById("feedbackForm").reset();
         });
     </script>
 </body>
