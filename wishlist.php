@@ -234,13 +234,19 @@ try {
                         <h3><?= htmlspecialchars($item['product_name']); ?></h3>
                     </a>
                     <p class="productPrice">£<?= htmlspecialchars($item['price']); ?></p>
-                    <div class="buttons">
-                        <button class="addToCart">Add to cart</button>
-                        <form action="remove_from_wishlist.php" method="POST" style="display: inline;">
-                            <input type="hidden" name="product_id" value="<?= $item['product_id']; ?>">
-                            <button type="submit" class="remove">Remove from wishlist</button>
-                        </form>
-                    </div>
+                   <div class="buttons">
+                    <form action="add_to_cart.php" method="POST" style="display: inline;">
+                     <input type="hidden" name="product_id" value="<?= $item['product_id']; ?>">
+                     <input type="hidden" name="name" value="<?= htmlspecialchars($item['product_name']); ?>">
+                     <input type="hidden" name="description" value="<?= htmlspecialchars($item['description']); ?>">
+                     <input type="hidden" name="price" value="<?= $item['price']; ?>">
+                    <button type="submit" class="addToCart">Add to cart</button>
+                  </form>
+                    <form action="remove_from_wishlist.php" method="POST" style="display: inline;">
+                     <input type="hidden" name="product_id" value="<?= $item['product_id']; ?>">
+                     <button type="submit" class="remove">Remove from wishlist</button>
+                     </form>
+                  </div>
                 </div>
             <?php endforeach; ?>
         <?php else: ?>
