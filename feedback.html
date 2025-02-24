@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Feedback | LUXUS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #5C4033;
+            color: white;
+        }
+        nav {
+            background: #6B4A37;
+            padding: 15px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            margin: 15px;
+        }
+        .container {
+            padding: 40px;
+            max-width: 700px;
+            margin: auto;
+            background: #835C44;
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #F0C987;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: 1px solid #F0C987;
+            font-size: 16px;
+            background-color: white;
+            color: black;
+        }
+        textarea {
+            resize: none; /* Prevents resizing */
+            height: 120px;
+        }
+        button {
+            background-color: #F0C987;
+            color: black;
+            padding: 12px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: #E0B76A;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+        <a href="faq.html">FAQs</a>
+        <a href="reviews.html">Reviews</a>
+    </nav>
+
+    <div class="container">
+        <h1>Customer Feedback</h1>
+        <p>We value your opinion! Let us know what you think about your new watch.</p>
+
+        <form id="feedbackForm">
+            <label for="full_name">Full Name:</label>
+            <input type="text" id="full_name" name="full_name" required placeholder="Enter your name">
+
+            <label for="rating">Rate Your Experience:</label>
+            <select id="rating" name="rating" required>
+                <option value="5">⭐⭐⭐⭐⭐</option>
+                <option value="4">⭐⭐⭐⭐</option>
+                <option value="3">⭐⭐⭐</option>
+                <option value="2">⭐⭐</option>
+                <option value="1">⭐</option>
+            </select>
+
+            <label for="feedback">Your Review:</label>
+            <textarea id="feedback" name="feedback" required placeholder="Write your review here..."></textarea>
+
+            <button type="submit" name="submit_review">Submit Feedback</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("feedbackForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            let fullName = document.getElementById("full_name").value.trim();
+            let rating = document.getElementById("rating").value;
+            let feedbackText = document.getElementById("feedback").value.trim();
+
+            if (!fullName || !rating || !feedbackText) {
+                alert("Please complete all fields.");
+                return;
+            }
+
+            let newReview = { name: fullName, rating: rating, text: feedbackText };
+
+            let storedReviews = JSON.parse(localStorage.getItem("customerReviews")) || [];
+            storedReviews.push(newReview);
+            localStorage.setItem("customerReviews", JSON.stringify(storedReviews));
+
+            alert("Thank you for your feedback!");
+            document.getElementById("feedbackForm").reset();
+        });
+    </script>
+</body>
+</html>
+
