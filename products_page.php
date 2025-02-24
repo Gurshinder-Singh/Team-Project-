@@ -25,7 +25,31 @@ try {
 } catch (PDOException $e) {
     die("Error fetching products: " . $e->getMessage());
 }
+
+$sort = isset($_POST['sort']) ? $_POST['sort'] : '';
+
+// SQL injection prevention
+$sort = htmlspecialchars($sort);
+
+try {
+    // SQL query sort filter
+    $sql = "SELECT DISTINCT brand, color, price, image FROM products";
+
+    if (!empty($sort)) {
+        $sql .= " ORDER BY $sort";
+    }
+
+    $stmt = $conn->prepare($sql);
+
+    $stmt->execute();
+    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Error fetching products: " . $e->getMessage());
+}
+
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -155,6 +179,24 @@ try {
         .dropdown:hover .dropdown-content {
             display: block;
         }
+        
+        .dropdownFilter a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdownFilter a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .dropdown:hover .dropdownFilter {
+            display: block;
+        }
+
 		.search-bar {
         display: flex;
         justify-content: flex-end; /* Align to the right */
@@ -182,6 +224,35 @@ try {
     .search-bar button:hover {
         background-color: #555;
     }
+
+    .search-bar {
+        display: flex;
+        justify-content: flex-end; /* Align to the right */
+        margin: 20px 0;
+        padding: 10px;
+    }
+
+    .search-bar input[type="text"] {
+        width: 200px; /* Smaller width */
+        padding: 5px; /* Smaller padding */
+        border: 1px solid #ccc;
+        border-radius: 5px 0 0 5px;
+    }
+
+    .search-bar button {
+        padding: 5px 10px; /* Smaller padding */
+        border: 1px solid #ccc;
+        border-left: none; /* Remove border between input and button */
+        border-radius: 0 5px 5px 0;
+        background-color: #333;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .button:hover {
+        background-color: #555;
+    }
+
     </style>
 </head>
 
@@ -283,8 +354,12 @@ try {
                             <label for="black">Black</label>
                         </div>
                         <div>
-                            <input type="checkbox" id="white" name="color[]" value="White">
-                            <label for="white">White</label>
+                            <input type="checkbox" id="Steel" name="color[]" value="Steel">
+                            <label for="Steel">Steel</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="Gold&Silver" name="color[]" value="Gold&Sliver">
+                            <label for="Gold&Silver">Gold&Sliver</label>
                         </div>
                     </div>
                 </div>
@@ -334,20 +409,9 @@ try {
 
     </form>
         <div class="sortBy">
-            <button class="dropbutton">Sort By: &#8595</button>
+            <button class="dropbutton">Filter</button>
             <div class="sort">
-                <div>
-                    <input type="radio" id="Low-to-High" name="sortBy" value="£400-£1000">
-                    <label for="Low-to-High">Low-to-High</label>
-                </div>
-                <div>
-                    <input type="radio" id="High-to-Low" name="sortBy" value="£1000-£2000">
-                    <label for="High-to-Low">High-to-Low</label>
-                </div>
-                <div>
-                    <input type="radio" id="Latest" name="sortBy" value="£2000-£4000">
-                    <label for="Latest">Latest</label>
-                </div>
+            <input type="submit" value="Filter">
             </div>
         </div>
 
