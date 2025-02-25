@@ -4,9 +4,11 @@ require 'db.php';
 
 $search = isset($_POST['search']) ? $_POST['search'] : '';
 
+// SQL injection prevention
 $search = htmlspecialchars($search);
 
 try {
+    // SQL query search filter
     $sql = "SELECT DISTINCT product_id, name, description, price, image, stock FROM products";
 
     if (!empty($search)) {
@@ -26,6 +28,7 @@ try {
 
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,7 +39,7 @@ try {
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="stylesheet.css"/>
-    <style>
+<style>
         h2 {
             color: rgb(0, 0, 0); 
             text-decoration: underline;
@@ -53,55 +56,55 @@ try {
         }
 
         body, html {
-            height: 100%; 
+            height: 100%; /* Ensure the body takes full height */
             margin: 0;
         }
 
         .main-container {
             display: flex;
             flex-direction: column;
-            align-items: center; 
-            justify-content: center; 
-            height: calc(100% - 75px); 
-            padding-top: 75px; 
+            align-items: center; /* Center horizontally */
+            justify-content: center; /* Center vertically */
+            height: calc(100% - 75px); /* Subtract navbar height */
+            padding-top: 75px; /* Push down content to be below navbar */
         }
 
         main {
-            text-align: center; 
+            text-align: center; /* Center text within main */
         }
 
         .navbar {
-            height: 75px; 
+            height: 75px; /* Set your desired navbar height */
             display: flex;
             align-items: center;
             position: fixed;
             top: 0;
             background-color: #363636;
             transition: top 0.3s ease-in-out;
-            will-change: transform; 
+            will-change: transform; /* Use hardware acceleration */
         }
 
         .navbar a, 
         .navbar-logo {
-            color: white; 
+            color: white; /* Set text color to white for links */
             text-decoration: none;
             padding: 14px 20px;
-            flex: 1; 
-            text-align: center; 
+            flex: 1; /* Ensure each item takes equal space */
+            text-align: center; /* Center text within buttons */
         }
 
         .navbar-logo {
-            display: flex; 
+            display: flex; /* Ensure image aligns in the center */
             justify-content: center;
             align-items: center;
-            position: relative; 
-            max-width: 200px; 
+            position: relative; /* Position the container relative for absolute centering */
+            max-width: 200px; /* Ensure the container space remains the same */
         }
 
         .navbar-logo img {
-            height: 95px; 
-            width: auto; 
-            margin: 0 auto; 
+            height: 95px; /* Increase the image size */
+            width: auto; /* Maintain aspect ratio */
+            margin: 0 auto; /* Center the image within its container */
         }
 
         .dropdown {
@@ -111,11 +114,11 @@ try {
         }
 
         .dropbtn {
-            background-color: #363636; 
+            background-color: #363636; /* Match the navbar color */
             color: white;
             padding: 14px 20px;
-            width: 70px; 
-            height: 70px; 
+            width: 70px; /* Set the container width */
+            height: 70px; /* Set the container height */
             border: none;
             cursor: pointer;
             display: flex;
@@ -124,29 +127,44 @@ try {
         }
 
         .wishlist{
-        padding: 5px 10px; 
+        padding: 5px 10px; /* Smaller padding */
         border: 1px solid #ccc;
-        border-left: none; 
+        border-left: none; /* Remove border between input and button */
         border-radius: 0 5px 5px 0;
         background-color: #333;
         color: #fff;
         cursor: pointer;
         }
-        
+
+        .filter{
+        padding: 5px 10px; /* Smaller padding */
+        border: 1px solid #ccc;
+        border-left: none; /* Remove border between input and button */
+        border-radius: 0 5px 5px 0;
+        background-color: #333;
+        color: #fff;
+        cursor: pointer;
+        }
+
+        .filter button:hover {
+            background-color: #ccc;
+            color: black;
+        }
+    
 
         .menu-icon {
-            height: 50px; 
-            width: auto; 
+            height: 50px; /* Adjust the height for the menu icon */
+            width: auto; /* Maintain aspect ratio */
         }
 
         .dropdown-content {
             display: none;
             position: absolute;
-            background-color: #363636; 
+            background-color: #363636; /* Match the navbar color */
             min-width: 160px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
-            transition: transform 0.3s ease-in-out; 
+            transition: transform 0.3s ease-in-out; /* Add transition for smooth movement */
         }
 
         .dropdown-content a {
@@ -159,7 +177,7 @@ try {
 
         .dropdown-content a:hover {
             background-color: #ddd;
-            color: black;
+            color: white;
         }
 
         .dropdown:hover .dropdown-content {
@@ -167,22 +185,22 @@ try {
         }
 		.search-bar {
         display: flex;
-        justify-content: flex-end; 
+        justify-content: flex-end; /* Align to the right */
         margin: 20px 0;
         padding: 10px;
     }
 
     .search-bar input[type="text"] {
-        width: 200px; 
-        padding: 5px; 
+        width: 200px; /* Smaller width */
+        padding: 5px; /* Smaller padding */
         border: 1px solid #ccc;
         border-radius: 5px 0 0 5px;
     }
 
     .search-bar button {
-        padding: 5px 10px; 
+        padding: 5px 10px; /* Smaller padding */
         border: 1px solid #ccc;
-        border-left: none; 
+        border-left: none; /* Remove border between input and button */
         border-radius: 0 5px 5px 0;
         background-color: #333;
         color: #fff;
@@ -196,6 +214,7 @@ try {
 </head>
 
 <header>
+    <!-- Navigation bar -->
    <div class="navbar" id="navbar">
     <div class="dropdown">
        <button class="dropbtn">
@@ -224,6 +243,7 @@ try {
     <?php endif; ?>
 </div>
 
+
     <script>
         let prevScrollpos = window.pageYOffset;
         let debounce;
@@ -239,13 +259,14 @@ try {
                     document.getElementById("navbar").style.top = "-50px";
                 }
                 prevScrollpos = currentScrollPos;
-            }, 100); 
+            }, 100); // Adjust the debounce delay as necessary
         }
     </script>
 
     </header>
 
 <body>
+    <!-- Navigation bar -->
     <div class="navbar" id="navbar">
         <div class="dropdown">
             <button class="dropbtn">
@@ -274,9 +295,36 @@ try {
             <a href="admin_page.php">ADMIN</a>
         <?php endif; ?>
     </div>
+
     <h1>Product Catalogue</h1>
+    <?php
+    $con = mysqli_connect("localhost", "root", "To9JV8nPTCYwpMh", "cs2team30_db");
+    $brand_query = "SELECT * FROM products";
+    $brand_query_run = mysqli_query($con, $brand_query);
+    
+    if (mysqli_num_rows($brand_query_run) > 0 ) {
+        foreach ($brand_query_run as $Brandlist) {
+            ?>
+            <div>
+                <input type = "checkbox" name="Brands[]" value="<? $Brandlist['product_id'] ?>">
+                <?= $Brandlist["Brand"]; ?>
+            
+            </div>
+            <?php
+        }
+
+
+    }
+    else {
+        echo "no Brands Found";
+    }
+
+
+    
+
+    ?>
                 <div id="filterSortBar">
-            <form method="post" action="products_page.php">
+            <form method="post" action="products_page.php"> <!-- Set your action script for processing the filter -->
                 <div class="dropdownFilter">
                     <button class="dropbutton">Colour &#8595</button>
                     <div class="filterOptions">
@@ -293,12 +341,8 @@ try {
                             <label for="black">Black</label>
                         </div>
                         <div>
-                            <input type="checkbox" id="Steel" name="color[]" value="Steel">
-                            <label for="Steel">Steel</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="Gold&Silver" name="color[]" value="Gold&Sliver">
-                            <label for="Gold&Silver">Gold&Sliver</label>
+                            <input type="checkbox" id="white" name="color[]" value="White">
+                            <label for="white">White</label>
                         </div>
                     </div>
                 </div>
@@ -340,18 +384,17 @@ try {
                         </div>
                     </div>
                 </div>
+                <a class ="filter">FILTER</a>
                          <form method="POST" action="" class="search-bar">
     <input type="text" name="search" placeholder="Search for a product..." 
            value="<?= htmlspecialchars($search); ?>" />
     <button type="submit">Search</button>
 </form>
 
-                <input type="submit" value="Filter">
-            </form>
-        </div>
+                
 
                             
-   <a class="wishlist" href="wishlist.php">Go to wishlist page</a>
+   <a class="wishlist" href="wishlist.php">WISHLIST</a> <!-- Add this line -->
 
 
 <?php if (isset($_GET['wishlist'])): ?>
@@ -361,6 +404,7 @@ try {
         <p style="color: red; text-align: center;">This product is already in your wishlist!</p>
     <?php endif; ?>
 <?php endif; ?>
+    <!-- Product Grid -->
     <div class="productGrid">
     <?php if (!empty($products)): ?>
         <?php foreach ($products as $product): ?>
@@ -392,6 +436,7 @@ try {
                     <button type="submit">Add to Wishlist</button>
                  </form>
 
+
             </div>
         <?php endforeach; ?>
     <?php else: ?>
@@ -400,9 +445,13 @@ try {
 </div>
 </div>
 
+
     <footer>
+        <!-- Add footer content here -->
     </footer>
     
 </body>
 
 </html>
+
+
