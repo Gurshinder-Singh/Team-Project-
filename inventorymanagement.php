@@ -2,7 +2,7 @@
 require 'db.php';
 
 try {
-    $sql = "SELECT product_id, name, description, price, image, brand, color FROM products";
+    $sql = "SELECT product_id, name, description, price, image, brand, color, stock FROM products";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -17,6 +17,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $price = $_POST['price'];
         $brand = trim($_POST['brand']);
         $color = trim($_POST['color']);
+        $stock = $_POST['stock'];
+
+        if (!is_numeric($stock) || $stock < 0) {
+            die("Stock must be a positive integer.");
+        }
 
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
             $imageTmpPath = $_FILES['image']['tmp_name'];
@@ -31,12 +36,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if (empty($name) || empty($description) || !is_numeric($price) || $price < 0 || empty($brand) || empty($color)) {
-            die("Fill all fields, and price has to be positive.");
+            die("Fill all fields, price must be positive, and stock must be a valid number.");
         }
 
         try {
-            $sql = "INSERT INTO products (name, description, price, image, brand, color) 
-                    VALUES (:name, :description, :price, :image, :brand, :color)";
+            $sql = "INSERT INTO products (name, description, price, image, brand, color, stock) 
+                    VALUES (:name, :description, :price, :image, :brand, :color, :stock)";
             $stmt = $conn->prepare($sql);
             $stmt->execute([
                 ':name' => $name,
@@ -45,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':image' => $imageDestination,
                 ':brand' => $brand,
                 ':color' => $color,
+                ':stock' => $stock
             ]);
             header("Location: inventorymanagement.php");
             exit;
@@ -60,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $price = $_POST['price'];
         $brand = trim($_POST['brand']);
         $color = trim($_POST['color']);
+        $stock = $_POST['stock'];
 
         $imageDestination = $_POST['existing_image'];
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
@@ -72,13 +79,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        if (empty($product_id) || empty($name) || empty($description) || !is_numeric($price) || $price < 0 || empty($brand) || empty($color)) {
-            die("Fill all fields, and price has to be positive.");
+        if (empty($product_id) || empty($name) || empty($description) || !is_numeric($price) || $price < 0 || empty($brand) || empty($color) || !is_numeric($stock) || $stock < 0) {
+            die("Fill all fields, price must be positive, and stock must be a valid number.");
         }
 
         try {
             $sql = "UPDATE products 
-                    SET name = :name, description = :description, price = :price, image = :image, brand = :brand, color = :color 
+                    SET name = :name, description = :description, price = :price, image = :image, brand = :brand, color = :color, stock = :stock 
                     WHERE product_id = :product_id";
             $stmt = $conn->prepare($sql);
             $stmt->execute([
@@ -88,7 +95,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':image' => $imageDestination,
                 ':brand' => $brand,
                 ':color' => $color,
-                ':product_id' => $product_id,
+                ':stock' => $stock,
+                ':product_id' => $product_id
             ]);
             header("Location: inventorymanagement.php");
             exit;
@@ -215,6 +223,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <th>Image</th>
                 <th>Brand</th>
                 <th>Color</th>
+                <th>Stock</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -229,16 +238,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <td><img src="<?= htmlspecialchars($product['image']); ?>"></td>
                         <td><?= htmlspecialchars($product['brand']); ?></td>
                         <td><?= htmlspecialchars($product['color']); ?></td>
+                        <td><?= htmlspecialchars($product['stock']); ?></td>
                         <td>
                             <form action="inventorymanagement.php" method="post" enctype="multipart/form-data" style="display: inline;">
                                 <input type="hidden" name="product_id" value="<?= $product['product_id']; ?>">
                                 <input type="hidden" name="existing_image" value="<?= htmlspecialchars($product['image']); ?>">
                                 <input type="text" name="name" value="<?= htmlspecialchars($product['name']); ?>" required>
                                 <input type="text" name="description" value="<?= htmlspecialchars($product['description']); ?>" required>
-                                <input type="number" name="price" value="<?= htmlspecialchars($product['price']); ?>" step="0.01" required>
+                                <input type="number" name="price" value="<?= htmlspecialchars($product['price']); ?>" required>
                                 <input type="file" name="image">
                                 <input type="text" name="brand" value="<?= htmlspecialchars($product['brand']); ?>" required>
                                 <input type="text" name="color" value="<?= htmlspecialchars($product['color']); ?>" required>
+                                <input type="text" name="stock" value="<?= htmlspecialchars($product['stock']); ?>" required>
                                 <button type="submit" name="update-product">Update</button>
                             </form>
                             <form action="inventorymanagement.php" method="post" style="display: inline;">
@@ -270,6 +281,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="text" name="brand" id="brand" required>
         <label for="color">Color:</label>
         <input type="text" name="color" id="color" required>
+        <label for="color">Stock:</label>
+        <input type="text" name="stock" id="stock" required>
         <button type="submit" name="add-product">Add Product</button>
     </form>
 </body>

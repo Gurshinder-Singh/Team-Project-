@@ -4,40 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us - LUXUS</title>
-<link rel="stylesheet" href="stylesheet.css">
+    <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
-    <!-- Navigation Bar -->
+
     <header>
         <nav>
             <ul class="nav-links">
                 <li><a href="about.html">About Us</a></li>
                 <li><a href="contact.html">Contact</a></li>
                 <li><a href="faq.html">FAQs</a></li>
+                <li><a href="feedback.html">Feedback</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Contact Section -->
     <section class="form-section">
         <h1>Contact Us</h1>
-        <p>We’d love to hear from you! If you have questions, feedback, or need assistance, please use the form below to get in touch with us. Our team will respond within 1-2 business days.</p>
-        <form action="action_page.php" method="post">
-            <!-- Email Address -->
-            <label for="email">Email Address:</label>
-            <input type="email" id="email" name="email" placeholder="e.g., example@example.com" required>
+        <p>Have questions or need assistance? Reach out to us using the form below, and we’ll get back to you within 24-48 hours.</p>
+        <form action="contact_form_handler.php" method="post">
+            <label for="email">Your Email:</label>
+            <input type="email" id="email" name="email" placeholder="e.g., yourname@example.com" required>
 
-            <!-- Subject -->
             <label for="subject">Subject:</label>
-            <input type="text" id="subject" name="subject" placeholder="What can we help you with?" required>
+            <input type="text" id="subject" name="subject" placeholder="What do you need help with?" required>
 
-            <!-- Message -->
             <label for="message">Message:</label>
-            <textarea id="message" name="message" placeholder="Write your message here..." rows="6" required></textarea>
+            <textarea id="message" name="message" placeholder="Type your message here..." required></textarea>
 
-            <!-- Submit Button -->
             <button type="submit">Send Message</button>
         </form>
     </section>
+
 </body>
 </html>
+
