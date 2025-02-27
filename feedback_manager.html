@@ -26,13 +26,12 @@
                 <th>Feedback</th>
                 <th>Rating</th>
                 <th>Reply</th>
-                <th>No Reply Needed</th> 
+                <th>No Reply Needed</th> <!-- New Column for "No Reply Needed" -->
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            <!-- INSERT PHP: Fetch unaddressed feedback from the database and display it in the table -->
-            <!-- Example of how feedback will be displayed -->
+            <!-- Example Feedback Row 1 -->
             <tr>
                 <td>1</td>
                 <td>John Doe</td>
@@ -41,40 +40,60 @@
                 <td>
                     <!-- Admin reply form -->
                     <form action="#" method="post" style="display: inline;">
-                        <!-- INSERT PHP: Add feedback ID -->
+                        <input type="hidden" name="feedback-id" value="1">
                         <textarea name="reply" placeholder="Write a reply" rows="2" required></textarea>
-                        <button type="submit" name="reply-submit">Reply</button>
+                        <button type="submit">Reply</button>
                     </form>
                 </td>
                 <td>
                     <!-- No Reply Needed Checkbox -->
                     <form action="#" method="post" style="display: inline;">
-                        <!-- INSERT PHP: Add feedback ID -->
+                        <input type="hidden" name="feedback-id" value="1">
                         <input type="checkbox" name="no-reply-needed" value="1" onclick="this.form.submit()"> No Reply Needed
                     </form>
                 </td>
                 <td>
                     <!-- Delete form -->
                     <form action="#" method="post" style="display: inline;">
-                        <!-- INSERT PHP: Add feedback ID -->
-                        <button type="submit" name="delete-submit" style="color: red;">Delete</button>
+                        <input type="hidden" name="delete-feedback-id" value="1">
+                        <button type="submit" style="color: red;">Delete</button>
                     </form>
                 </td>
             </tr>
-            <!-- Additional feedback rows will be displayed in a similar manner -->
+
+            <!-- Example Feedback Row 2 -->
+            <tr>
+                <td>2</td>
+                <td>Jane Smith</td>
+                <td>The product quality was average.</td>
+                <td>3</td>
+                <td>
+                    <!-- Admin reply form -->
+                    <form action="#" method="post" style="display: inline;">
+                        <input type="hidden" name="feedback-id" value="2">
+                        <textarea name="reply" placeholder="Write a reply" rows="2" required></textarea>
+                        <button type="submit">Reply</button>
+                    </form>
+                </td>
+                <td>
+                    <!-- No Reply Needed Checkbox -->
+                    <form action="#" method="post" style="display: inline;">
+                        <input type="hidden" name="feedback-id" value="2">
+                        <input type="checkbox" name="no-reply-needed" value="1" onclick="this.form.submit()"> No Reply Needed
+                    </form>
+                </td>
+                <td>
+                    <!-- Delete form -->
+                    <form action="#" method="post" style="display: inline;">
+                        <input type="hidden" name="delete-feedback-id" value="2">
+                        <button type="submit" style="color: red;">Delete</button>
+                    </form>
+                </td>
+            </tr>
+
+            <!-- Additional rows will be dynamically added here from the backend -->
         </tbody>
     </table>
-
-    <!-- Handle PHP operations -->
-    <!-- INSERT PHP: Handle reply submission
-          - Connect to the database
-          - Update feedback with admin reply and mark as actioned -->
-    <!-- INSERT PHP: Handle 'No Reply Needed' submission
-          - Connect to the database
-          - Mark feedback as not needing a reply and actioned -->
-    <!-- INSERT PHP: Handle delete feedback submission
-          - Connect to the database
-          - Delete feedback from the database -->
 
 </body>
 </html>

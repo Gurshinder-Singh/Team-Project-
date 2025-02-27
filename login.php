@@ -53,12 +53,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="icon" type="image/favicon" href="/asset/LUXUS_logo.png"> 
     <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
  
 <!-- NAVIGATION BAR -->
-   
+
 <div class="navbar" id="navbar">
     <div class="dropdown">
         <button class="dropbtn">
@@ -71,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
     <a href="homepage.php">HOME</a>
-    <a href="search.php">SEARCH</a>
+    <a href="products_page.php">PRODUCTS</a>
     <div class="navbar-logo">
         <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
     </div>
@@ -87,7 +88,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 </div>
     <!-- NAVIGATION BAR END! -->
-
     <script>
         let prevScrollpos = window.pageYOffset;
         let debounce;
@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!-- Updated CSS -->
 <style>
 .navbar {
-    height: 75px; /* Set your desired navbar height */
+    height: 75px; 
     display: flex;
     align-items: center;
     position: fixed;
@@ -122,31 +122,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     top: 0;
     background-color: #363636;
     transition: top 0.3s ease-in-out;
-    will-change: transform; /* Use hardware acceleration */
+    will-change: transform; 
 }
 
 .navbar a, 
 .navbar-logo {
-    color: white; /* Set text color to white for links */
+    color: white; 
     text-decoration: none;
     padding: 14px 20px;
-    flex: 1; /* Ensure each item takes equal space */
-    text-align: center; /* Center text within buttons */
-    transform: translateX(-100px); /* Shift everything else left by 100px */
+    flex: 1; 
+    text-align: center; 
+    transform: translateX(-100px); 
 }
 
 .navbar-logo {
-    display: flex; /* Ensure image aligns in the center */
+    display: flex; 
     justify-content: center;
     align-items: center;
-    position: relative; /* Position the container relative for absolute centering */
-    max-width: 200px; /* Ensure the container space remains the same */
+    position: relative; 
+    max-width: 200px; 
 }
 
 .navbar-logo img {
-    height: 95px; /* Increase the image size by 50px */
-    width: auto; /* Maintain aspect ratio */
-    margin: 0 auto; /* Center the image within its container */
+    height: 95px; 
+    width: auto; 
+    margin: 0 auto; 
 }
 
 .dropdown {
@@ -156,11 +156,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 .dropbtn {
-    background-color: #363636; /* Match the navbar color */
+    background-color: #363636; 
     color: white;
     padding: 14px 20px;
-    width: 70px; /* Set the container width */
-    height: 70px; /* Set the container height */
+    width: 70px; 
+    height: 70px;
     border: none;
     cursor: pointer;
     display: flex;
@@ -169,18 +169,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 .menu-icon {
-    height: 50px; /* Adjust the height for the menu icon */
-    width: auto; /* Maintain aspect ratio */
+    height: 50px; 
+    width: auto; 
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #363636; /* Match the navbar color */
+    background-color: #363636; 
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    transition: transform 0.3s ease-in-out; /* Add transition for smooth movement */
+    transition: transform 0.3s ease-in-out; 
 }
 
 .dropdown-content a {
@@ -189,8 +189,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     text-decoration: none;
     display: block;
     text-align: left;
-    transform: translateX(0); /* Initial position */
-    transition: transform 0.3s ease-in-out; /* Smooth transition */
+    transform: translateX(0); 
+    transition: transform 0.3s ease-in-out; 
 }
 
 .dropdown-content a:hover {
@@ -210,11 +210,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 .image-container img {
-    width: 400px; /* Adjust the width to make the image smaller */
-    height: auto; /* Maintain the aspect ratio */
+    width: 400px; 
+    height: auto; 
     position: absolute;
-    left: 1000px; /* Move the image 320 pixels to the right */
+    left: 1000px; 
     top: 200px;
+}
+.error {
+    color: red;
+    font-weight: bold;
+    margin: 10px 0;
 }
 </style>
 

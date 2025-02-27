@@ -1,36 +1,34 @@
-/* General Styles */
+/* General Form Styling */
 html, body {
     margin: 0;
     padding: 0;
-    height: 130vh; /* Adjusted height */
-    overflow-y: scroll; /* Enable vertical scrolling */
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-    background-color: #5c4033; /* Brown background */
+    height: 130vh; 
+    overflow-y: scroll; 
+    overflow-x: hidden; 
+    background-color: #5c4033; 
     background-size: fill;
-    font-family: 'Century Gothic', sans-serif; /* Set default font */
-    font-weight: bold; /* Apply bold text globally */
+    font-family: 'Century Gothic', sans-serif; 
+    font-weight: bold; 
     position: relative;
 }
 
 h1 {
-    font-family: 'Century Gothic', sans-serif; /* Set default font */
-    font-weight: bold; /* Apply bold text globally */
+    font-family: 'Century Gothic', sans-serif; 
+    font-weight: bold; 
 }
 
-/* Gold Shape Background */
 .gold-shape {
     width: 0;
     height: 0;
-    border-left: 50vw solid transparent; /* Create diagonal shape */
-    border-bottom: 130vh solid #d4af37; /* Gold color */
+    border-left: 50vw solid transparent; 
+    border-bottom: 130vh solid #d4af37; 
     position: absolute;
     top: 0;
-    right: 0; /* Ensure it touches the right side of the screen */
+    right: 0; 
 }
 
-/* Navigation Bar Styles */
 .navbar {
-    height: 100px; /* Set your desired navbar height */
+    height: 100px; 
     display: flex;
     align-items: center;
     position: fixed;
@@ -38,26 +36,26 @@ h1 {
     top: 0;
     background-color: #363636;
     transition: top 0.3s ease-in-out;
-    will-change: transform; /* Use hardware acceleration */
-    z-index: 1000; /* Ensure navbar stays above background shapes */
+    will-change: transform; 
+    z-index: 1000; 
 }
 
 .navbar a {
-    padding: 0 15px; /* Add some padding around the links */
-    text-decoration: none; /* Remove underline from links */
-    color: black; /* Set link color */
-    font-weight: bold; /* Optional: Make the text bold */
-    text-transform: uppercase; /* Make navbar links uppercase */
+    padding: 0 15px; 
+    text-decoration: none; 
+    color: black; 
+    font-weight: bold; 
+    text-transform: uppercase; 
 }
 
 .navbar a:hover {
-    color: gray; /* Change link color on hover */
+    color: gray;
 }
 
 .navbar img {
-    height: 100%; /* Adjust this percentage to make the image bigger */
+    height: 100%;
     max-height: 100%;
-    margin-left: center; /* Push the logo to the right if needed */
+    margin-left: center; 
 }
 
 /* Image Container Styles */
@@ -68,76 +66,77 @@ h1 {
 }
 
 .image-container img {
-    width: 650px; /* Adjust the width to make the image smaller */
-    height: auto; /* Maintain the aspect ratio */
+    width: 650px; 
+    height: auto; 
     position: absolute;
-    left: 800px; /* Move the image 320 pixels to the right */
+    left: 800px; 
     top: 100px;
 }
 
 /* Text Styles */
 .luxus-text {
-    font-family: 'DM Serif Display', serif; /* Set font for LUXUS text */
+    font-family: 'DM Serif Display', serif; 
     font-size: 150px;
     color: white;
     position: fixed;
     top: 90px;
     left: 60px;
-    z-index: 1000; /* Ensure text stays above background shapes */
+    z-index: 1000; 
     font-weight: normal;
 }
 
 .catchphrase-text {
-    font-family: 'DM Serif Display', serif; /* Set font for CATCHPHRASE text */
+    font-family: 'DM Serif Display', serif; 
     font-size: 35px;
     color: white;
     position: fixed;
-    top: 250px; /* Adjusted position */
+    top: 250px; 
     left: 60px;
-    z-index: 1000; /* Ensure text stays above background shapes */
+    z-index: 1000; 
     font-weight: normal;
 }
 
 .catchphrase2-text {
-    font-family: 'Poppins', sans-serif; /* Set font for CATCHPHRASE2 text */
+    font-family: 'Poppins', sans-serif; 
     font-size: 28px;
     color: gold;
     position: fixed;
-    top: 500px; /* Adjusted position */
+    top: 500px; 
     left: 60px;
-    z-index: 1000; /* Ensure text stays above background shapes */
-    font-weight: 835; /* Increase font-weight for bolder text */
+    z-index: 1000; 
+    font-weight: 835;
     font-style: italic;
 }
 
 .catchphrase3-text {
-    font-family: 'Poppins', serif; /* Set font for CATCHPHRASE3 text */
+    font-family: 'Poppins', serif; 
     font-size: 28px;
     color: rgb(255, 255, 255);
     position: fixed;
-    top: 530px; /* Adjusted position */
+    top: 530px; 
     left: 60px;
-    z-index: 1000; /* Ensure text stays above background shapes */
+    z-index: 1000;
     font-weight: 400;
     font-style: italic;
 }
 
-/* Login and Sign-up Forms */
+/* LOGIN & SIGNUP FORM CSS */
+
 .login-container {
-    background: #fff; /* White background for the form */
+    background: #fff; 
     padding: 30px;
     border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Softer shadow for elegance */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); 
     width: 90%;
-    max-width: 400px; /* Limit width for desktop screens */
-    margin: 120px auto; /* Center the form */
+    max-width: 400px; 
+    margin: 120px auto; 
     text-align: center;
 }
 
 .login-container h1 {
     font-size: 24px;
     margin-bottom: 20px;
-    color: #222; /* Slightly darker for better contrast */
+    color: #222; 
     font-weight: bold;
 }
 
@@ -149,15 +148,15 @@ form label {
     display: block;
     text-align: left;
     max-width: 300px;
-    margin: 10px auto 5px; /* Center labels within form */
+    margin: 10px auto 5px; 
 }
 
 form input {
     width: 90%;
-    max-width: 300px; /* Input width constrained */
+    max-width: 300px;  
     padding: 12px;
-    margin: 10px auto; /* Center inputs */
-    border: 1px solid #ddd; /* Subtle border for inputs */
+    margin: 10px auto; 
+    border: 1px solid #ddd;  
     border-radius: 8px;
     background-color: #fff;
     font-size: 14px;
@@ -167,16 +166,16 @@ form input {
 }
 
 form input:focus {
-    border-color: #d4af37; /* Gold border when focused */
-    box-shadow: 0 0 5px rgba(212, 175, 55, 0.4); /* Subtle gold glow */
+    border-color: #d4af37;  
+    box-shadow: 0 0 5px rgba(212, 175, 55, 0.4);  
     outline: none;
 }
 
 form button {
     width: 90%;
-    max-width: 300px; /* Button width matches inputs */
+    max-width: 300px;  
     padding: 12px;
-    background-color: #333; /* Dark button for contrast */
+    background-color: #333;  
     color: #fff;
     border: none;
     border-radius: 8px;
@@ -184,13 +183,13 @@ form button {
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    margin: 15px auto; /* Center button */
+    margin: 15px auto;  
     display: block;
 }
 
 form button:hover {
-    background-color: #555; /* Lighter dark hover effect */
-    transform: scale(1.02); /* Gentle zoom on hover */
+    background-color: #555;    
+    transform: scale(1.02);  
 }
 
 .signup-link p {
@@ -200,19 +199,19 @@ form button:hover {
 }
 
 .signup-link a {
-    color: #d4af37; /* Gold color for links */
+    color: #d4af37; 
     text-decoration: none;
     font-weight: bold;
 }
 
 .signup-link a:hover {
-    text-decoration: underline; /* Underline on hover for emphasis */
+    text-decoration: underline; 
 }
 
 @media (max-width: 768px) {
     .login-container {
-        margin: 60px auto; /* Adjust margin for smaller screens */
-        padding: 20px; /* Reduce padding for compact design */
+        margin: 60px auto;  
+        padding: 20px;  
     }
 
     form input,
@@ -221,47 +220,7 @@ form button:hover {
         padding: 10px;
     }
 }
-
-/* Fade-in animation for the login form */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-header {
-    background: #333;
-    padding: 10px 0;
-}
-
-.nav-links {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    margin: 0;
-    padding: 0;
-}
-
-.nav-links li {
-    margin: 0 15px;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: rgb(96, 96, 96);
-    font-weight: bold;
-}
-
-.nav-links a:hover {
-    color: #04AA6D;
-}
-
-/*Products page*/
+/*Product page*/
 .productGrid{
     display:flex;
     flex-wrap:wrap;
@@ -271,7 +230,6 @@ header {
     margin-top: 200px;
     resize: both;
 }
-/*Product Card*/
 .productCard{
     width:50%;
     max-width: 300px;
@@ -283,6 +241,8 @@ header {
     text-align:center;
     align-items: stretch;
 }
+
+
 .productImage img{
     width: 40%;
     height: 20%;
@@ -290,9 +250,11 @@ header {
     border-radius: 50px;
     align-content: center;
 }
+
 .productImage:hover img{
     transform:scale(1.2);
 }
+
 .productLink:hover{
     text-decoration: underline;
     color:black;
@@ -300,22 +262,19 @@ header {
 
 .productLink:visited{
     color:black;
-        text-decoration: none;
-    font-size:relative;
-    font-weight:bold;
-    margin-top:30px;
-    margin-bottom:none;
-    font-size: relative;
-    align-items: left;
-    padding: 5px 0 5px 0;
 }
+
+
 .productPrice{
     font-size:small;
     font-weight:bold;
     text-align:center;
     margin-bottom:none;
+color:white;
 }
+
 .productLink{
+    color:white;
     text-decoration: none;
     font-size:relative;
     font-weight:bold;
@@ -325,33 +284,56 @@ header {
     align-items: left;
     padding: 5px 0 5px 0;
 }
-.productCard button, .singleProduct button{
+
+.productCard button,.singleProduct button {
     padding:10px 20px;
     margin:6px;
     background-color:none;
     border:none;
-    margin-bottom: none;
+    margin-bottom: 6px;
     font-weight: bold;
     text-align: center;
     text-decoration: none;
     transition-duration:0.3s;
   }
-.productCard button:hover, .singleProduct button:hover{
-    background-color: #d4af37;
-    color:#fff;
+  .productCard button:hover,
+  .singleProduct button:hover {
+      background-color: #d4af37;
+      color: white;
+  }
+.productCard #description{
+font-size:32px;
+color:white;
 }
+  
 .dropdownFilter,.sortBy{
     position: relative;
     display: inline-block;
+
 }
-.dropbtn {
+.dropbutton {
     border:none;
-    padding:16px;
     margin:0;
+    position:relative;
+    width: 90%;
+    max-width: 300px;  
+    padding: 12px;
+    background-color: #333;  
+    color: #fff;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 15px auto;  
+}
+.dropbutton:hover{
+    background-color:gold;
 }
 .filterOptions,.sort{
     display: none;
     position: absolute;
+    color:white;
 }
 .filterOptions a,.sort a{
     display: none;
@@ -361,78 +343,70 @@ header {
     display: block;
 }
 .sortBy:hover .sort{
+display:block;
+}
+
+.filterOptions label, .filterOptions checkbox{
+    color:white;
+}
+.sort label,.sort input{
+color:white;
+font-weight:bold;
+}
+.sort label, .filterOptions label{
+display:block;
+padding:15px;
+text-indent:-15px;
+}
+.sort input,.filterOptions checkbox{
+  padding: 0;
+  vertical-align: bottom;
+  position: fixed;
+}
+
+.sortBy:hover .sort{
     display: block;
 }
+#filterSubmit:hover{
+    background-color:gold;
+}
+#filterSubmit{
+    max-width:50px;
+    margin:30px;
+    float:left;
+    display:inline-block;
+}
+
 .search{
     float: right;
+    right:0;
     background-color:none ;
     border:none;
     padding: 1em;
     margin-left: 0;
 }
+
 .sortBy{
     float:right;
     border: radius 0.2em;
-}
 
-/*cart*/
-table{
-    position: fixed;
-    margin: 80px auto;
-    text-align: center;
-    padding-top: 10px;
-    width: 100%;
-    box-shadow: 0 10px 10px 0 black;
-    border-radius: 1px;
-    border-collapse: collapse;  
-    font-weight:bold;
 }
-th,td{
-    padding:10px;
-    border:1px solid #363636;
-}
-tr:nth-child(even){
-    background-color:rgb(201, 200, 198);
-}
-tr:hover{
-    background-color: rgb(147, 145, 145);
-}
-th,tfoot{
-    background-color:#363636;
-    color:white;
-    padding: 10px 5px;
-    text-align: left;
-}
-.checkoutBtn{
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right:0;
-    border:none;
-    padding:16px;
-    margin:0;
-    background-color: #363636;
-    color: white;
-}
-.checkoutBtn:hover{
-    background-color: gray;
-}
-
-/*Product description*/
+/**single product page**/
 .singleProduct{
     display:inline-flex;
     width: 100%;
     height: 100%;
 }
-.col1,.col2{
+
+.firstCol,.secondCol{
     flex:1;
     overflow: hidden;
 }
-.col1{
+.firstCol{
     left: 0;
     align-content: right;
 }
-.col2{
+.secondCol{
     right: 0;
     align-items: left;
 }
@@ -443,33 +417,27 @@ th,tfoot{
     margin-right: 50px;
     bottom:0
 }
+
 .singleProductName{
     margin: 100px 0 0 0;
     font-size: 40px;
 }
+
 .singleProductPrice{
     font-weight: bold;
     font-size: 20px;
 }
+
 .productDescription{
     font-size: 15px;
     color:#333;
 }
+
 .singleProduct .buttons{
     margin: 100px 0 0 0;
-}
-#inventoryPage .table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
+
+
 }
 
-#inventoryPage .table th, #inventoryPage .table td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
 
-#inventoryPage .table tr:hover {
-    background-color: #f1f1f1;
-}
+

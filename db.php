@@ -1,4 +1,4 @@
-
+    <!-- Database Config- Connects to the phpmyadmin db-->
 <?php
 $host = "localhost";
 $dbname = "cs2team30_db";

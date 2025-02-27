@@ -175,8 +175,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </body>
 </html>
+<!-- NAVIGATION BAR -->
 
-    <!-- Navigation bar -->
 <div class="navbar" id="navbar">
     <div class="dropdown">
         <button class="dropbtn">
@@ -189,10 +189,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
     <a href="homepage.php">HOME</a>
-    <a href="search.php">SEARCH</a>
+    <a href="products_page.php">PRODUCTS</a>
     <div class="navbar-logo">
         <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
-        
     </div>
     <?php if (isset($_SESSION['user_id'])): ?>
         <a href="profile.php">PROFILE</a>
@@ -205,8 +204,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <a href="admin_page.php">ADMIN</a>
     <?php endif; ?>
 </div>
-<!-- Navigation bar END -->
-
+    <!-- NAVIGATION BAR END! -->
 
 
 
@@ -228,7 +226,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     document.getElementById("navbar").style.top = "-50px";
                 }
                 prevScrollpos = currentScrollPos;
-            }, 100); // Adjust the debounce delay as necessary
+            }, 100); 
         }
     </script>
     
@@ -252,7 +250,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 .navbar a, 
 .navbar-logo {
-    color: white;
+    color: white; 
     text-decoration: none;
     padding: 14px 20px;
     flex: 1; 
@@ -264,12 +262,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     display: flex; 
     justify-content: center;
     align-items: center;
-    position: relative;
+    position: relative; 
     max-width: 200px; 
 }
 
 .navbar-logo img {
-    height: 95px; 
+    height: 95px;
     width: auto; 
     margin: 0 auto; 
 }
@@ -284,7 +282,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     background-color: #363636; 
     color: white;
     padding: 14px 20px;
-    width: 70px;
+    width: 70px; 
     height: 70px; 
     border: none;
     cursor: pointer;
@@ -355,12 +353,12 @@ body {
 }
 
 .container {
-    margin-top: 100px; 
+    margin-top: 100px; /
     padding: 20px;
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
-    background-color: #fff;
+    background-color: #fff; 
     border-radius: 15px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
@@ -436,7 +434,7 @@ form button:hover {
 }
 
 .message.success {
-    color: #5cb85c;
+    color: #5cb85c; 
 }
 
 @media (max-width: 768px) {
