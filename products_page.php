@@ -2,30 +2,68 @@
 session_start();
 require 'db.php';
 
-$search = isset($_POST['search']) ? $_POST['search'] : '';
+$search = isset($_POST['search']) ? htmlspecialchars($_POST['search']) : '';
 
-// SQL injection prevention
-$search = htmlspecialchars($search);
+$filters = [];
+$params = [];
+
+if (!empty($search)) {
+    $filters[] = "(name LIKE :search OR description LIKE :search)";
+    $params[':search'] = '%' . $search . '%';
+}
+
+// colour filtering
+if (!empty($_POST['color'])) {
+    $colorFilters = [];
+    foreach ($_POST['color'] as $index => $color) {
+        $key = ":color$index";
+        $colorFilters[] = $key;
+        $params[$key] = $color;
+    }
+    $filters[] = "color IN (" . implode(',', $colorFilters) . ")";
+}
+
+//if (!empty($_POST['gender'])) {
+ //   $genderFilters = [];
+ //   foreach ($_POST['gender'] as $index => $gender) {
+ //       $key = ":gender$index";
+ //       $genderFilters[] = $key;
+ //       $params[$key] = $gender;
+ //   }
+ //  $filters[] = "gender IN (" . implode(',', $genderFilters) . ")";
+// }
+
+// Handle price filtering
+if (!empty($_POST['priceRange'])) {
+    $priceFilters = [];
+    foreach ($_POST['priceRange'] as $index => $range) {
+        list($min, $max) = explode('-', str_replace('£', '', $range));
+        $keyMin = ":priceMin$index";
+        $keyMax = ":priceMax$index";
+        $priceFilters[] = "(price BETWEEN $keyMin AND $keyMax)";
+        $params[$keyMin] = $min;
+        $params[$keyMax] = $max;
+    }
+    $filters[] = "(" . implode(' OR ', $priceFilters) . ")";
+}
+
+// SQL query
+$sql = "SELECT DISTINCT product_id, name, description, price, image, stock, color FROM products";
+
+if (!empty($filters)) {
+    $sql .= " WHERE " . implode(' AND ', $filters);
+}
 
 try {
-    // SQL query search filter
-    $sql = "SELECT DISTINCT product_id, name, description, price, image, stock FROM products";
-
-    if (!empty($search)) {
-        $sql .= " WHERE name LIKE :search OR description LIKE :search";
-    }
     $stmt = $conn->prepare($sql);
-
-    if (!empty($search)) {
-        $stmt->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
+    foreach ($params as $key => $value) {
+        $stmt->bindValue($key, $value, PDO::PARAM_STR);
     }
-
     $stmt->execute();
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     die("Error fetching products: " . $e->getMessage());
 }
-
 ?>
 
 
@@ -297,33 +335,7 @@ try {
     </div>
 
     <h1>Product Catalogue</h1>
-    <?php
-    $con = mysqli_connect("localhost", "root", "To9JV8nPTCYwpMh", "cs2team30_db");
-    $brand_query = "SELECT * FROM products";
-    $brand_query_run = mysqli_query($con, $brand_query);
-    
-    if (mysqli_num_rows($brand_query_run) > 0 ) {
-        foreach ($brand_query_run as $Brandlist) {
-            ?>
-            <div>
-                <input type = "checkbox" name="Brands[]" value="<? $Brandlist['product_id'] ?>">
-                <?= $Brandlist["Brand"]; ?>
-            
-            </div>
-            <?php
-        }
-
-
-    }
-    else {
-        echo "no Brands Found";
-    }
-
-
-    
-
-    ?>
-                <div id="filterSortBar">
+                   <div id="filterSortBar">
             <form method="post" action="products_page.php"> <!-- Set your action script for processing the filter -->
                 <div class="dropdownFilter">
                     <button class="dropbutton">Colour &#8595</button>
@@ -366,10 +378,7 @@ try {
                 <div class="dropdownFilter">
                     <button class="dropbutton">Price &#8595</button>
                     <div class="filterOptions">
-                        <div>
-                            <input type="checkbox" id="price1" name="priceRange[]" value="£0-£1000">
-                            <label for="price1">£0-£1000</label>
-                        </div>
+                        <div><input type="checkbox" id="price1" name="priceRange[]" value="£0-£1000"><label for="price1">£0-£1000</label></div>
                         <div>
                             <input type="checkbox" id="price2" name="priceRange[]" value="£1000-£2000">
                             <label for="price2">£1000-£2000</label>
@@ -384,7 +393,10 @@ try {
                         </div>
                     </div>
                 </div>
-                <a class ="filter">FILTER</a>
+                <button type="submit" class="filter">FILTER</button>
+                            
+                            
+                            
                          <form method="POST" action="" class="search-bar">
     <input type="text" name="search" placeholder="Search for a product..." 
            value="<?= htmlspecialchars($search); ?>" />
