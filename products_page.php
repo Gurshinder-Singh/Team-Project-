@@ -188,8 +188,60 @@ try {
 
         .filter button:hover {
             background-color: #ccc;
-            color: black;
+            color: #fff;
         }
+
+.dropdownFilter {
+    position: relative;
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.dropbutton {
+    background-color: #363636; /* Match the navbar color */
+    color: white; /* Ensure text is white */
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.dropbutton:hover {
+    background-color: #555;
+}
+
+.filterOptions {
+    display: none; /* Hide by default */
+    position: absolute;
+    background-color: #363636; /* Dark background for dropdown */
+    color: white; /* White text */
+    min-width: 150px; /* Adjust width as needed */
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    z-index: 2;
+    padding: 10px;
+}
+
+.filterOptions div {
+    display: flex;
+    align-items: center;
+    justify-content: left; 
+    padding: 5px 10px;
+}
+
+.filterOptions input[type="checkbox"] {
+    margin-right: 8px; /* Space between checkbox and text */
+}
+
+.filterOptions label {
+    color: white;
+    cursor: pointer;
+    text-align: left; /* Ensure text is left-aligned */
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+
     
 
         .menu-icon {
@@ -470,6 +522,39 @@ try {
         <!-- Add footer content here -->
     </footer>
     
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Select all dropdown buttons
+        const filterButtons = document.querySelectorAll(".dropbutton");
+
+        filterButtons.forEach(button => {
+            button.addEventListener("click", function (event) {
+                event.preventDefault(); // Prevent form submission
+                
+                let filterOptions = this.nextElementSibling; // The associated filterOptions div
+                
+                document.querySelectorAll(".filterOptions").forEach(option => {
+                    if (option !== filterOptions) {
+                        option.style.display = "none";
+                    }
+                });
+
+                // Toggle current dropdown
+                filterOptions.style.display = (filterOptions.style.display === "block") ? "none" : "block";
+            });
+        });
+
+        // Close filters when outside
+        document.addEventListener("click", function (event) {
+            if (!event.target.closest(".dropdownFilter")) {
+                document.querySelectorAll(".filterOptions").forEach(option => {
+                    option.style.display = "none";
+                });
+            }
+        });
+    });
+</script>
+
 </body>
 
 </html>
