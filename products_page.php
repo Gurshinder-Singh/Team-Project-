@@ -12,7 +12,7 @@ if (!empty($search)) {
     $params[':search'] = '%' . $search . '%';
 }
 
-// colour filtering
+// color filtering
 if (!empty($_POST['color'])) {
     $colorFilters = [];
     foreach ($_POST['color'] as $index => $color) {
@@ -23,15 +23,15 @@ if (!empty($_POST['color'])) {
     $filters[] = "color IN (" . implode(',', $colorFilters) . ")";
 }
 
-//if (!empty($_POST['gender'])) {
- //   $genderFilters = [];
- //   foreach ($_POST['gender'] as $index => $gender) {
- //       $key = ":gender$index";
- //       $genderFilters[] = $key;
- //       $params[$key] = $gender;
- //   }
- //  $filters[] = "gender IN (" . implode(',', $genderFilters) . ")";
-// }
+if (!empty($_POST['gender'])) {
+    $genderFilters = [];
+    foreach ($_POST['gender'] as $index => $gender) {
+        $key = ":gender$index";
+        $genderFilters[] = $key;
+        $params[$key] = $gender;
+    }
+   $filters[] = "gender IN (" . implode(',', $genderFilters) . ")";
+ }
 
 // Handle price filtering
 if (!empty($_POST['priceRange'])) {
@@ -45,6 +45,9 @@ if (!empty($_POST['priceRange'])) {
         $params[$keyMax] = $max;
     }
     $filters[] = "(" . implode(' OR ', $priceFilters) . ")";
+    
+
+
 }
 
 // SQL query
@@ -177,7 +180,6 @@ try {
         .filter{
         padding: 5px 10px; /* Smaller padding */
         border: 1px solid #ccc;
-        border-left: none; /* Remove border between input and button */
         border-radius: 0 5px 5px 0;
         background-color: #333;
         color: #fff;
@@ -356,6 +358,10 @@ try {
                             <input type="checkbox" id="white" name="color[]" value="White">
                             <label for="white">White</label>
                         </div>
+                        <div>
+                            <input type="checkbox" id="steel" name="color[]" value="Steel">
+                            <label for="Steel">Steel</label>
+                        </div>
                     </div>
                 </div>
                 <div class="dropdownFilter">
@@ -378,7 +384,9 @@ try {
                 <div class="dropdownFilter">
                     <button class="dropbutton">Price &#8595</button>
                     <div class="filterOptions">
-                        <div><input type="checkbox" id="price1" name="priceRange[]" value="£0-£1000"><label for="price1">£0-£1000</label></div>
+                        <div>
+                            <input type="checkbox" id="price1" name="priceRange[]" value="£0-£1000">
+                            <label for="price1">£0-£1000</label></div>
                         <div>
                             <input type="checkbox" id="price2" name="priceRange[]" value="£1000-£2000">
                             <label for="price2">£1000-£2000</label>
@@ -388,8 +396,8 @@ try {
                             <label for="price3">£2000-£4000</label>
                         </div>
                         <div>
-                            <input type="checkbox" id="price4" name="priceRange[]" value="£4000-£5000">
-                            <label for="price4">£4000-£5000</label>
+                            <input type="checkbox" id="price4" name="priceRange[]" value="£4000-£6000">
+                            <label for="price4">£4000-£6000</label>
                         </div>
                     </div>
                 </div>
