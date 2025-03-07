@@ -1,5 +1,43 @@
 <?php
 session_start();
+require_once 'db.php';
+
+$stmt = $conn->query("SELECT f.FeedbackID, f.fullname, f.Review, f.Rating, f.reply, p.name AS product_name
+                      FROM CustomerFeedback f
+                      JOIN products p ON f.product_id = p.product_id");
+$customerFeedback = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_reply'])) {
+    $feedbackId = $_POST['feedback_id'];
+    $reply = $_POST['reply'];
+
+    $stmt = $conn->prepare("UPDATE CustomerFeedback SET reply = :reply WHERE FeedbackID = :feedback_id");
+    $stmt->bindParam(':reply', $reply, PDO::PARAM_STR);
+    $stmt->bindParam(':feedback_id', $feedbackId, PDO::PARAM_INT);
+    $stmt->execute();
+
+    foreach ($customerFeedback as &$feedback) {
+        if ($feedback['FeedbackID'] == $feedbackId) {
+            $feedback['reply'] = $reply;
+            break;
+        }
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_feedback'])) {
+    $feedbackId = $_POST['feedback_id'];
+
+    $stmt = $conn->prepare("DELETE FROM CustomerFeedback WHERE FeedbackID = :feedback_id");
+    $stmt->bindParam(':feedback_id', $feedbackId, PDO::PARAM_INT);
+    $stmt->execute();
+
+    foreach ($customerFeedback as $key => $feedback) {
+        if ($feedback['FeedbackID'] == $feedbackId) {
+            unset($customerFeedback[$key]);
+            break;
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -8,23 +46,18 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Feedback Manager</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
-
- <style>
+    <style>
         body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: white;
             margin: 0;
-            position: relative;
+            padding: 0;
         }
-
-        .content {
-            flex: 1;
-            position: relative;
-        	margin-top: 75px
+        header {
+            background-color: #f4f4f4;
+            padding: 10px;
+            text-align: center;
         }
-
         .navbar {
             height: 75px;
             display: flex;
@@ -35,7 +68,7 @@ session_start();
             background-color: #363636;
             transition: top 0.3s ease-in-out;
             will-change: transform;
-        	z-index: 1000
+            z-index: 1000;
         }
 
         .navbar a, 
@@ -45,7 +78,6 @@ session_start();
             padding: 14px 20px;
             flex: 1;
             text-align: center;
-            transform: translateX(-100px);
         }
 
         .navbar-logo {
@@ -102,7 +134,6 @@ session_start();
             text-decoration: none;
             display: block;
             text-align: left;
-            transform: translateX(0);
             transition: transform 0.3s ease-in-out;
         }
 
@@ -115,112 +146,138 @@ session_start();
             display: block;
         }
 
-        .image-container {
-            display: flex;
-            justify-content: center;
-            position: absolute;
-        }
-
-        .image-container img {
-            width: 400px;
-            height: auto;
-            position: absolute;
-            left: 1000px;
-            top: 200px;
-        }
-
-        .footer {
-            background-color: #363636;
-            color: gold;
-            text-align: center;
+        .container {
             padding: 20px;
+        }
+        table {
             width: 100%;
-            position: absolute;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .action-box {
+            display: flex;
+            gap: 10px;
+        }
+        .action-box input[type="checkbox"] {
+            margin: 0;
+        }
+        .comment-box {
+            margin-top: 5px;
+        }
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #f4f4f4;
+            position: fixed;
             bottom: 0;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .social-icons {
-            margin-top: 10px;
-        }
-
-        .social-icon {
-            color: gold;
-            margin: 0 10px;
-            text-decoration: none;
+            width: 100%;
         }
     </style>
 </head>
 <body>
+    <header>
+        <h1>Admin - Feedback Manager</h1>
+    </header>
 
-    
     <div class="navbar" id="navbar">
-    <div class="dropdown">
-        <button class="dropbtn">
-            <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
-        </button>
-        <div class="dropdown-content">
-            <a href="about.php">About Us</a>
-            <a href="contact.php">Contact Us</a>
-            <a href="FAQ.php">FAQs</a>
+        <div class="dropdown">
+            <button class="dropbtn">
+                <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
+            </button>
+            <div class="dropdown-content">
+                <a href="about.php">About Us</a>
+                <a href="contact.php">Contact Us</a>
+                <a href="FAQ.php">FAQs</a>
+            </div>
         </div>
+
+        <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+            <a href="homepage.php">HOME</a>
+            <a href="loyalty_manager.php">LOYALTY MANAGER</a>
+        <?php else: ?>
+            <a href="homepage.php">HOME</a>
+            <a href="products_page.php">PRODUCTS</a>
+        <?php endif; ?>
+
+        <div class="navbar-logo">
+            <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
+        </div>
+
+        <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+            <a href="feedback_manager.php">FEEDBACK MANAGER</a>
+            <a href="inventorymanagement.php">INVENTORY MANAGER</a>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['user_id'])): ?>
+            <a href="profile.php">PROFILE</a>
+            <a href="logout.php">LOGOUT</a>
+        <?php elseif (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']): ?>
+            <a href="login.php">LOGIN</a>
+        <?php endif; ?>
     </div>
-    <a href="homepage.php">HOME</a>
-    <a href="loyalty_manager.php">LOYALTY MANAGER</a>
-    <div class="navbar-logo">
-        <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
+
+    <div class="container">
+        <h2>Feedback Manager</h2>
+        <p>View customer feedback, respond where needed, and remove inappropriate comments:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Feedback ID</th>
+                    <th>Customer Name</th>
+                    <th>Product</th>
+                    <th>Feedback</th>
+                    <th>Rating</th>
+                    <th>Reply</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($customerFeedback as $feedback): ?>
+                    <tr>
+                        <td><?php echo $feedback['FeedbackID']; ?></td>
+                        <td><?php echo $feedback['fullname']; ?></td>
+                        <td><?php echo $feedback['product_name']; ?></td>
+                        <td><?php echo $feedback['Review']; ?></td>
+                        <td><?php echo $feedback['Rating']; ?></td>
+                        <td>
+                            <form method="POST">
+                                <input type="hidden" name="feedback_id" value="<?php echo $feedback['FeedbackID']; ?>">
+                                <textarea name="reply" placeholder="Enter your reply here..."><?php echo $feedback['reply'] ?? ''; ?></textarea>
+                                <button type="submit" name="submit_reply">Update Reply</button>
+                            </form>
+                        </td>
+                        <td>
+                            <div class="action-box">
+                                <form method="POST">
+                                    <input type="hidden" name="feedback_id" value="<?php echo $feedback['FeedbackID']; ?>">
+                                    <button type="submit" name="remove_feedback">Remove</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+        <h3>Manage Feedback Rules</h3>
+        <form method="POST">
+            <label for="filter_words">Filter Words (comma-separated):</label>
+            <input type="text" id="filter_words" name="filter_words" placeholder="e.g., bad, inappropriate">
+            <button type="submit" name="update_rules">Update Rules</button>
+        </form>
     </div>
-    <a href="feedback_manager.php">FEEDBACK MANAGER</a>
-    <a href="inventorymanagement.php">INVENTORY MANAGER</a>
-    <a href="logout.php">LOGOUT</a>
-</div>
-
-
-
-<div class="content">
-    <h1>Feedback Manager</h1>
-    <p>View customer feedback, respond where needed, and remove inappropriate comments:</p>
-
-    <h2>Customer Feedback</h2>
-    <table border="1" style="width: 100%; text-align: left;">
-        <thead>
-            <tr>			
-                <th>Feedback ID</th>
-                <th>Customer Name</th>
-                <th>Feedback</th>
-                <th>Rating</th>
-                <th>Reply</th>
-                <th>No Reply Needed</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-
-    </table>
-
-    <h3>Reply to Feedback</h3>
-    <form method="post" action="reply_feedback.php">
-        <label for="feedback-id">Feedback ID:</label>
-        <input type="text" id="feedback-id" name="feedback_id" required placeholder="Enter Feedback ID"><br><br>
-        <label for="reply">Your Reply:</label>
-        <textarea id="reply" name="reply" required></textarea><br><br>
-        <button type="submit">Submit Reply</button>
-    </form>
-
-    <h3>Manage Feedback Rules</h3>
-    <form method="post" action="update_feedback_rules.php">
-        <label for="filter-words">Filter Words (comma-separated):</label>
-        <input type="text" id="filter-words" name="filter_words" required><br><br>
-        <button type="submit">Update Rules</button>
-    </form>
-</div>
-
-<div class="footer">
-    <p>&copy; 2025 Luxus. All rights reserved.</p>
-</div>
-
+    <div class="footer">
+        © 2025 Luxus. All rights reserved.
+    </div>
 </body>
 </html>
