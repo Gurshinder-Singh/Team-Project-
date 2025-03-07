@@ -18,8 +18,8 @@ if (isset($_POST['submit_review'])) {
     $fullName = $_POST['full_name'];
     $rating = $_POST['rating'];
     $feedback = $_POST['feedback'];
-    $order_id = $_GET['order_id']; 
-    $product_id = $_POST['product_id']; 
+    $order_id = $_GET['order_id'];
+    $product_id = $_POST['product_id'];
 
     if (isset($_SESSION['user_id'])) {
         $user_id = $_SESSION['user_id'];
@@ -28,7 +28,6 @@ if (isset($_POST['submit_review'])) {
         exit;
     }
 
-   
     $order_id = intval($order_id);
 
     try {
@@ -39,10 +38,14 @@ if (isset($_POST['submit_review'])) {
         $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
         $stmt->bindParam(':rating', $rating, PDO::PARAM_INT);
         $stmt->bindParam(':feedback', $feedback, PDO::PARAM_STR);
-        $stmt->bindParam(':fullname', $fullName, PDO::PARAM_STR); 
+        $stmt->bindParam(':fullname', $fullName, PDO::PARAM_STR);
 
         $stmt->execute();
 
+        echo "<script>
+                alert('Thank you for your feedback!');
+                window.location.href = 'profile.php';
+              </script>";
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage() . " - SQL: " . $stmt->queryString;
     }
@@ -172,25 +175,6 @@ $conn = null;
             <button type="submit" name="submit_review">Submit Feedback</button>
         </form>
     </div>
-
-    
-    <script>
-        document.getElementById("feedbackForm").addEventListener("submit", function (event) {
-            event.preventDefault();
-
-            let fullName = document.getElementById("full_name").value.trim();
-            let rating = document.getElementById("rating").value;
-            let feedbackText = document.getElementById("feedback").value.trim();
-
-            if (!fullName || !rating || !feedbackText) {
-                alert("Please complete all fields.");
-                return;
-            }
-            
-            alert("Thank you for your feedback!");
-            window.location.href = "profile.php"; 
-        });
-    </script>
 
 </body>
 </html>
