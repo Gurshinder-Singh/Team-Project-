@@ -123,20 +123,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
 
         <!-- Previous Orders -->
-        <h2>Previous Orders</h2>
-        <ul>
-            <?php if (!empty($previous_orders)): ?>
-                <?php foreach ($previous_orders as $order): ?>
-                    <li>
-                        Order #<?= htmlspecialchars($order['order_id']) ?> - 
-                        Total: £<?= htmlspecialchars($order['total_price']) ?> - 
-                        Date: <?= htmlspecialchars($order['created_at']) ?>
-                    </li>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p>No previous orders found.</p>
-            <?php endif; ?>
-        </ul>
+        h2>Previous Orders</h2>
+    <ul>
+        <?php if (!empty($previous_orders)): ?>
+            <?php foreach ($previous_orders as $order): ?>
+                <li class="order-item">
+                    <span>
+                    Order #<?= htmlspecialchars($order['order_id']) ?> -
+                    Total: £<?= htmlspecialchars($order['total_price']) ?> -
+                    Date: <?= htmlspecialchars($order['created_at']) ?>
+                    </span>
+                <a href="Feedback.php?order_id=<?= htmlspecialchars($order['order_id']) ?>" class="feedback-link">Leave Feedback</a>
+                </l>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>No previous orders found.</p>
+        <?php endif; ?>
+    </ul>   
 
         <!-- Current Orders -->
         <h2>Current Orders</h2>
