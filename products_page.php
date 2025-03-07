@@ -33,22 +33,30 @@ if (!empty($_POST['gender'])) {
    $filters[] = "gender IN (" . implode(',', $genderFilters) . ")";
  }
 
-// Handle price filtering
+// price filtering
 if (!empty($_POST['priceRange'])) {
     $priceFilters = [];
     foreach ($_POST['priceRange'] as $index => $range) {
-        list($min, $max) = explode('-', str_replace('£', '', $range));
+        // Remove '£' and extract min & max prices
+        $range = str_replace('£', '', $range);
+        list($min, $max) = explode('-', $range);
+
+        // Convert to integers
+        $min = (int)trim($min);
+        $max = (int)trim($max);
+
+        // Use direct values in query parameters
         $keyMin = ":priceMin$index";
         $keyMax = ":priceMax$index";
-        $priceFilters[] = "(price BETWEEN $keyMin AND $keyMax)";
+        $priceFilters[] = "(CAST(REPLACE(price, '£', '') AS UNSIGNED) BETWEEN $keyMin AND $keyMax)";
+        
+        // Bind values properly
         $params[$keyMin] = $min;
         $params[$keyMax] = $max;
     }
     $filters[] = "(" . implode(' OR ', $priceFilters) . ")";
-    
-
-
 }
+
 
 // SQL query
 $sql = "SELECT DISTINCT product_id, name, description, price, image, stock, color FROM products";
@@ -60,14 +68,16 @@ if (!empty($filters)) {
 try {
     $stmt = $conn->prepare($sql);
     foreach ($params as $key => $value) {
-        $stmt->bindValue($key, $value, PDO::PARAM_STR);
-    }
+    $stmt->bindValue($key, $value, is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR);
+}
+
     $stmt->execute();
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     die("Error fetching products: " . $e->getMessage());
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -558,5 +568,6 @@ try {
 </body>
 
 </html>
+
 
 
