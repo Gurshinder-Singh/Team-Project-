@@ -307,6 +307,12 @@ try {
             display: block;
         }
 
+		.productGrid {
+     margin: 20px; /* Add margin around the grid */
+}
+
+
+
         .search-bar {
             display: flex;
             justify-content: flex-end;
