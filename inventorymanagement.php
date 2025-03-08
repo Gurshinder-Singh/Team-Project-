@@ -401,34 +401,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <script>
 function printTable() {
-  var table = document.querySelector('.inventory-table');
-  var newWin = window.open('', 'Print-Window');
+    var table = document.querySelector('.inventory-table').cloneNode(true);
 
-  newWin.document.open();
-  newWin.document.write('<html><head><title>Products Stock</title><style>' + getComputedStyleString() + '</style></head><body>' + table.outerHTML + '</body></html>');
+    var actionColumnIndex = getActionColumnIndex(table);
 
-  newWin.document.close();
-  newWin.focus();
-  newWin.print();
-  newWin.close();
+    if (actionColumnIndex > -1) {
+        var rows = table.querySelectorAll('tr');
+        for (var i = 0; i < rows.length; i++) {
+            rows[i].removeChild(rows[i].cells[actionColumnIndex]);
+        }
+    }
+
+    var newWin = window.open('', 'Print-Window');
+    newWin.document.open();
+    newWin.document.write('<html><head><title>Products Stock</title><style>' + getTableStyle() + '</style></head><body>' + table.outerHTML + '</body></html>');
+    newWin.document.close();
+    newWin.focus();
+    newWin.print();
+    newWin.close();
 }
 
-function getComputedStyleString() {
-  var styles = '';
-  for (var i = 0; i < document.styleSheets.length; i++) {
-    var sheet = document.styleSheets[i];
-    try {
-      var rules = sheet.cssRules || sheet.rules;
-      if (rules) {
-        for (var j = 0; j < rules.length; j++) {
-          styles += rules[j].cssText + '\n';
+function getTableStyle() {
+    return `
+        .inventory-table { width: 100%; border-collapse: collapse; text-align: center; }
+        .inventory-table th, .inventory-table td { border: 1px solid #ddd; padding: 10px; }
+        .inventory-table th { background-color: #f2f2f2; }
+        .inventory-table img { max-width: 50px; height: auto; }
+    `;
+}
+
+function getActionColumnIndex(table) {
+    var headerRow = table.querySelector('tr');
+    var headers = headerRow.querySelectorAll('th');
+
+    for (var i = 0; i < headers.length; i++) {
+        if (headers[i].textContent.trim().toLowerCase() === 'actions') {
+            return i;
         }
-      }
-    } catch (e) {
-      console.error('Error accessing stylesheet:', sheet.href, e);
     }
-  }
-  return styles;
+    return -1;
 }
 </script>
     <h2>Add New Product</h2>
