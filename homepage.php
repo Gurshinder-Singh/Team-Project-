@@ -1,5 +1,25 @@
+
 <?php
 session_start();
+require 'db.php'; 
+
+try {
+    $sql = "SELECT product_id, name, stock FROM products"; 
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Error fetching products: " . $e->getMessage());
+}
+
+$lowStockItems = [];
+if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']) {
+    foreach ($products as $product) {
+        if ($product['stock'] < 5) {
+            $lowStockItems[] = htmlspecialchars($product['name']);
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +32,7 @@ session_start();
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="stylesheet.css">
-    <style>
+       <style>
         body {
             display: flex;
             flex-direction: column;
@@ -158,74 +178,97 @@ session_start();
 <body>
 
     <div class="gold-shape"></div>
-
     <div class="luxus-text">LUXUS</div>
-    
     <div class="catchphrase-text">OF THE ESSENCE</div>
-
     <div class="catchphrase2-text">TIME WAITS FOR NO ONE</div>
-
     <div class="catchphrase3-text">LET OUR EXPERTS FIND YOUR FIT</div>
 
     <div class="content">
+        <div class="navbar" id="navbar">
+            <div class="dropdown">
+                <button class="dropbtn">
+                    <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
+                </button>
+                <div class="dropdown-content">
+                    <a href="about.php">About Us</a>
+                    <a href="contact.php">Contact Us</a>
+                    <a href="FAQ.php">FAQs</a>
+                </div>
+            </div>
 
-    
-<div class="navbar" id="navbar">
-    <div class="dropdown">
-        <button class="dropbtn">
-            <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
-        </button>
-        <div class="dropdown-content">
-            <a href="about.php">About Us</a>
-            <a href="contact.php">Contact Us</a>
-            <a href="FAQ.php">FAQs</a>
+            <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+                <a href="homepage.php">HOME</a>
+                <a href="loyalty_manager.html">LOYALTY MANAGER</a>
+                <a href="feedback_manager.html">FEEDBACK MANAGER</a>
+                <a href="inventorymanagement.php">INVENTORY MANAGER</a>
+            <?php else: ?>
+                <a href="homepage.php">HOME</a>
+                <a href="products_page.php">PRODUCTS</a>
+            <?php endif; ?>
+
+            <div class="navbar-logo">
+                <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
+            </div>
+
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <a href="profile.php">PROFILE</a>
+                <a href="logout.php">LOGOUT</a>
+            <?php else: ?>
+                <a href="login.php">LOGIN</a>
+            <?php endif; ?>
         </div>
-    </div>
-    <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-        <a href="homepage.php">HOME</a>
-        <a href="loyalty_manager.html">LOYALTY MANAGER</a>
-    <?php else: ?>
-        <a href="homepage.php">HOME</a>
-        <a href="products_page.php">PRODUCTS</a>
-    <?php endif; ?>
-    <div class="navbar-logo">
-        <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
-    </div>
-    <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-        <a href="feedback_manager.html">FEEDBACK MANAGER</a>
-        <a href="inventorymanagement.php">INVENTORY MANAGER</a>
-    <?php endif; ?>
-    <?php if (isset($_SESSION['user_id'])): ?>
-        <a href="profile.php">PROFILE</a>
-        <a href="logout.php">LOGOUT</a>
-    <?php elseif (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']): ?>
-        <a href="login.php">LOGIN</a>
-    <?php endif; ?>
-    <a href="logout.php">LOGOUT</a>
 
+        <script>
+            let prevScrollpos = window.pageYOffset;
+            let debounce;
+
+            window.onscroll = function() {
+                clearTimeout(debounce);
+
+                debounce = setTimeout(function() {
+                    let currentScrollPos = window.pageYOffset;
+                    if (prevScrollpos > currentScrollPos) {
+                        document.getElementById("navbar").style.top = "0";
+                    } else {
+                        document.getElementById("navbar").style.top = "-50px";
+                    }
+                    prevScrollpos = currentScrollPos;
+                }, 100);
+            }
+        </script>
+
+        <div id="notification-container" style="position: fixed; bottom: 20px; right: 20px; display: none;">
+    <div id="notification" style="background-color: white; border: 1px solid #ccc; padding: 15px; width: 300px; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);">
+        <div style="display: flex; align-items: center;">
+            <div>
+                <h3 id="notification-title" style="margin: 0;"></h3>
+                <ul id="notification-message" style="margin: 5px 0 0; padding: 0; list-style: none;">
+                    </ul>
+            </div>
+        </div>
+        <button id="close-notification" style="margin-top: 10px;">Close</button>
+    </div>
 </div>
+       <script>
+    function showNotification(title, message) {
+        document.getElementById('notification-title').textContent = title;
+        document.getElementById('notification-message').innerHTML = message;
+        document.getElementById('notification-container').style.display = 'block';
+    }
 
+    document.getElementById('close-notification').addEventListener('click', function() {
+        document.getElementById('notification-container').style.display = 'none';
+    });
 
-    <script>
-        let prevScrollpos = window.pageYOffset;
-        let debounce;
-    
-        window.onscroll = function() {
-            clearTimeout(debounce);
-    
-            debounce = setTimeout(function() {
-                let currentScrollPos = window.pageYOffset;
-                if (prevScrollpos > currentScrollPos) {
-                    document.getElementById("navbar").style.top = "0";
-                } else {
-                    document.getElementById("navbar").style.top = "-50px";
-                }
-                prevScrollpos = currentScrollPos;
-            }, 100);
-        }
-    </script>
+    <?php if (!empty($lowStockItems)): ?>
+        showNotification(
+            'Low Stock Alert',
+            '<?= implode("<br>", $lowStockItems); ?> - Low Stock! Check Inventory'
+        );
+    <?php endif; ?>
+</script>
 
-    <footer class="footer">
+    </div> <footer class="footer">
         <div class="footer-content">
             <p>&copy; 2024 LUXUS. All rights reserved.</p>
             <p>Follow us on social media!</p>
