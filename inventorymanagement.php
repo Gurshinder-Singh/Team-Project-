@@ -266,7 +266,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
         </tbody>
     </table>
+    <button class="print-button" onclick="printTable()">Print Stock Levels</button>
 
+        <script>
+        function printTable() {
+        var table = document.querySelector('.inventory-table');
+        var newWin = window.open('', 'Print-Window');
+
+        newWin.document.open();
+        newWin.document.write('<html><head><title>Products Stock</title><style>' + getComputedStyleString() + '</style></head><body>' + table.outerHTML + '</body></html>');
+
+        newWin.document.close();
+        newWin.focus();
+        newWin.print();
+        newWin.close();
+        }
+
+        function getComputedStyleString() {
+        var styles = '';
+        for (var i = 0; i < document.styleSheets.length; i++) {
+            var sheet = document.styleSheets[i];
+            try {
+            var rules = sheet.cssRules || sheet.rules;
+            if (rules) {
+                for (var j = 0; j < rules.length; j++) {
+                styles += rules[j].cssText + '\n';
+                }
+            }
+            } catch (e) {
+            console.error('Error accessing stylesheet:', sheet.href, e);
+            }
+        }
+        return styles;
+        }
+        </script>
     <h2>Add New Product</h2>
     <form action="inventorymanagement.php" method="post" enctype="multipart/form-data">
         <label for="name">Name:</label>
