@@ -1,5 +1,4 @@
-
-<?php
+<?php 
 session_start();
 require 'db.php'; 
 
@@ -34,6 +33,7 @@ if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']) {
     <link rel="stylesheet" href="stylesheet.css">
        <style>
         body {
+			font-family: 'Poppins', sans-serif;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -184,38 +184,43 @@ if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']) {
     <div class="catchphrase3-text">LET OUR EXPERTS FIND YOUR FIT</div>
 
     <div class="content">
-        <div class="navbar" id="navbar">
-            <div class="dropdown">
-                <button class="dropbtn">
-                    <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
-                </button>
-                <div class="dropdown-content">
-                    <a href="about.php">About Us</a>
-                    <a href="contact.php">Contact Us</a>
-                    <a href="FAQ.php">FAQs</a>
-                </div>
-            </div>
+      
+<!-- NAVIGATION BAR -->
+<div class="navbar" id="navbar">
+    <div class="dropdown">
+        <button class="dropbtn">
+            <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
+        </button>
+        <div class="dropdown-content">
+            <a href="about.php">About Us</a>
+            <a href="contact.php">Contact Us</a>
+            <a href="FAQ.php">FAQs</a>
+        </div>
+    </div>
 
-            <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-                <a href="homepage.php">HOME</a>
-                <a href="loyalty_manager.html">LOYALTY MANAGER</a>
-                <a href="feedback_manager.html">FEEDBACK MANAGER</a>
-                <a href="inventorymanagement.php">INVENTORY MANAGER</a>
-            <?php else: ?>
-                <a href="homepage.php">HOME</a>
-                <a href="products_page.php">PRODUCTS</a>
-            <?php endif; ?>
+    <a href="homepage.php">HOME</a>
+    <a href="products_page.php">PRODUCTS</a>
 
-            <div class="navbar-logo">
-                <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
-            </div>
+    <div class="navbar-logo">
+        <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
+    </div>
 
-            <?php if (isset($_SESSION['user_id'])): ?>
-                <a href="profile.php">PROFILE</a>
-                <a href="logout.php">LOGOUT</a>
-            <?php else: ?>
-                <a href="login.php">LOGIN</a>
-            <?php endif; ?>
+    <?php if (isset($_SESSION['user_id'])): ?>
+    <a href="profile.php">PROFILE</a>
+    <a href="previous_orders.php">PREVIOUS ORDERS</a> <!-- NEW LINK -->
+    <a href="current_orders.php">CURRENT ORDERS</a> <!-- NEW LINK -->
+    <a href="logout.php">LOGOUT</a>
+<?php else: ?>
+    <a href="login.php">LOGIN</a>
+<?php endif; ?>
+
+
+    <?php if (!empty($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+        <a href="admin_page.php">ADMIN</a>
+    <?php endif; ?>
+</div>
+<!-- NAVIGATION BAR END! -->
+
         </div>
 
         <script>
