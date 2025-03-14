@@ -12,6 +12,17 @@ if (!empty($search)) {
     $params[':search'] = '%' . $search . '%';
 }
 
+// brand filtering
+if (!empty($_POST['brand'])) {
+    $colorFilters = [];
+    foreach ($_POST['brand'] as $index => $brand) {
+        $key = ":brand$index";
+        $brandFilters[] = $key;
+        $params[$key] = $brand;
+    }
+    $filters[] = "brand IN (" . implode(',', $brandFilters) . ")";
+}
+
 // color filtering
 if (!empty($_POST['color'])) {
     $colorFilters = [];
@@ -37,20 +48,16 @@ if (!empty($_POST['gender'])) {
 if (!empty($_POST['priceRange'])) {
     $priceFilters = [];
     foreach ($_POST['priceRange'] as $index => $range) {
-        // Remove '£' and extract min & max prices
+        // removes '£' and extract min & max prices
         $range = str_replace('£', '', $range);
         list($min, $max) = explode('-', $range);
 
-        // Convert to integers
+        // convert to integers
         $min = (int)trim($min);
         $max = (int)trim($max);
-
-        // Use direct values in query parameters
         $keyMin = ":priceMin$index";
         $keyMax = ":priceMax$index";
-        $priceFilters[] = "(CAST(REPLACE(price, '£', '') AS UNSIGNED) BETWEEN $keyMin AND $keyMax)";
-        
-        // Bind values properly
+        $priceFilters[] = "(CAST(REPLACE(price, '£', '') AS UNSIGNED) BETWEEN $keyMin AND $keyMax)";   
         $params[$keyMin] = $min;
         $params[$keyMax] = $max;
     }
@@ -401,6 +408,27 @@ try {
     <h1>Product Catalogue</h1>
                    <div id="filterSortBar">
             <form method="post" action="products_page.php"> <!-- Set your action script for processing the filter -->
+            <div class="dropdownFilter">
+                    <button class="dropbutton">Brand &#8595</button>
+                    <div class="filterOptions">
+                        <div>
+                            <input type="checkbox" id="omega" name="brand[]" value="Omega">
+                            <label for="omega">Omega</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="tudor" name="brand[]" value="Tudor">
+                            <label for="tudor">Tudor</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="bvlagri" name="brand[]" value="Bvlagri">
+                            <label for="bvlagri">Bvlagri</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="tag Heuer" name="brand[]" value="Tag Heuer">
+                            <label for="tag Heuer">Tag Heuer</label>
+                        </div>
+                    </div>
+                </div>
                 <div class="dropdownFilter">
                     <button class="dropbutton">Colour &#8595</button>
                     <div class="filterOptions">
@@ -464,6 +492,7 @@ try {
                     </div>
                 </div>
                 <button type="submit" class="filter">FILTER</button>
+                    
                             
                             
                             
@@ -477,6 +506,7 @@ try {
 
                             
    <a class="wishlist" href="wishlist.php">WISHLIST</a> <!-- Add this line -->
+
 
 
 <?php if (isset($_GET['wishlist'])): ?>
