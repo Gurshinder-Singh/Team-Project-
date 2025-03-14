@@ -48,24 +48,14 @@ if (!empty($_POST['gender'])) {
 if (!empty($_POST['priceRange'])) {
     $priceFilters = [];
     foreach ($_POST['priceRange'] as $index => $range) {
-        // removes '£' and extract min & max prices
         $range = str_replace('£', '', $range);
         list($min, $max) = explode('-', $range);
 
-        // convert to integers
-<<<<<<< HEAD
-        $min = (int)trim($min);
-        $max = (int)trim($max);
-        $keyMin = ":priceMin$index";
-        $keyMax = ":priceMax$index";
-        $priceFilters[] = "(CAST(REPLACE(price, '£', '') AS UNSIGNED) BETWEEN $keyMin AND $keyMax)";   
-=======
         $min = (int) trim($min);
         $max = (int) trim($max);
         $keyMin = ":priceMin$index";
         $keyMax = ":priceMax$index";
         $priceFilters[] = "(CAST(REPLACE(price, '£', '') AS UNSIGNED) BETWEEN $keyMin AND $keyMax)";
->>>>>>> ff46d2dd73de8bdc26ac93e0c5a2053b67499047
         $params[$keyMin] = $min;
         $params[$keyMax] = $max;
     }
@@ -83,13 +73,8 @@ if (!empty($filters)) {
 try {
     $stmt = $conn->prepare($sql);
     foreach ($params as $key => $value) {
-<<<<<<< HEAD
-    $stmt->bindValue($key, $value, is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR);
-}
-=======
         $stmt->bindValue($key, $value, is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR);
     }
->>>>>>> ff46d2dd73de8bdc26ac93e0c5a2053b67499047
 
     $stmt->execute();
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -320,11 +305,10 @@ try {
             display: block;
         }
 
-		.productGrid {
-     margin: 20px; /* Add margin around the grid */
-}
-
-
+        .productGrid {
+            margin: 20px;
+            /* Add margin around the grid */
+        }
 
         .search-bar {
             display: flex;
@@ -439,151 +423,6 @@ try {
     </div>
 
     <h1>Product Catalogue</h1>
-<<<<<<< HEAD
-                   <div id="filterSortBar">
-            <form method="post" action="products_page.php"> <!-- Set your action script for processing the filter -->
-            <div class="dropdownFilter">
-                    <button class="dropbutton">Brand &#8595</button>
-                    <div class="filterOptions">
-                        <div>
-                            <input type="checkbox" id="omega" name="brand[]" value="Omega">
-                            <label for="omega">Omega</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="tudor" name="brand[]" value="Tudor">
-                            <label for="tudor">Tudor</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="bvlagri" name="brand[]" value="Bvlagri">
-                            <label for="bvlagri">Bvlagri</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="tag Heuer" name="brand[]" value="Tag Heuer">
-                            <label for="tag Heuer">Tag Heuer</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="dropdownFilter">
-                    <button class="dropbutton">Colour &#8595</button>
-                    <div class="filterOptions">
-                        <div>
-                            <input type="checkbox" id="gold" name="color[]" value="Gold">
-                            <label for="gold">Gold</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="silver" name="color[]" value="Silver">
-                            <label for="silver">Silver</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="black" name="color[]" value="Black">
-                            <label for="black">Black</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="white" name="color[]" value="White">
-                            <label for="white">White</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="steel" name="color[]" value="Steel">
-                            <label for="Steel">Steel</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="dropdownFilter">
-                    <button class="dropbutton">Gender &#8595</button>
-                    <div class="filterOptions">
-                        <div>
-                            <input type="checkbox" id="women" name="gender[]" value="Women">
-                            <label for="women">Women</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="men" name="gender[]" value="Men">
-                            <label for="men">Men</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="unisex" name="gender[]" value="Unisex">
-                            <label for="unisex">Unisex</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="dropdownFilter">
-                    <button class="dropbutton">Price &#8595</button>
-                    <div class="filterOptions">
-                        <div>
-                            <input type="checkbox" id="price1" name="priceRange[]" value="£0-£1000">
-                            <label for="price1">£0-£1000</label></div>
-                        <div>
-                            <input type="checkbox" id="price2" name="priceRange[]" value="£1000-£2000">
-                            <label for="price2">£1000-£2000</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="price3" name="priceRange[]" value="£2000-£4000">
-                            <label for="price3">£2000-£4000</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="price4" name="priceRange[]" value="£4000-£6000">
-                            <label for="price4">£4000-£6000</label>
-                        </div>
-                    </div>
-                </div>
-                <button type="submit" class="filter">FILTER</button>
-                    
-                            
-                            
-                            
-                         <form method="POST" action="" class="search-bar">
-    <input type="text" name="search" placeholder="Search for a product..." 
-           value="<?= htmlspecialchars($search); ?>" />
-    <button type="submit">Search</button>
-</form>
-
-                
-
-                            
-   <a class="wishlist" href="wishlist.php">WISHLIST</a> <!-- Add this line -->
-
-
-
-<?php if (isset($_GET['wishlist'])): ?>
-    <?php if ($_GET['wishlist'] == 'success'): ?>
-        <p style="color: green; text-align: center;">Product added to wishlist successfully!</p>
-    <?php elseif ($_GET['wishlist'] == 'duplicate'): ?>
-        <p style="color: red; text-align: center;">This product is already in your wishlist!</p>
-    <?php endif; ?>
-<?php endif; ?>
-    <!-- Product Grid -->
-    <div class="productGrid">
-    <?php if (!empty($products)): ?>
-        <?php foreach ($products as $product): ?>
-            <div class="productCard">
-                <div class="productImage">
-                    <img src="<?= htmlspecialchars($product['image']); ?>" alt="<?= htmlspecialchars($product['name']); ?>">
-                </div>
-                <a class="productLink" href="product_details.php?id=<?= $product['product_id']; ?>">
-                    <h3><?= htmlspecialchars($product['name']); ?></h3>
-                </a>
-                <p class="productPrice"><?= htmlspecialchars($product['price']); ?></p>
-                <form method="POST" action="add_to_cart.php">
-   					<input type="hidden" name="product_id" value="<?= $product['product_id']; ?>">
-    				<input type="hidden" name="name" value="<?= htmlspecialchars($product['name']); ?>">
-    				<input type="hidden" name="price" value="<?= htmlspecialchars($product['price']); ?>">
-    				<input type="hidden" name="description" value="<?= htmlspecialchars($product['description']); ?>">
-    				<?php if ($product['stock'] > 0): ?>
-        				<button class="addToCart" type="submit">Add to cart</button>
-    				<?php else: ?>
-        				<button class="addToCart" type="button" disabled style="background-color: gray;">Out of Stock</button>
-    				<?php endif; ?>
-				</form>
-                  <form action="add_to_wishlist.php" method="POST">
-                    <input type="hidden" name="product_id" value="<?= $product['product_id']; ?>">
-                    <input type="hidden" name="name" value="<?= htmlspecialchars($product['name']); ?>">
-                    <input type="hidden" name="price" value="<?= htmlspecialchars($product['price']); ?>">
-                    <input type="hidden" name="description" value="<?= htmlspecialchars($product['description']); ?>">
-                    <input type="hidden" name="image" value="<?= htmlspecialchars($product['image']); ?>">
-                    <button type="submit">Add to Wishlist</button>
-                 </form>
-
-
-=======
     <div id="filterSortBar">
         <form method="post" action="products_page.php"> <!-- Set your action script for processing the filter -->
             <div class="dropdownFilter">
@@ -606,7 +445,6 @@ try {
                         <label for="tag Heuer">Tag Heuer</label>
                     </div>
                 </div>
->>>>>>> ff46d2dd73de8bdc26ac93e0c5a2053b67499047
             </div>
             <div class="dropdownFilter">
                 <button class="dropbutton">Colour &#8595</button>
@@ -781,11 +619,4 @@ try {
 
 </body>
 
-<<<<<<< HEAD
 </html>
-
-
-
-=======
-</html>
->>>>>>> ff46d2dd73de8bdc26ac93e0c5a2053b67499047
