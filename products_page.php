@@ -84,7 +84,6 @@ try {
 ?>
 
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -443,6 +442,10 @@ try {
                     <div>
                         <input type="checkbox" id="tag Heuer" name="brand[]" value="Tag Heuer">
                         <label for="tag Heuer">Tag Heuer</label>
+                    </div>
+                     <div>
+                        <input type="checkbox" id="Tissot" name="brand[]" value="Tissot">
+                        <label for="tissot">Tissot</label>
                     </div>
                 </div>
             </div>
