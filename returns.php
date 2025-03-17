@@ -1,6 +1,19 @@
 <?php
 session_start();
+require 'db.php';
+
+if (!isset($_SESSION['user_id'])) {
+    die("Please log in to access returns.");
+}
+
+$user_id = $_SESSION['user_id'];
+$query = "SELECT order_id FROM orders WHERE user_id = :user_id";
+$stmt = $conn->prepare($query);
+$stmt->bindParam(':user_id', $user_id);
+$stmt->execute();
+$orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -101,13 +114,15 @@ session_start();
             padding: 50px 20px;
             background-color: #412920;
             border-radius: 10px;
-            margin: 80px auto;
+            margin: 100px auto;
             max-width: 600px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .return-section h1 {
             color: #f0c14b;
+            font-size: 2em;
+            margin-bottom: 10px;
         }
 
         .return-section p {
@@ -120,7 +135,14 @@ session_start();
             margin: 0 auto;
         }
 
-        .return-form input,
+        .return-form label {
+            display: block;
+            text-align: left;
+            font-weight: bold;
+            color: #f0c14b;
+            margin: 10px 0 5px;
+        }
+
         .return-form select,
         .return-form textarea,
         .return-form button {
@@ -131,11 +153,22 @@ session_start();
             border: none;
         }
 
+        .return-form select,
+        .return-form textarea {
+            background-color: #f9f9f9;
+            color: black;
+        }
+
         .return-form button {
             background-color: #f0c14b;
             color: black;
             font-weight: bold;
             cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .return-form button:hover {
+            background-color: #d9a441;
         }
     </style>
 </head>
@@ -169,28 +202,30 @@ session_start();
         <?php endif; ?>
     </div>
 
-    <section class="return-section">
-        <h1>Return Policy</h1>
-        <p>If you're not satisfied with your order, you may return it in its original condition within **30 days** of purchase.</p>
-        <p>Customers are responsible for return shipping costs unless the item is defective.</p>
+   <section class="return-section">
+    <h1>Request a Return</h1>
+    <p>Please select the order you want to return and provide additional details.</p>
+    <form class="return-form" action="returns_handler.php" method="POST">
+        <label for="order_id">Order ID:</label>
+        <select name="order_id" required>
+            <?php foreach ($orders as $order): ?>
+                <option value="<?= htmlspecialchars($order['order_id']); ?>"><?= htmlspecialchars($order['order_id']); ?></option>
+            <?php endforeach; ?>
+        </select>
 
-        <h2>Request a Return</h2>
-        <form class="return-form">
-            <label for="order_id">Order ID:</label>
-            <input type="text" id="order_id" name="order_id" required placeholder="Enter your order ID here">
+        <label for="reason">Reason for Return:</label>
+        <select name="reason" required>
+            <option value="Damaged Item">Damaged Item</option>
+            <option value="Incorrect Item">Incorrect Item</option>
+            <option value="Other">Other</option>
+        </select>
 
-            <label for="reason">Reason for Return:</label>
-            <select id="reason" name="reason" required>
-                <option value="Damaged Item">Damaged Item</option>
-                <option value="Incorrect Item">Incorrect Item</option>
-                <option value="Other">Other</option>
-            </select>
+        <label for="details">Additional Details:</label>
+        <textarea name="details" placeholder="Provide any relevant details..." rows="4" required></textarea>
 
-            <label for="details">Additional Details:</label>
-            <textarea id="details" name="details" rows="4" required placeholder="Provide any additional information about your return"></textarea>
+        <button type="submit">Submit Return Request</button>
+    </form>
+</section>
 
-            <button type="submit">Submit Return Request</button>
-        </form>
-    </section>
 </body>
 </html>
