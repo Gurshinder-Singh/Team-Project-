@@ -5,6 +5,7 @@ session_start();
 
 require 'db.php'; 
 
+
 try {
     $sql = "SELECT * FROM orders ORDER BY created_at DESC";
     $stmt = $conn->prepare($sql);
@@ -13,6 +14,7 @@ try {
 } catch (PDOException $e) {
     die("Error fetching orders: " . $e->getMessage());
 }
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update-status'])) {
     $order_id = filter_input(INPUT_POST, 'order_id', FILTER_VALIDATE_INT);
@@ -36,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update-status'])) {
     }
 }
 
+
 $status_filter = isset($_GET['status']) ? $_GET['status'] : '';
 
 try {
@@ -55,7 +58,6 @@ try {
 } catch (PDOException $e) {
     die("Error fetching orders: " . $e->getMessage());
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -169,8 +171,20 @@ try {
             color: orange;
         }
 
+        .status-processing {
+            color: blue;
+        }
+
+        .status-shipped {
+            color: purple;
+        }
+
         .status-completed {
             color: green;
+        }
+
+        .status-cancelled {
+            color: red;
         }
 
         button {
@@ -179,10 +193,19 @@ try {
             color: white;
             border: none;
             cursor: pointer;
+            margin: 2px;
         }
 
         button:hover {
             background-color: #555;
+        }
+
+        .complete-button {
+            background-color: #4CAF50; /* Green */
+        }
+
+        .complete-button:hover {
+            background-color: #45a049; /* Darker green */
         }
 
         h1, h2 {
@@ -211,6 +234,8 @@ try {
                 <a href="feedback_manager.php">FEEDBACK MANAGER</a>
                 <a href="inventorymanagement.php">INVENTORY MANAGER</a>
            		<a href="order_management.php">ORDER MANAGER</a>
+                <a href="contactUs_manager.php">CONTACT US MANAGER</a>
+                <a href="return_manager.php">RETURN MANAGER</a>
             <?php else: ?>
                 <a href="homepage.php">HOME</a>
                 <a href="products_page.php">PRODUCTS</a>
@@ -221,86 +246,84 @@ try {
             </div>
 
            <?php if (isset($_SESSION['user_id'])): ?>
-    <a href="profile.php">PROFILE</a>
-    <a href="previous_orders.php">PREVIOUS ORDERS</a> 
-    <a href="current_orders.php">CURRENT ORDERS</a> 
-    <a href="logout.php">LOGOUT</a>
-<?php else: ?>
-    <a href="login.php">LOGOUT</a>
-<?php endif; ?>
-
+                <a href="profile.php">PROFILE</a>
+                <a href="previous_orders.php">PREVIOUS ORDERS</a> 
+                <a href="current_orders.php">CURRENT ORDERS</a> 
+                <a href="logout.php">LOGOUT</a>
+            <?php else: ?>
+                <a href="login.php">LOGOUT</a>
+            <?php endif; ?>
         </div>
 
-<h1 style="margin-top:100px;">Order Management</h1>
+        <h1 style="margin-top:100px;">Order Management</h1>
+  
+        <form method="GET" action="order_management.php">
+            <label for="status">Filter by Status:</label>
+            <select name="status" id="status">
+                <option value="">All</option>
+                <option value="Pending" <?= $status_filter == 'Pending' ? 'selected' : ''; ?>>Pending</option>
+                <option value="Processing" <?= $status_filter == 'Processing' ? 'selected' : ''; ?>>Processing</option>
+                <option value="Shipped" <?= $status_filter == 'Shipped' ? 'selected' : ''; ?>>Shipped</option>
+                <option value="Completed" <?= $status_filter == 'Completed' ? 'selected' : ''; ?>>Completed</option>
+                <option value="Cancelled" <?= $status_filter == 'Cancelled' ? 'selected' : ''; ?>>Cancelled</option>
+            </select>
+            <button type="submit">Apply</button>
+        </form>
 
-<form method="GET" action="order_management.php">
-    <label for="status">Filter by Status:</label>
-    <select name="status" id="status">
-        <option value="">All</option>
-        <option value="Pending" <?= $status_filter == 'Pending' ? 'selected' : ''; ?>>Pending</option>
-        <option value="Processing" <?= $status_filter == 'Processing' ? 'selected' : ''; ?>>Processing</option>
-        <option value="Shipped" <?= $status_filter == 'Shipped' ? 'selected' : ''; ?>>Shipped</option>
-        <option value="Completed" <?= $status_filter == 'Completed' ? 'selected' : ''; ?>>Completed</option>
-        <option value="Cancelled" <?= $status_filter == 'Cancelled' ? 'selected' : ''; ?>>Cancelled</option>
-    </select>
-    <button type="submit">Apply</button>
-</form>
-
-<table class="inventory-table">
-    <thead>
-        <tr>
-            <th>Order ID</th>
-            <th>User ID</th>
-            <th>Total Price</th>
-            <th>Status</th>
-            <th>Created At</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php if (!empty($orders)): ?>
-            <?php foreach ($orders as $order): ?>
+        <table class="inventory-table">
+            <thead>
                 <tr>
-                    <td><?= $order['order_id']; ?></td>
-                    <td><?= htmlspecialchars($order['user_id']); ?></td>
-                    <td>£<?= htmlspecialchars($order['total_price']); ?></td>
-                    <td class="status-<?= strtolower($order['status']); ?>">
-                        <?= htmlspecialchars($order['status']); ?>
-                    </td>
-                    <td><?= htmlspecialchars($order['created_at']); ?></td>
-                    <td>
-                        <?php if ($order['status'] === 'Pending'): ?>
-                            <form action="order_management.php" method="post" style="display: inline;">
-                                <input type="hidden" name="order_id" value="<?= $order['order_id']; ?>">
-                                <input type="hidden" name="status" value="Processing">
-                                <button type="submit" name="update-status">Mark as Processing</button>
-                            </form>
-                            <form action="order_management.php" method="post" style="display: inline;">
-                                <input type="hidden" name="order_id" value="<?= $order['order_id']; ?>">
-                                <input type="hidden" name="status" value="Shipped">
-                                <button type="submit" name="update-status">Mark as Shipped</button>
-                            </form>
-                            <form action="order_management.php" method="post" style="display: inline;">
-                                <input type="hidden" name="order_id" value="<?= $order['order_id']; ?>">
-                                <input type="hidden" name="status" value="Completed">
-                                <button type="submit" name="update-status">Mark as Completed</button>
-                            </form>
-                            <form action="order_management.php" method="post" style="display: inline;">
-                                <input type="hidden" name="order_id" value="<?= $order['order_id']; ?>">
-                                <input type="hidden" name="status" value="Cancelled">
-                                <button type="submit" name="update-status">Mark as Cancelled</button>
-                            </form>
-                        <?php endif; ?>
-                    </td>
+                    <th>Order ID</th>
+                    <th>User ID</th>
+                    <th>Total Price</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
                 </tr>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <tr>
-                <td colspan="6">No orders found.</td>
-            </tr>
-        <?php endif; ?>
-    </tbody>
-</table>
-
+            </thead>
+            <tbody>
+                <?php if (!empty($orders)): ?>
+                    <?php foreach ($orders as $order): ?>
+                        <tr>
+                            <td><?= $order['order_id']; ?></td>
+                            <td><?= htmlspecialchars($order['user_id']); ?></td>
+                            <td>£<?= htmlspecialchars($order['total_price']); ?></td>
+                            <td class="status-<?= strtolower($order['status']); ?>">
+                                <?= htmlspecialchars($order['status']); ?>
+                            </td>
+                            <td><?= htmlspecialchars($order['created_at']); ?></td>
+                            <td>
+                               
+                                <form action="order_management.php" method="post" style="display: inline;">
+                                    <input type="hidden" name="order_id" value="<?= $order['order_id']; ?>">
+                                    <input type="hidden" name="status" value="Processing">
+                                    <button type="submit" name="update-status">Processing</button>
+                                </form>
+                                <form action="order_management.php" method="post" style="display: inline;">
+                                    <input type="hidden" name="order_id" value="<?= $order['order_id']; ?>">
+                                    <input type="hidden" name="status" value="Shipped">
+                                    <button type="submit" name="update-status">Shipped</button>
+                                </form>
+                                <form action="order_management.php" method="post" style="display: inline;">
+                                    <input type="hidden" name="order_id" value="<?= $order['order_id']; ?>">
+                                    <input type="hidden" name="status" value="Completed">
+                                    <button type="submit" name="update-status" class="complete-button">Complete</button>
+                                </form>
+                                <form action="order_management.php" method="post" style="display: inline;">
+                                    <input type="hidden" name="order_id" value="<?= $order['order_id']; ?>">
+                                    <input type="hidden" name="status" value="Cancelled">
+                                    <button type="submit" name="update-status">Cancel</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="6">No orders found.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
