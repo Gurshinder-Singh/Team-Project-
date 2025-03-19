@@ -2,16 +2,17 @@
 session_start();
 require 'db.php';
 
-if (!isset($_SESSION['user_id'])) {
-    die("Please log in to access returns.");
-}
+// Check if user is logged in
+$loggedIn = isset($_SESSION['user_id']);
 
-$user_id = $_SESSION['user_id'];
-$query = "SELECT order_id FROM orders WHERE user_id = :user_id";
-$stmt = $conn->prepare($query);
-$stmt->bindParam(':user_id', $user_id);
-$stmt->execute();
-$orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+if ($loggedIn) {
+    $user_id = $_SESSION['user_id'];
+    $query = "SELECT order_id FROM orders WHERE user_id = :user_id";
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->execute();
+    $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +28,12 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
             color: white;
             font-family: 'Century Gothic', sans-serif;
             margin: 0;
-            padding: 0;
+            padding-top: 75px; /* Moves everything directly under the nav bar */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
         }
 
         .navbar {
@@ -38,8 +44,6 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
             width: 100%;
             top: 0;
             background-color: #363636;
-            transition: top 0.3s ease-in-out;
-            will-change: transform;
             z-index: 1000;
         }
 
@@ -49,6 +53,7 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
             padding: 14px 20px;
             flex: 1;
             text-align: center;
+            font-weight: bold;
         }
 
         .navbar-logo img {
@@ -57,65 +62,13 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
             margin: 0 auto;
         }
 
-        .dropdown {
-            position: relative;
-            display: inline-block;
-            flex: 1;
-        }
-
-        .dropbtn {
-            background-color: #363636;
-            color: white;
-            padding: 14px 20px;
-            width: 70px;
-            height: 70px;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .menu-icon {
-            height: 50px;
-            width: auto;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #363636;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .dropdown-content a {
-            color: white;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
         .return-section {
             text-align: center;
-            padding: 50px 20px;
-            background-color: #412920;
+            padding: 30px 20px;
+            background-color: #3b2418;
             border-radius: 10px;
-            margin: 100px auto;
-            max-width: 600px;
+            margin: 10px auto; /* Reduced margin to move it up */
+            width: 600px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
@@ -128,16 +81,17 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .return-section p {
             font-size: 1.1em;
             margin-bottom: 15px;
+            color: white;
         }
 
         .return-form {
             max-width: 500px;
             margin: 0 auto;
+            text-align: left;
         }
 
         .return-form label {
             display: block;
-            text-align: left;
             font-weight: bold;
             color: #f0c14b;
             margin: 10px 0 5px;
@@ -147,16 +101,16 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .return-form textarea,
         .return-form button {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
+            padding: 12px;
+            margin: 8px 0;
             border-radius: 5px;
             border: none;
+            font-size: 1rem;
         }
 
-        .return-form select,
         .return-form textarea {
-            background-color: #f9f9f9;
-            color: black;
+            resize: none;
+            height: 100px;
         }
 
         .return-form button {
@@ -165,6 +119,7 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
             font-weight: bold;
             cursor: pointer;
             transition: background 0.3s ease;
+            text-transform: uppercase;
         }
 
         .return-form button:hover {
@@ -173,59 +128,68 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </style>
 </head>
 <body>
-    <div class="navbar" id="navbar">
-        <div class="dropdown">
-            <button class="dropbtn">
-                <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
-            </button>
-            <div class="dropdown-content">
-                <a href="about.php">About Us</a>
-                <a href="contact.php">Contact Us</a>
-                <a href="FAQ.php">FAQs</a>
-                <a href="returns.php">Returns</a>
-            </div>
+
+<div class="navbar" id="navbar">
+    <a href="homepage.php">HOME</a>
+    <a href="products_page.php">PRODUCTS</a>
+    <div class="navbar-logo">
+        <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
+    </div>
+    <?php if (!$loggedIn): ?>
+        <a href="login.php">LOGIN</a>
+    <?php else: ?>
+        <a href="profile.php">PROFILE</a>
+        <a href="logout.php">LOGOUT</a>
+    <?php endif; ?>
+    <a href="checkout.php">BASKET</a>
+</div>
+
+<<!-- Show Login Form if not logged in -->
+<?php if (!$loggedIn): ?>
+    <div class="login-container">
+        <h1>Login</h1>
+        <form method="POST" action="login.php">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required>
+
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+        <div class="signup-link">
+            <p>Don't have an account? <a href="sign_up.php">Sign Up</a></p>
+            <p><a href="forgot_password.php">Forgot Password?</a></p>
         </div>
-        <a href="homepage.php">HOME</a>
-        <a href="products_page.php">PRODUCTS</a>
-        <div class="navbar-logo">
-            <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
-        </div>
-        <?php if (isset($_SESSION['user_id'])): ?>
-            <a href="profile.php">PROFILE</a>
-            <a href="logout.php">LOGOUT</a>
-        <?php else: ?>
-            <a href="login.php">LOGIN</a>
-        <?php endif; ?>
-        <a href="checkout.php">BASKET</a>
-        <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-            <a href="admin_page.php">ADMIN</a>
-        <?php endif; ?>
     </div>
 
-   <section class="return-section">
-    <h1>Request a Return</h1>
-    <p>Please select the order you want to return and provide additional details.</p>
-    <form class="return-form" action="returns_handler.php" method="POST">
-        <label for="order_id">Order ID:</label>
-        <select name="order_id" required>
-            <?php foreach ($orders as $order): ?>
-                <option value="<?= htmlspecialchars($order['order_id']); ?>"><?= htmlspecialchars($order['order_id']); ?></option>
-            <?php endforeach; ?>
-        </select>
+<?php else: ?>
+    <!-- Show Return Form if logged in -->
+    <section class="return-section">
+        <h1>Request a Return</h1>
+        <p>Please select the order you want to return and provide additional details.</p>
+        <form class="return-form" action="returns_handler.php" method="POST">
+            <label for="order_id">Order ID:</label>
+            <select name="order_id" required>
+                <?php foreach ($orders as $order): ?>
+                    <option value="<?= htmlspecialchars($order['order_id']); ?>"><?= htmlspecialchars($order['order_id']); ?></option>
+                <?php endforeach; ?>
+            </select>
 
-        <label for="reason">Reason for Return:</label>
-        <select name="reason" required>
-            <option value="Damaged Item">Damaged Item</option>
-            <option value="Incorrect Item">Incorrect Item</option>
-            <option value="Other">Other</option>
-        </select>
+            <label for="reason">Reason for Return:</label>
+            <select name="reason" required>
+                <option value="Damaged Item">Damaged Item</option>
+                <option value="Incorrect Item">Incorrect Item</option>
+                <option value="Other">Other</option>
+            </select>
 
-        <label for="details">Additional Details:</label>
-        <textarea name="details" placeholder="Provide any relevant details..." rows="4" required></textarea>
+            <label for="details">Additional Details:</label>
+            <textarea name="details" placeholder="Explain the issue..." rows="4" required></textarea>
 
-        <button type="submit">Submit Return Request</button>
-    </form>
-</section>
+            <button type="submit">Submit Return Request</button>
+        </form>
+    </section>
+<?php endif; ?>
 
 </body>
 </html>
