@@ -35,62 +35,126 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Luxus Product Catalogue</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="stylesheet.css"/>
 
     <style>
-         .navbar {
-            height: 75px; /* Set your desired navbar height */
+         h2 {
+            color: rgb(0, 0, 0); 
+            text-decoration: underline;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        h2:hover {
+            color: rgb(0, 0, 0); 
+        }
+        section {
+            padding: 10px 20px; 
+        }
+        body, html {
+            height: 100%; 
+            margin: 0;
+        }
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center; 
+            height: calc(100% - 75px); 
+            padding-top: 75px; 
+        }
+        main {
+            text-align: center;
+        }
+
+        .navbar {
+            height: 75px;
             display: flex;
             align-items: center;
             position: fixed;
+            width: 100%;
             top: 0;
             background-color: #363636;
             transition: top 0.3s ease-in-out;
-            will-change: transform; /* Use hardware acceleration */
+            will-change: transform;
         }
 
         .navbar a, 
         .navbar-logo {
-            color: white; /* Set text color to white for links */
+            color: white;
             text-decoration: none;
             padding: 14px 20px;
-            flex: 1; /* Ensure each item takes equal space */
-            text-align: center; /* Center text within buttons */
+            flex: 1;
+            text-align: center;
+            transform: translateX(-100px);
         }
 
         .navbar-logo {
-            display: flex; /* Ensure image aligns in the center */
+            display: flex;
             justify-content: center;
             align-items: center;
-            position: relative; /* Position the container relative for absolute centering */
-            max-width: 200px; /* Ensure the container space remains the same */
+            position: relative;
+            max-width: 200px;
         }
 
         .navbar-logo img {
-            height: 95px; /* Increase the image size */
-            width: auto; /* Maintain aspect ratio */
-            margin: 0 auto; /* Center the image within its container */
+            height: 95px;
+            width: auto;
+            margin: 0 auto;
         }
 
+        .navbar-logo img {
+            height: 95px;
+            width: auto;
+            margin: 0 auto;
+        }
+        
         .dropdown {
             position: relative;
             display: inline-block;
             flex: 1;
         }
-
         .dropbtn {
-            background-color: #363636; /* Match the navbar color */
+            background-color: #363636; 
             color: white;
             padding: 14px 20px;
-            width: 70px; /* Set the container width */
-            height: 70px; /* Set the container height */
+            width: 70px; 
+            height: 70px; 
             border: none;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-
+        .menu-icon {
+            height: 50px; 
+            width: auto; 
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #363636; 
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            transition: transform 0.3s ease-in-out; 
+        }
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        .dropdown-content a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
         /* Background color fix to match screenshot */
         body, html {
             height: 100%;
@@ -98,6 +162,11 @@ try {
             font-family: 'Poppins', sans-serif;
             background-color: #3B2314; /* Correct brown from the screenshot */
             color: white; /* Ensures all text is readable */
+        }
+        
+        .singleProduct{
+            position:fixed;
+            top:100px;
         }
 
         /* Product Image Container */
@@ -122,7 +191,7 @@ try {
             background-color: rgba(0, 0, 0, 0.7);
             color: white;
             border: none;
-            border-radius: 50%;
+            border-radius: 0;
             width: 30px;
             height: 30px;
             font-size: 18px;
@@ -139,47 +208,28 @@ try {
         }
 
         /* Magnifier Glass Effect */
-        .img-magnifier-container {
+         .img-magnifier-container {
             position: relative;
+            display: inline-block;
         }
 
         .img-magnifier-glass {
             position: absolute;
             border: 3px solid #000;
-            border-radius: 50%;
+            border-radius: 0;
             cursor: none;
-            width: 100px;
-            height: 100px;
+            width: 200px;
+            height: 200px;
             display: none;
             background-repeat: no-repeat;
             background-size: 200% 200%;
-        }
-                .menu-icon {
-            height: 50px; /* Adjust the height for the menu icon */
-            width: auto; /* Maintain aspect ratio */
+            pointer-events: none; /* Ensures the glass does not interfere with cursor events */
+            transform: translate(-50%, -50%); /* Centers the magnifier over the cursor */
         }
 
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #363636; /* Match the navbar color */
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            transition: transform 0.3s ease-in-out; /* Add transition for smooth movement */
-        }
-
-        .dropdown-content a {
-            color: white;
-            padding: 12px 16px;
-            text-decoration: none;
+        img {
             display: block;
-            text-align: left;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #ddd;
-            color: white;
+            width: 400px; /* Adjust image size as needed */
         }
 
         /* Ensure Product Name & Other Text is White */
@@ -189,47 +239,105 @@ try {
         .productColor {
             color: white; /* Change all text to white */
         }
+        
+        .productBrand,.productDescription,.productColor{
+            font-weight:normal;
+            color:lightgrey;
+        }
 
         .singleProductPrice {
             color: #FFD700; /* Keep price in gold */
         }
-    </style>   
-    <!-- Navigation bar -->
-   <div class="navbar" id="navbar">
+.saveToWishlist{
+   background-color:#363636;
+   border-radius:8px;
+   width:90%;
+   max-width:300px;
+   font-size:14px;
+   font-weight:bold;
+   position:relative;
+   float:right;
+   right:0;
+}
+.addToCart{
+   position:absolute;
+   float:left;
+}
+
+  .bottomHalf {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 16px;
+    margin: 16px 0;
+  }
+  .customerReview,.adminReply{
+    background-color:white;
+    color:#363636;
+    box-shadow:1px grey;
+    padding:5px;
+    margin:0;
+  }
+  
+  /* Clear floats after containers */
+  .review::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+    
+  /* Increase the font-size of a span element */
+  .review span {
+    font-size: 20px;
+    margin-right: 15px;
+  }
+
+  .review .customerName{
+    font-size: 10px;
+  }
+  .rating{
+    color:#FFD700;
+  }
+  
+  /* Add media queries for responsiveness. This will center both the text and the image inside the container */
+  @media (max-width: 500px) {
+    .container {
+      text-align: center;
+    }
+  
+    </style>
+</head>
+
+<body>
+<!-- NAVIGATION BAR -->
+
+<div class="navbar" id="navbar">
     <div class="dropdown">
-       <button class="dropbtn">
+        <button class="dropbtn">
             <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
         </button>
         <div class="dropdown-content">
-            <a href="about.php">About Us</a>
-            <a href="contact.php">Contact Us</a>
-            <a href="FAQ.php">FAQs</a>
+            <a href="about.php"><i class="fas fa-info-circle"></i> About Us</a>
+            <a href="contact.php"><i class="fas fa-envelope"></i> Contact Us</a>
+            <a href="FAQ.php"><i class="fas fa-question-circle"></i> FAQs</a>
+    <a href="returns.php"><i class="fas fa-undo-alt"></i> Returns</a>
         </div>
     </div>
-    <a href="homepage.php">HOME</a>
-    <a href="products_page.php">PRODUCTS</a>
+    <a href="homepage.php"><i class="fas fa-home"></i> HOME</a>
+    <a href="products_page.php"><i class="fas fa-box-open"></i> PRODUCTS</a>
     <div class="navbar-logo">
         <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
     </div>
     <?php if (isset($_SESSION['user_id'])): ?>
-        <a href="profile.php">PROFILE</a>
-        <a href="logout.php">LOGOUT</a>
+        <a href="profile.php"><i class="fas fa-user"></i> PROFILE</a>
+        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+    <?php elseif (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+        <a href="admin_page.php"><i class="fas fa-user-shield"></i> ADMIN</a>
+        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
     <?php else: ?>
-        <a href="login.php">LOGIN</a>
+        <a href="login.php"><i class="fas fa-sign-in-alt"></i> LOGIN</a>
     <?php endif; ?>
-    <a href="cart.php">BASKET</a>
-    <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-        <a href="admin_page.php">ADMIN</a>
-    <?php endif; ?>
+    <a href="cart.php"><i class="fas fa-shopping-basket"></i> BASKET</a>
 </div>
-</head>
-<header>
-
-
-    
-</header>    
-
-<body>
 
 <div class="singleProduct">
     <div class="topHalf">
@@ -250,11 +358,12 @@ try {
             <p class="productBrand">
                 <strong>Brand:</strong> <?= htmlspecialchars($product['brand']); ?>
             </p>
-            <p class="productDescription">
-                <strong>Description:</strong> <?= htmlspecialchars($product['description']); ?>
-            </p>
+     
             <p class="productColor">
                 <strong>Color:</strong> <?= htmlspecialchars($product['color']); ?>
+            </p>       
+             <p class="productDescription">
+                <strong>Description:</strong> <?= htmlspecialchars($product['description']); ?>
             </p>
             <div class="buttons">
                 <form method="POST" action="add_to_cart.php">
@@ -268,12 +377,13 @@ try {
                         <button class="addToCart" type="button" disabled>Out of Stock</button>
                     <?php endif; ?>
                 </form>
-                <button class="saveToWishlist">Save to wishlist</button>
+                <button type="button" class="saveToWishlist">Save to wishlist</button>
             </div>
         </div>
     </div>
     
-   <div class="bottomHalf">
+    <div class="bottomHalf">
+        <h1>Reviews</h1>
         <div class="review">
             <?php foreach ($feedbacks as $feedback): ?>
                 <p class="customerName"><?= $feedback['fullname'] ?> <span class="rating">
@@ -360,6 +470,16 @@ try {
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
 
 
 
