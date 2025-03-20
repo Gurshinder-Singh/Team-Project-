@@ -28,29 +28,31 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Luxus Product Catalogue</title>
+    <title>Luxus Product Catalogue</title> 
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="stylesheet.css"/>
-    <style>
+    <link rel="stylesheet" href="pp.css"/>
+        <style>
         h2 {
-            color: rgb(0, 0, 0); 
+            color: rgb(0, 0, 0);
             text-decoration: underline;
             cursor: pointer;
             margin-top: 20px;
         }
 
         h2:hover {
-            color: rgb(0, 0, 0); 
+            color: rgb(0, 0, 0);
         }
 
         section {
-            padding: 10px 20px; 
+            padding: 10px 20px;
         }
 
-        body, html {
+        body,
+        html {
             height: 100%;
             margin: 0;
+            font-family:'Poppins',sans-serif;
         }
 
         .main-container {
@@ -66,11 +68,12 @@ try {
             text-align: center;
         }
 
-        .navbar {
+.navbar {
             height: 75px;
             display: flex;
             align-items: center;
             position: fixed;
+            width: 100%;
             top: 0;
             background-color: #363636;
             transition: top 0.3s ease-in-out;
@@ -84,6 +87,7 @@ try {
             padding: 14px 20px;
             flex: 1;
             text-align: center;
+            transform: translateX(-100px);
         }
 
         .navbar-logo {
@@ -140,6 +144,8 @@ try {
             text-decoration: none;
             display: block;
             text-align: left;
+            transform: translateX(0);
+            transition: transform 0.3s ease-in-out;
         }
 
         .dropdown-content a:hover {
@@ -150,78 +156,43 @@ try {
         .dropdown:hover .dropdown-content {
             display: block;
         }
-
-        .search-bar {
-            display: flex;
-            justify-content: flex-end;
-            margin: 20px 0;
-            padding: 10px;
-        }
-
-        .search-bar input[type="text"] {
-            width: 200px;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px 0 0 5px;
-        }
-
-        .search-bar button {
-            padding: 5px 10px;
-            border: 1px solid #ccc;
-            border-left: none;
-            border-radius: 0 5px 5px 0;
-            background-color: #333;
-            color: #fff;
-            cursor: pointer;
-        }
-
-        .search-bar button:hover {
-            background-color: #555;
-        }
-
-        .products_page {
-            padding: 5px 10px;
-            border: 1px solid #ccc;
-            border-left: none;
-            border-radius: 0 5px 5px 0;
-            background-color: #333;
-            color: #fff;
-            cursor: pointer;
-        }
+ 
     </style>
 </head>
 
-<body>
     <header>
-        <div class="navbar" id="navbar">
-            <div class="dropdown">
-                <button class="dropbtn">
-                    <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
-                </button>
-                <div class="dropdown-content">
-                    <a href="about.php">About Us</a>
-                    <a href="contact.php">Contact Us</a>
-                    <a href="FAQ.php">FAQs</a>
-                </div>
-            </div>
-            <a href="homepage.php">HOME</a>
-            <a href="products_page.php">PRODUCTS</a>
-            <div class="navbar-logo">
-                <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
-            </div>
-            <?php if (isset($_SESSION['user_id'])): ?>
-                <a href="profile.php">PROFILE</a>
-                <a href="logout.php">LOGOUT</a>
-            <?php else: ?>
-                <a href="login.php">LOGIN</a>
-            <?php endif; ?>
-            <a href="cart.php">BASKET</a>
-            <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-                <a href="admin_page.php">ADMIN</a>
-            <?php endif; ?>
+    <!-- NavBar Icons-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <div class="navbar" id="navbar">
+    <div class="dropdown">
+        <button class="dropbtn">
+            <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
+        </button>
+        <div class="dropdown-content">
+            <a href="about.php"><i class="fas fa-info-circle"></i> About Us</a>
+            <a href="contact.php"><i class="fas fa-envelope"></i> Contact Us</a>
+            <a href="FAQ.php"><i class="fas fa-question-circle"></i> FAQs</a>
+            <a href="returns.php"><i class="fas fa-undo-alt"></i> Returns</a>
         </div>
-    </header>
-
+    </div>
+    <a href="homepage.php"><i class="fas fa-home"></i> HOME</a>
+    <a href="products_page.php"><i class="fas fa-box-open"></i> PRODUCTS</a>
+    <div class="navbar-logo">
+        <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
+    </div>
+    <?php if (isset($_SESSION['user_id'])): ?>
+        <a href="profile.php"><i class="fas fa-user"></i> PROFILE</a>
+        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+    <?php else: ?>
+        <a href="login.php"><i class="fas fa-sign-in-alt"></i> LOGIN</a>
+    <?php endif; ?>
+    <a href="cart.php"><i class="fas fa-shopping-basket"></i> BASKET</a>
+    <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+        <a href="admin_page.php"><i class="fas fa-user-shield"></i> ADMIN</a>
+    <?php endif; ?>
+</div>
+</header>
+<body>
     <h1>Wishlist</h1>
     <div class="productGrid">
         <?php if (!empty($wishlist_items)): ?>
@@ -233,7 +204,7 @@ try {
                     <a class="productLink" href="product_details.php?id=<?= $item['product_id']; ?>">
                         <h3><?= htmlspecialchars($item['product_name']); ?></h3>
                     </a>
-                    <p class="productPrice">£<?= htmlspecialchars($item['price']); ?></p>
+                    <p class="productPrice"><?= htmlspecialchars($item['price']); ?></p>
                    <div class="buttons">
                     <form action="add_to_cart.php" method="POST" style="display: inline;">
                      <input type="hidden" name="product_id" value="<?= $item['product_id']; ?>">
