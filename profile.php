@@ -613,8 +613,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 .dark-mode .container {
-    background-color: #333; /* Dark background for the content container */
-    color: white; /* Ensure text is white in the container */
+    background-color: #333;
+    color: white;
 }
 
 .dark-mode .container h1, 
@@ -622,48 +622,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 .dark-mode .container h2, 
 .dark-mode form label, 
 .dark-mode .feedback-link {
-    color: white; /* Ensure all text inside the container is white */
+    color: white; 
 }
 
 .dark-mode form input {
     background-color: #444; /* Dark background for inputs */
     border: 1px solid #888; /* Light border for inputs */
-    color: white; /* Text in the input field should be white */
+    color: white;
 }
 
 .dark-mode form input:focus, 
 .dark-mode .refreshBtn {
-    border-color: goldenrod; /* Highlighted border on focus */
-    outline: goldenrod; /* Outline when input is focused */
+    border-color: goldenrod;
+    outline: goldenrod;
 }
 
 .dark-mode form button, 
 .dark-mode .refreshBtn {
-    background-color: #444; /* Dark button background */
-    color: white; /* Light text on buttons */
-    border: 1px solid goldenrod; /* Golden border */
+    background-color: #444;
+    color: white;
+    border: 1px solid goldenrod; 
 }
 
 .dark-mode .navbar {
-    background-color: #111; /* Dark background for the navbar */
+    background-color: #111;
 }
 
 .dark-mode .navbar a, 
 .dark-mode .navbar-logo {
-    color: white; /* White text in navbar */
+    color: white;
 }
 
 .dark-mode .dropdown-content {
-    background-color: #222; /* Dark dropdown background */
+    background-color: #222; 
 }
 
 .dark-mode .dropdown-content a {
-    color: white; /* Light text for dropdown items */
+    color: white;
 }
 
 .dark-mode .dropdown-content a:hover {
-    background-color: #444; /* Lighter hover background */
-    color: gold; /* Gold text on hover */
+    background-color: #444; 
+    color: gold;
 }
 
 .dark-mode .message {
