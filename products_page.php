@@ -48,11 +48,9 @@ if (!empty($_POST['gender'])) {
 if (!empty($_POST['priceRange'])) {
     $priceFilters = [];
     foreach ($_POST['priceRange'] as $index => $range) {
-        // removes '£' and extract min & max prices
         $range = str_replace('£', '', $range);
         list($min, $max) = explode('-', $range);
 
-        // convert to integers
         $min = (int) trim($min);
         $max = (int) trim($max);
         $keyMin = ":priceMin$index";
@@ -86,7 +84,6 @@ try {
 ?>
 
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -96,51 +93,19 @@ try {
     <title>Luxus Product Catalogue</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="stylesheet.css" />
+    <link rel="stylesheet" href="pp.css" />
     <style>
-        h2 {
-            color: rgb(0, 0, 0);
-            text-decoration: underline;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-
-        h2:hover {
-            color: rgb(0, 0, 0);
-        }
-
-        section {
-            padding: 10px 20px;
-        }
-
-        body,
-        html {
-            height: 100%;
-            margin: 0;
-        }
-
-        .main-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: calc(100% - 75px);
-            padding-top: 75px;
-        }
-
-        main {
-            text-align: center;
-        }
-
-        .navbar {
+.navbar {
             height: 75px;
             display: flex;
             align-items: center;
             position: fixed;
+            width: 100%;
             top: 0;
             background-color: #363636;
             transition: top 0.3s ease-in-out;
             will-change: transform;
+            z-index: 1000;
         }
 
         .navbar a,
@@ -166,22 +131,6 @@ try {
             margin: 0 auto;
         }
 
-        .footer {
-            background-color: #363636;
-            color: gold;
-            text-align: center;
-            height: auto;
-            padding: 20px;
-            width: 100%;
-            position: relative;
-            bottom: 0;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
         .dropdown {
             position: relative;
             display: inline-block;
@@ -201,22 +150,96 @@ try {
             justify-content: center;
         }
 
-        .wishlist {
-            padding: 5px 10px;
-            border: 1px solid #ccc;
-            border-radius: 0 5px 5px 0;
-            background-color: #333;
-            color: #fff;
-            cursor: pointer;
+        .menu-icon {
+            height: 50px;
+            width: auto;
         }
 
-        .filter {
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #363636;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        h2 {
+            color: rgb(0, 0, 0);
+            text-decoration: underline;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        h2:hover {
+            color: rgb(0, 0, 0);
+        }
+
+        section {
+            padding: 10px 20px;
+        }
+
+        body {
+    background-color:rgb(255, 255, 255); /* Creme white color */
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+}
+        
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100% - 75px);
+            padding-top: 75px;
+        }
+
+        main {
+            text-align: center;
+        }
+
+        .footer {
+            background-color: #363636;
+            color: gold;
+            text-align: center;
+            height: auto;
+            padding: 20px;
+            width: 100%;
+            position: relative;
+            bottom: 0;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .filter,.wishlist{
             padding: 5px 10px;
             border: 1px solid #ccc;
             border-radius: 0 5px 5px 0;
             background-color: #333;
             color: #fff;
             cursor: pointer;
+
         }
 
         .filter button:hover {
@@ -225,10 +248,12 @@ try {
         }
 
         .dropdownFilter {
-            position: relative;
+         
             display: inline-block;
-            margin-right: 15px;
-            box-shadow: 100px;
+            margin-right: 5px;
+            box-shadow: 100px;  
+        margin-left:5px;        
+        position:relative;
         }
 
         .dropbutton {
@@ -239,6 +264,7 @@ try {
             cursor: pointer;
             font-size: 16px;
             border-radius: 5px;
+         
         }
 
         .dropbutton:hover {
@@ -275,154 +301,78 @@ try {
             white-space: nowrap;
         }
 
-        .menu-icon {
-            height: 50px;
-            width: auto;
-        }
 
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #363636;
-            min-width: 160px;
-            box-shadow: 0px 8px 200px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .dropdown-content a {
-            color: white;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #ddd;
-            color: white;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .productGrid {
-            margin: 20px;
-            /* Add margin around the grid */
-        }
-
-        .search-bar {
-            display: flex;
-            justify-content: flex-end;
-            margin: 20px 0;
-            padding: 10px;
-        }
-
-        .search-bar input[type="text"] {
-            width: 200px;
+.wishlist:hover {
+    background-color: goldenrod;
+    color: black;
+}
+.wishlist{
+position:relative;
+float:right;
+}
+.search{
+position:relative;
+float:right;
+}
+        .searchBar{
+                    width: 200px;
             padding: 5px;
             border: 1px solid #ccc;
             border-radius: 5px 0 0 5px;
+
         }
 
-        .search-bar button {
+        .searchBtn {
             padding: 5px 10px;
             border: 1px solid #ccc;
             border-left: none;
             border-radius: 0 5px 5px 0;
-            background-color: #333;
-            color: #fff;
             cursor: pointer;
+            background-color:#363636;
+            color:white;
+
         }
 
-        .search-bar button:hover {
-            background-color: #555;
-        }
     </style>
+    <!-- NavBar Icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 
 <header>
-    <!-- Navigation bar -->
-    <div class="navbar" id="navbar">
-        <div class="dropdown">
-            <button class="dropbtn">
-                <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
-            </button>
-            <div class="dropdown-content">
-                <a href="about.php">About Us</a>
-                <a href="contact.php">Contact Us</a>
-                <a href="FAQ.php">FAQs</a>
-            </div>
+<!-- NAVIGATION BAR -->
+<div class="navbar" id="navbar">
+    <div class="dropdown">
+        <button class="dropbtn">
+            <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
+        </button>
+        <div class="dropdown-content">
+            <a href="about.php"><i class="fas fa-info-circle"></i> About Us</a>
+            <a href="contact.php"><i class="fas fa-envelope"></i> Contact Us</a>
+            <a href="FAQ.php"><i class="fas fa-question-circle"></i> FAQs</a>
+            <a href="returns.php"><i class="fas fa-undo-alt"></i> Returns</a>
         </div>
-        <a href="homepage.php">HOME</a>
-        <a href="products_page.php">PRODUCTS</a>
-        <div class="navbar-logo">
-            <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
-        </div>
-        <?php if (isset($_SESSION['user_id'])): ?>
-            <a href="profile.php">PROFILE</a>
-            <a href="logout.php">LOGOUT</a>
-        <?php else: ?>
-            <a href="login.php">LOGIN</a>
-        <?php endif; ?>
-        <a href="cart.php">BASKET</a>
-        <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-            <a href="admin_page.php">ADMIN</a>
-        <?php endif; ?>
     </div>
-
-    <script>
-        let prevScrollpos = window.pageYOffset;
-        let debounce;
-
-        window.onscroll = function () {
-            clearTimeout(debounce);
-
-            debounce = setTimeout(function () {
-                let currentScrollPos = window.pageYOffset;
-                if (prevScrollpos > currentScrollPos) {
-                    document.getElementById("navbar").style.top = "0";
-                } else {
-                    document.getElementById("navbar").style.top = "-50px";
-                }
-                prevScrollpos = currentScrollPos;
-            }, 100); // Adjust the debounce delay as necessary
-        }
-    </script>
-
+    <a href="homepage.php"><i class="fas fa-home"></i> HOME</a>
+    <a href="products_page.php"><i class="fas fa-box-open"></i> PRODUCTS</a>
+    <div class="navbar-logo">
+        <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
+    </div>
+    <?php if (isset($_SESSION['user_id'])): ?>
+        <a href="profile.php"><i class="fas fa-user"></i> PROFILE</a>
+        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+    <?php else: ?>
+        <a href="login.php"><i class="fas fa-sign-in-alt"></i> LOGIN</a>
+    <?php endif; ?>
+    <a href="cart.php"><i class="fas fa-shopping-basket"></i> BASKET</a>
+    <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+        <a href="admin_page.php"><i class="fas fa-user-shield"></i> ADMIN</a>
+    <?php endif; ?>
+</div>
+<!-- NAVIGATION BAR END! -->
 </header>
 
 <body>
-    <!-- Navigation bar -->
-    <div class="navbar" id="navbar">
-        <div class="dropdown">
-            <button class="dropbtn">
-                <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
-            </button>
-            <div class="dropdown-content">
-                <a href="about.php">About Us</a>
-                <a href="contact.php">Contact Us</a>
-                <a href="FAQ.php">FAQs</a>
-            </div>
-        </div>
-        <a href="homepage.php">HOME</a>
-        <a href="products_page.php">PRODUCTS</a>
-        <div class="navbar-logo">
-            <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
-        </div>
-
-        <?php if (isset($_SESSION['user_id'])): ?>
-            <a href="profile.php">PROFILE</a>
-            <a href="logout.php">LOGOUT</a>
-        <?php elseif (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']): ?>
-            <a href="login.php">LOGIN</a>
-        <?php endif; ?>
-        <a href="checkout.php">BASKET</a>
-        <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-            <a href="admin_page.php">ADMIN</a>
-        <?php endif; ?>
-    </div>
+    
 
     <h1>Product Catalogue</h1>
     <div id="filterSortBar">
@@ -445,6 +395,10 @@ try {
                     <div>
                         <input type="checkbox" id="tag Heuer" name="brand[]" value="Tag Heuer">
                         <label for="tag Heuer">Tag Heuer</label>
+                    </div>
+                     <div>
+                        <input type="checkbox" id="Tissot" name="brand[]" value="Tissot">
+                        <label for="tissot">Tissot</label>
                     </div>
                 </div>
             </div>
@@ -494,31 +448,39 @@ try {
                 <button class="dropbutton">Price &#8595</button>
                 <div class="filterOptions">
                     <div>
-                        <input type="checkbox" id="price1" name="priceRange[]" value="£0-£1000">
-                        <label for="price1">£0-£1000</label>
-                    </div>
-                    <div>
                         <input type="checkbox" id="price2" name="priceRange[]" value="£1000-£2000">
-                        <label for="price2">£1000-£2000</label>
+                        <label for="price1">£1000-£2000</label>
                     </div>
                     <div>
                         <input type="checkbox" id="price3" name="priceRange[]" value="£2000-£4000">
-                        <label for="price3">£2000-£4000</label>
+                        <label for="price2">£2000-£4000</label>
                     </div>
                     <div>
                         <input type="checkbox" id="price4" name="priceRange[]" value="£4000-£6000">
-                        <label for="price4">£4000-£6000</label>
+                        <label for="price3">£4000-£6000</label>
                     </div>
+                    <div>
+                        <input type="checkbox" id="price4" name="priceRange[]" value="£6000-£8000">
+                        <label for="price4">£6000-£8000</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="price4" name="priceRange[]" value="£8000-£10000">
+                        <label for="price5">£8000-£10000</label>
+                    </div>    
+                    <div>
+                        <input type="checkbox" id="price4" name="priceRange[]" value="£10000-£12000">
+                        <label for="price6">£10000-£12000</label>
+                    </div>    
                 </div>
             </div>
             <button type="submit" class="filter">FILTER</button>
-
+            <div class="search">
             <form method="POST" action="" class="search-bar">
-                <input type="text" name="search" placeholder="Search for a product..."
+                <input type="text" name="search" class="searchBar" placeholder="Search for a product..."
                     value="<?= htmlspecialchars($search); ?>" />
-                <button type="submit">Search</button>
+                <button type="submit" class="searchBtn">Search</button>
             </form>
-
+            </div>
             <a class="wishlist" href="wishlist.php">WISHLIST</a>
 
             <?php if (isset($_GET['wishlist'])): ?>
@@ -610,12 +572,6 @@ try {
     <footer class="footer">
         <div class="footer-content">
             <p>&copy; 2024 LUXUS. All rights reserved.</p>
-            <p>Follow us on social media!</p>
-            <div class="social-icons">
-                <a href="#" class="social-icon">Facebook</a>
-                <a href="#" class="social-icon">Instagram</a>
-                <a href="#" class="social-icon">Twitter</a>
-            </div>
         </div>
     </footer>
 
