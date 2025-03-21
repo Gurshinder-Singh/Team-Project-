@@ -55,34 +55,41 @@ if (isset($_POST['clear_cart'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Your Cart</title>
+    <link rel="icon" type="image/favicon" href="asset/LUXUS_logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <!-- NavBar Icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="stylesheet.css">
-    <div class="navbar" id="navbar">
-        <div class="dropdown">
-            <button class="dropbtn">
-                <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
-            </button>
-            <div class="dropdown-content">
-                <a href="about.php">About Us</a>
-                <a href="contact.php">Contact Us</a>
-                <a href="FAQ.php">FAQs</a>
-            </div>
+<div class="navbar" id="navbar">
+    <div class="dropdown">
+        <button class="dropbtn">
+            <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
+        </button>
+        <div class="dropdown-content">
+            <a href="about.php"><i class="fas fa-info-circle"></i> About Us</a>
+            <a href="contact.php"><i class="fas fa-envelope"></i> Contact Us</a>
+            <a href="FAQ.php"><i class="fas fa-question-circle"></i> FAQs</a>
+    <a href="returns.php"><i class="fas fa-undo-alt"></i> Returns</a>
         </div>
-        <a href="homepage.php">HOME</a>
-        <a href="products_page.php">PRODUCTS</a>
-        <div class="navbar-logo">
-            <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
-        </div>
-        <?php if (isset($_SESSION['user_id'])): ?>
-            <a href="profile.php">PROFILE</a>
-            <a href="logout.php">LOGOUT</a>
-        <?php elseif (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']): ?>
-            <a href="login.php">LOGIN</a>
-        <?php endif; ?>
-        <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-            <a href="admin_page.php">ADMIN</a>
-        <?php endif; ?>
-        <a href="checkout.php">BASKET</a>
     </div>
+	<button id="darkModeToggle">Toggle Dark Mode</button>
+    <a href="homepage.php"><i class="fas fa-home"></i> HOME</a>
+    <a href="products_page.php"><i class="fas fa-box-open"></i> PRODUCTS</a>
+    <div class="navbar-logo">
+        <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
+    </div>
+    <?php if (isset($_SESSION['user_id'])): ?>
+        <a href="profile.php"><i class="fas fa-user"></i> PROFILE</a>
+        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+    <?php elseif (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+        <a href="admin_page.php"><i class="fas fa-user-shield"></i> ADMIN</a>
+        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+    <?php else: ?>
+        <a href="login.php"><i class="fas fa-sign-in-alt"></i> LOGIN</a>
+    <?php endif; ?>
+    <a href="cart.php"><i class="fas fa-shopping-basket"></i> BASKET</a>
+</div>
     <style>
         h2 {
             color: rgb(0, 0, 0);
@@ -117,7 +124,7 @@ if (isset($_POST['clear_cart'])) {
             text-align: center;
         }
 
-        .navbar {
+        ..navbar {
             height: 75px;
             display: flex;
             align-items: center;
@@ -153,56 +160,60 @@ if (isset($_POST['clear_cart'])) {
             margin: 0 auto;
         }
 
-        .dropdown {
-            position: relative;
-            display: inline-block;
-            flex: 1;
-        }
+.dropdown {
+    position: relative;
+    display: inline-block;
+    flex: 1;
+}
 
-        .dropbtn {
-            background-color: #363636;
-            color: white;
-            padding: 14px 20px;
-            width: 70px;
-            height: 70px;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+.dropbtn {
+    background-color: #363636; 
+    color: white;
+    padding: 14px 20px;
+    width: 70px; 
+    height: 70px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        .menu-icon {
-            height: 50px;
-            width: auto;
-        }
+.menu-icon {
+    height: 50px; 
+    width: auto; 
+}
 
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #363636;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            transition: transform 0.3s ease-in-out;
-        }
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #363636; 
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    transition: transform 0.3s ease-in-out; 
+}
 
-        .dropdown-content a {
-            color: white;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-        }
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    transform: translateX(0); 
+    transition: transform 0.3s ease-in-out; 
+}
 
-        .dropdown-content a:hover {
-            background-color: #ddd;
-            color: black;
-        }
+.dropdown-content a:hover {
+    background-color: #ddd;
+    color: black;
 
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
 
 table.cartTable {
     position: relative;
@@ -220,7 +231,7 @@ table.cartTable {
 
 th, td {
     padding: 10px;
-    border: 1px solid #363636;
+    
     text-align: center;
 }
 
@@ -258,53 +269,76 @@ th:nth-child(4), td:nth-child(4) {
 th:nth-child(5), td:nth-child(5) {
     width: 10%;
 }
-        .buttons-container {
-            display: flex;
-            justify-content: flex-start;
-            margin: 20px;
-        }
 
-        .cartTotal {
+
+        .checkoutButton {
             background-color: #363636;
             color: white;
             text-align: center;
-            padding: 10px;
+            padding: 30px;
             margin-top: 20px;
             font-size: 20px;
             font-weight: bold;
+            position:fixed;
+            bottom:0;
+            right:0;
+            left:0;
+            text-decoration:none;
         }
 
-        .checkoutButton {
-            background-color: #4CAF50;
+        .cartTotal{
+            background-color:#d4af37;
             color: white;
-            padding: 10px;
-            font-size: 16px;
-            cursor: pointer;
+            padding:10px;
+            font-size: 20px;
             border: none;
             border-radius: 5px;
-            display: inline-block;
-            margin-left: 10px;
-            text-decoration: none;
+            text-decoration:none;
+            position:fixed;
+            bottom:75px;
+            right:0;
+            left:0;
+            text-align:center;
         }
 
         .checkoutButton:hover {
-            background-color: #45a049;
+            background-color: darkgreen;
         }
 
         .clearCartButton {
-            background-color: red;
+            background-color:darkred;
             color: white;
-            padding: 10px;
+            padding: 10px 0 10px 0;
             font-size: 16px;
             cursor: pointer;
-            border: none;
-            border-radius: 5px;
+           position: relative;
+    margin: 80px auto;
+    text-align: center;
+    padding-top: 10px;
+    border-radius: 1px;
         }
 
         .clearCartButton:hover {
             background-color: darkred;
         }
+.backToProductsButton {
+    background-color: #363636;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    position:relative;
+    left:0;
+    text-decoration:none;
+    margin: 80px auto;
+    text-align: center;
+    padding-top: 10px;
+    border-radius: 1px;
+}
 
+.backToProductsButton:hover {
+    background-color: darkblue;
+}
 .updateButton {
     background-color: #4CAF50;
     color: white;
@@ -336,22 +370,7 @@ input[type="number"]:focus {
     border-color: #4CAF50;
 }
 
-.backToProductsButton {
-    background-color: #008CBA;
-    color: white;
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    display: inline-block;
-    text-decoration: none;
-    margin-left: 10px;
-}
 
-.backToProductsButton:hover {
-    background-color: #007BB5;
-}
 
 .removeButton {
     background-color: red;
@@ -368,6 +387,115 @@ input[type="number"]:focus {
 .removeButton:hover {
     background-color: darkred;
 }
+
+/* Dark Mode Styles */
+.dark-mode {
+    background-color: #1e1e1e; /* Dark background for the entire body */
+    color: white; /* Light text color */
+}
+
+.dark-mode .cartTable {
+    background-color: #333; /* Dark background for the cart table */
+    color: white; /* White text */
+    border: 1px solid #888; /* Light border for the table */
+}
+
+.dark-mode .cartTable th,
+.dark-mode .cartTable tfoot {
+    background-color: #444; /* Dark background for table header/footer */
+    color: white; /* White text in header/footer */
+}
+
+.dark-mode .cartTable tr:nth-child(even) {
+    background-color: #555; /* Darker background for even rows */
+}
+
+.dark-mode .cartTable tr:hover {
+    background-color: #666; /* Dark hover effect */
+}
+
+.dark-mode .cartTable td, 
+.dark-mode .cartTable th {
+    padding: 10px;
+    text-align: center;
+}
+
+.dark-mode .checkoutButton, 
+.dark-mode .backToProductsButton {
+    background-color: #444; /* Dark button background */
+    color: white; /* White text on buttons */
+    border: 1px solid #888; /* Light border */
+    padding: 15px;
+    font-size: 18px;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.dark-mode .checkoutButton:hover, 
+.dark-mode .backToProductsButton:hover {
+    background-color: #555; /* Lighter button background on hover */
+}
+
+.dark-mode .cartTotal {
+    background-color: #d4af37; /* Keep golden background for cart total */
+    color: white;
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.dark-mode .removeButton {
+    background-color: red;
+    color: white;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.dark-mode .updateButton {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.dark-mode .updateButton:hover {
+    background-color: #45a049;
+}
+
+.dark-mode input[type="number"] {
+    background-color: #555; /* Dark background for number inputs */
+    color: white; /* White text */
+    border: 2px solid #888; /* Light border for inputs */
+}
+
+.dark-mode input[type="number"]:focus {
+    border-color: #4CAF50; /* Green border on focus */
+    outline: none;
+}
+
+.dark-mode .error {
+    color: #d9534f; /* Red error message */
+}
+
+#darkModeToggle {
+    background-color: transparent;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    padding: 10px 15px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+
+
     </style>
 </head>
 <body>
@@ -376,7 +504,7 @@ input[type="number"]:focus {
 
 <div class="buttons-container">
     <div class="buttons-container">
-        <a href="products_page.php" class="backToProductsButton">Back to Products</a>
+        <a href="products_page.php" class="backToProductsButton">←Back to Products</a>
     </div>
     <form method="POST" action="cart.php">
         <button type="submit" name="clear_cart" class="clearCartButton">Clear Cart</button>
@@ -436,6 +564,10 @@ input[type="number"]:focus {
         ?>
     </p>
 </div>
-
+<script>
+    document.getElementById('darkModeToggle').addEventListener('click', function() {
+    document.body.classList.toggle('dark-mode');
+});
+    </script>
 </body>
 </html>
