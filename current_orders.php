@@ -65,16 +65,17 @@ $current_orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
             background-color: #363636;
             transition: top 0.3s ease-in-out;
             will-change: transform;
-            z-index: 1000;
         }
 
-        .navbar a, .navbar-logo {
+        .navbar a, 	
+		.navbar-logo {
             color: white;
             text-decoration: none;
             padding: 14px 20px;
             flex: 1;
             text-align: center;
-            font-weight: bold;
+            transform: translatex(-100px);
+        	
         }
 
         .navbar-logo img {
@@ -86,22 +87,25 @@ $current_orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .dropdown {
             position: relative;
             display: inline-block;
+        	flex: 1;
         }
 
         .dropbtn {
             background-color: #363636;
+            color: white;
+            padding: 14px 20px;
+            width: 70px;
+            height: 70px;
             border: none;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 10px;
         }
 
         .menu-icon {
-            height: 18px; /* SIGNIFICANTLY SMALLER */
-            width: 18px;
-            cursor: pointer;
+            height: 50px;
+            width: auto;
         }
 
         .dropdown-content {
@@ -109,8 +113,9 @@ $current_orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
             position: absolute;
             background-color: #363636;
             min-width: 160px;
-            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
+            transition: transform 0.3s ease-in-out;
         }
 
         .dropdown-content a {
@@ -119,6 +124,8 @@ $current_orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
             text-decoration: none;
             display: block;
             text-align: left;
+            transform: translateX(0);
+            transition: transform 0.3s ease-in-out;
         }
 
         .dropdown-content a:hover {
@@ -131,7 +138,7 @@ $current_orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         body {
-            background-color: #5C4033;
+            
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding-top: 110px;
@@ -141,8 +148,7 @@ $current_orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
             padding: 40px;
             max-width: 700px;
             margin: auto;
-            background: #835C44;
-            color: white;
+            background-color:white;
             border-radius: 12px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
             text-align: center;
@@ -150,7 +156,7 @@ $current_orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         h1 {
             text-align: center;
-            color: #F0C987;
+   
         }
 
         .order-box {
@@ -185,41 +191,92 @@ $current_orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         .no-orders {
-            color: white;
+            color:goldenrod;
             font-size: 18px;
             font-weight: bold;
             margin-top: 20px;
         }
+
+/* Dark Mode Styles */
+.dark-mode {
+    background-color: #1e1e1e; /* Dark background for the entire body */
+}
+
+/* Dark Mode Styles for the Current Orders Page */
+.dark-mode .container {
+    background-color: #2d2d2d;
+    color: white;
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .order-box {
+    background-color: #363636;
+    color: white;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .order-box strong {
+    color: #d4af37;
+}
+
+.dark-mode .no-orders {
+    color: #d4af37;
+}
+
+.dark-mode .remove-button {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+.dark-mode .remove-button:hover {
+    background-color: #cc0000;
+}
+
     </style>
 </head>
 <body>
 
+<body>
+ 
 <!-- NAVIGATION BAR -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
 <div class="navbar" id="navbar">
     <div class="dropdown">
         <button class="dropbtn">
             <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
         </button>
         <div class="dropdown-content">
-            <a href="about.php">ABOUT US</a>
-            <a href="contact.php">CONTACT US</a>
-            <a href="FAQ.php">FAQs</a>
-            <a href="returns.php">RETURNS</a>
+            <a href="about.php"><i class="fas fa-info-circle"></i> About Us</a>
+            <a href="contact.php"><i class="fas fa-envelope"></i> Contact Us</a>
+            <a href="FAQ.php"><i class="fas fa-question-circle"></i> FAQs</a>
+            <a href="returns.php"><i class="fas fa-undo-alt"></i> Returns</a>
+            <a href="javascript:void(0);" id="darkModeToggle">
+                <i class="fas fa-moon"></i> <span>Dark Mode</span>
+            </a>
         </div>
     </div>
-    <a href="homepage.php">HOME</a>
-    <a href="products_page.php">PRODUCTS</a>
+    <a href="homepage.php"><i class="fas fa-home"></i> HOME</a>
+    <a href="products_page.php"><i class="fas fa-box-open"></i> PRODUCTS</a>
     <div class="navbar-logo">
         <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
     </div>
     <?php if (isset($_SESSION['user_id'])): ?>
-        <a href="profile.php">PROFILE</a>
-        <a href="logout.php">LOGOUT</a>
+        <a href="profile.php"><i class="fas fa-user"></i> PROFILE</a>
+        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+    <?php elseif (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+        <a href="admin_page.php"><i class="fas fa-user-shield"></i> ADMIN</a>
+        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
     <?php else: ?>
-        <a href="login.php">LOGIN</a>
+        <a href="login.php"><i class="fas fa-sign-in-alt"></i> LOGIN</a>
     <?php endif; ?>
-    <a href="checkout.php">BASKET</a>
-</div>
+    <a href="cart.php"><i class="fas fa-shopping-basket"></i> BASKET</a>
+
+    </div>
+
+<!-- NAVIGATION BAR END! -->
+    
+</body>
 
 <!-- Orders Section -->
 <div class="container">
@@ -242,6 +299,38 @@ $current_orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <p class="no-orders">No current orders found.</p>
     <?php endif; ?>
 </div>
+
+<!-- JS Script for light & dark mode button -->
+    <script>
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+    const darkModeIcon = document.querySelector('#darkModeToggle i');
+    const darkModeText = darkModeToggle.querySelector('span'); 
+    const savedTheme = localStorage.getItem('theme');
+
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        darkModeIcon.classList.remove('fa-moon');
+        darkModeIcon.classList.add('fa-sun');
+        darkModeText.textContent = 'Light Mode'; 
+    }
+
+    darkModeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+
+        if (body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            darkModeIcon.classList.remove('fa-moon');
+            darkModeIcon.classList.add('fa-sun');
+            darkModeText.textContent = 'Light Mode'; 
+        } else {
+            localStorage.setItem('theme', 'light');
+            darkModeIcon.classList.remove('fa-sun');
+            darkModeIcon.classList.add('fa-moon');
+            darkModeText.textContent = 'Dark Mode'; 
+        }
+    });
+</script>
 
 </body>
 </html>
