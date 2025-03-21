@@ -1,17 +1,18 @@
 <?php
-require_once 'db.php'; //DATABASE CONNECTION
+require_once 'db.php'; // DATABASE CONNECTION
 session_start();
 $is_admin_page = false; // IS ADMIN ?
-$error = ''; 
+$error = '';  
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email']);
     $password = $_POST['password'];
 
- if (empty($email) || empty($password)) {
+    if (empty($email) || empty($password)) {
         $error = "Both fields are required.";
     } else {
         try {
+            // Check if the user is an admin
             $stmt = $conn->prepare("SELECT * FROM admin_log WHERE email = :email");
             $stmt->bindParam(':email', $email);
             $stmt->execute();
@@ -24,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 header("Location: homepage.php");
                 exit();
             }
+
             $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email");
             $stmt->bindParam(':email', $email, PDO::PARAM_STR);
             $stmt->execute();
@@ -34,7 +36,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['name'] = $user['name'];
                 unset($_SESSION['is_admin']); 
-                header("Location: homepage.php");
+
+                // Redirect to checkout if coming from checkout button
+                if (!empty($_SESSION['redirect_after_login'])) {
+                    $redirect_url = $_SESSION['redirect_after_login'];
+                    unset($_SESSION['redirect_after_login']); 
+                    header("Location: " . $redirect_url);
+                } else {
+                    header("Location: homepage.php"); 
+                }
                 exit();
             } else {
                 $error = "Invalid email or password.";
@@ -45,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
 
    <!-- HTML START -->
 <!DOCTYPE html>
@@ -70,10 +81,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="about.php"><i class="fas fa-info-circle"></i> About Us</a>
             <a href="contact.php"><i class="fas fa-envelope"></i> Contact Us</a>
             <a href="FAQ.php"><i class="fas fa-question-circle"></i> FAQs</a>
-    <a href="returns.php"><i class="fas fa-undo-alt"></i> Returns</a>
+            <a href="returns.php"><i class="fas fa-undo-alt"></i> Returns</a>
+            <a href="javascript:void(0);" id="darkModeToggle">
+                <i class="fas fa-moon"></i> <span>Dark Mode</span>
+            </a>
         </div>
     </div>
-	<button id="darkModeToggle">Toggle Dark Mode</button>
     <a href="homepage.php"><i class="fas fa-home"></i> HOME</a>
     <a href="products_page.php"><i class="fas fa-box-open"></i> PRODUCTS</a>
     <div class="navbar-logo">
@@ -89,10 +102,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <a href="login.php"><i class="fas fa-sign-in-alt"></i> LOGIN</a>
     <?php endif; ?>
     <a href="cart.php"><i class="fas fa-shopping-basket"></i> BASKET</a>
-</div>
-<!-- NAVIGATION BAR END! -->
 
-    
+    </div>
+
+<!-- NAVIGATION BAR END! -->
     
 </body>
 </html>
@@ -109,16 +122,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background-color: #363636;
             transition: top 0.3s ease-in-out;
             will-change: transform;
-            z-index: 1000;
         }
 
-        .navbar a,
+        .navbar a, 
         .navbar-logo {
             color: white;
             text-decoration: none;
             padding: 14px 20px;
             flex: 1;
             text-align: center;
+            transform: translateX(-100px);
         }
 
         .navbar-logo {
@@ -135,73 +148,72 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin: 0 auto;
         }
 
-.dropdown {
-    position: relative;
-    display: inline-block;
-    flex: 1;
-}
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            flex: 1;
+        }
 
-.dropbtn {
-    background-color: #363636; 
-    color: white;
-    padding: 14px 20px;
-    width: 70px; 
-    height: 70px;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+        .dropbtn {
+            background-color: #363636;
+            color: white;
+            padding: 14px 20px;
+            width: 70px;
+            height: 70px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.menu-icon {
-    height: 50px; 
-    width: auto; 
-}
+        .menu-icon {
+            height: 50px;
+            width: auto;
+        }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #363636; 
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    transition: transform 0.3s ease-in-out; 
-}
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #363636;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            transition: transform 0.3s ease-in-out;
+        }
 
-.dropdown-content a {
-    color: white;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-    transform: translateX(0); 
-    transition: transform 0.3s ease-in-out; 
-}
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            transform: translateX(0);
+            transition: transform 0.3s ease-in-out;
+        }
 
-.dropdown-content a:hover {
-    background-color: #ddd;
-    color: black;
+        .dropdown-content a:hover {
+            background-color: #ddd;
+            color: black;
+        }
 
-}
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
 
-.dropdown:hover .dropdown-content {
-    display: block;
-}
+        .image-container {
+            display: flex;
+            justify-content: center;
+            position: absolute;
+        }
 
-.image-container {
-    display: flex;
-    justify-content: center;
-    position: absolute;
-}
-
-.image-container img {
-    width: 400px; 
-    height: auto; 
-    position: absolute;
-    left: 1000px; 
-    top: 200px;
-}
+        .image-container img {
+            width: 400px;
+            height: auto;
+            position: absolute;
+            left: 1000px;
+            top: 200px;
+        }
 .error {
     color: red;
     font-weight: bold;
@@ -270,19 +282,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     color: #d9534f;
 }
 
- 
-
-#darkModeToggle {
-    background-color: transparent;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    padding: 10px 15px;
-    text-decoration: none;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
 
 </style>
 
@@ -307,11 +306,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         </div>
     </div>
-        <script>
-    document.getElementById('darkModeToggle').addEventListener('click', function() {
-    document.body.classList.toggle('dark-mode');
-});
-    </script>
+<!-- JS Script for light & dark mode button -->
+    <script>
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+    const darkModeIcon = document.querySelector('#darkModeToggle i');
+    const darkModeText = darkModeToggle.querySelector('span'); 
+    const savedTheme = localStorage.getItem('theme');
+
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        darkModeIcon.classList.remove('fa-moon');
+        darkModeIcon.classList.add('fa-sun');
+        darkModeText.textContent = 'Light Mode'; 
+    }
+
+    darkModeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+
+        if (body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            darkModeIcon.classList.remove('fa-moon');
+            darkModeIcon.classList.add('fa-sun');
+            darkModeText.textContent = 'Light Mode'; 
+        } else {
+            localStorage.setItem('theme', 'light');
+            darkModeIcon.classList.remove('fa-sun');
+            darkModeIcon.classList.add('fa-moon');
+            darkModeText.textContent = 'Dark Mode'; 
+        }
+    });
+</script>
+
     
 </body>
 </html>
