@@ -327,10 +327,10 @@ th:nth-child(5), td:nth-child(5) {
     padding: 10px;
     font-size: 16px;
     cursor: pointer;
-    position:relative;
+    position:absolute;
     left:0;
     text-decoration:none;
-    margin: 80px auto;
+    margin-top:20px;
     text-align: center;
     padding-top: 10px;
     border-radius: 1px;
@@ -395,23 +395,23 @@ input[type="number"]:focus {
 }
 
 .dark-mode .cartTable {
-    background-color: #333; /* Dark background for the cart table */
-    color: white; /* White text */
-    border: 1px solid #888; /* Light border for the table */
+    background-color: #333;
+    color: white; 
+    border: 1px solid #888; 
 }
 
 .dark-mode .cartTable th,
 .dark-mode .cartTable tfoot {
-    background-color: #444; /* Dark background for table header/footer */
-    color: white; /* White text in header/footer */
+    background-color: #444; 
+    color: white; 
 }
 
 .dark-mode .cartTable tr:nth-child(even) {
-    background-color: #555; /* Darker background for even rows */
+    background-color: #555;
 }
 
 .dark-mode .cartTable tr:hover {
-    background-color: #666; /* Dark hover effect */
+    background-color: #666;
 }
 
 .dark-mode .cartTable td, 
@@ -424,7 +424,7 @@ input[type="number"]:focus {
 .dark-mode .backToProductsButton {
     background-color: #444; /* Dark button background */
     color: white; /* White text on buttons */
-    border: 1px solid #888; /* Light border */
+    border: 1px solid #888; 
     padding: 15px;
     font-size: 18px;
     text-align: center;
@@ -468,18 +468,18 @@ input[type="number"]:focus {
 }
 
 .dark-mode input[type="number"] {
-    background-color: #555; /* Dark background for number inputs */
-    color: white; /* White text */
-    border: 2px solid #888; /* Light border for inputs */
+    background-color: #555;
+    color: white;
+    border: 2px solid #888; 
 }
 
 .dark-mode input[type="number"]:focus {
-    border-color: #4CAF50; /* Green border on focus */
+    border-color: #4CAF50;
     outline: none;
 }
 
 .dark-mode .error {
-    color: #d9534f; /* Red error message */
+    color: #d9534f; 
 }
 
 #darkModeToggle {
