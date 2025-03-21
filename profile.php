@@ -321,9 +321,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="contact.php"><i class="fas fa-envelope"></i> Contact Us</a>
             <a href="FAQ.php"><i class="fas fa-question-circle"></i> FAQs</a>
             <a href="returns.php"><i class="fas fa-undo-alt"></i> Returns</a>
+            <a href="javascript:void(0);" id="darkModeToggle">
+                <i class="fas fa-moon"></i> <span>Dark Mode</span>
+            </a>
         </div>
     </div>
-    <button id="darkModeToggle">Toggle Dark Mode</button>
     <a href="homepage.php"><i class="fas fa-home"></i> HOME</a>
     <a href="products_page.php"><i class="fas fa-box-open"></i> PRODUCTS</a>
     <div class="navbar-logo">
@@ -396,6 +398,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             padding: 14px 20px;
             flex: 1;
             text-align: center;
+        	transform: translateX(-100px);
         }
 
         .navbar-logo {
@@ -644,47 +647,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     border: 1px solid goldenrod; 
 }
 
-.dark-mode .navbar {
-    background-color: #111;
-}
-
-.dark-mode .navbar a, 
-.dark-mode .navbar-logo {
-    color: white;
-}
-
-.dark-mode .dropdown-content {
-    background-color: #222; 
-}
-
-.dark-mode .dropdown-content a {
-    color: white;
-}
-
-.dark-mode .dropdown-content a:hover {
-    background-color: #444; 
-    color: gold;
-}
-
 .dark-mode .message {
     color: #d9534f; /* Keep red message color in dark mode */
 }
-#darkModeToggle {
-    background-color: transparent;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    padding: 10px 15px;
-    text-decoration: none;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
+
     </style>
     <script>
-    document.getElementById('darkModeToggle').addEventListener('click', function() {
-    document.body.classList.toggle('dark-mode');
-});
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+    const darkModeIcon = document.querySelector('#darkModeToggle i');
+    const darkModeText = darkModeToggle.querySelector('span'); 
+    const savedTheme = localStorage.getItem('theme');
+
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        darkModeIcon.classList.remove('fa-moon');
+        darkModeIcon.classList.add('fa-sun');
+        darkModeText.textContent = 'Light Mode'; 
+    }
+
+    darkModeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+
+        if (body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            darkModeIcon.classList.remove('fa-moon');
+            darkModeIcon.classList.add('fa-sun');
+            darkModeText.textContent = 'Light Mode'; 
+        } else {
+            localStorage.setItem('theme', 'light');
+            darkModeIcon.classList.remove('fa-sun');
+            darkModeIcon.classList.add('fa-moon');
+            darkModeText.textContent = 'Dark Mode'; 
+        }
+    });
     </script>
 </head>
 <body>
