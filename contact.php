@@ -24,8 +24,7 @@ session_start();
             will-change: transform;
         }
 
-        .navbar a,
-        .navbar-logo {
+        .navbar a, .navbar-logo {
             color: white;
             text-decoration: none;
             padding: 14px 20px;
@@ -90,95 +89,130 @@ session_start();
             display: block;
         }
 
-        .form-section {
-            padding: 50px 20px;
-            background-color: #412920;
-            color: white;
-            text-align: center;
-            margin: 20px;
-            border-radius: 10px;
-        }
+    body {
+    background-color: white;
+    color: black;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding-top: 100px; /* Adjust for fixed navbar */
+}
 
-        .form-section h1 {
-            color: #f0c14b;
-        }
+/* Contact Form Section Styling */
+.form-section {
+    background-color: #f2f2f2;
+    color: black;
+    border: 2px solid gold;
+    padding: 40px 20px;
+    margin: 40px auto;
+    max-width: 600px;
+    border-radius: 12px;
+    text-align: center;
+}
 
-        .form-section form {
-            max-width: 500px;
-            margin: 0 auto;
-        }
+.form-section h1 {
+    color: #d4af37; /* Gold */
+    margin-bottom: 20px;
+}
 
-        .form-section input,
-        .form-section textarea,
-        .form-section button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: none;
-        }
+.form-section p {
+    font-size: 16px;
+    margin-bottom: 30px;
+    color: #333;
+}
 
-        .form-section button {
-            background-color: #f0c14b;
-            color: black;
-            font-weight: bold;
-            cursor: pointer;
-        }
+.form-section form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-section label {
+    color: #d4af37;
+    margin-bottom: 5px;
+    align-self: center;
+    font-weight: bold;
+}
+
+.form-section input,
+.form-section textarea {
+    width: 80%;
+    padding: 12px;
+    margin: 10px 0 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    text-align: center;
+    color: #000;
+}
+
+.form-section textarea {
+    resize: none;
+}
+
+.form-section button {
+    background-color: #d4af37;
+    color: black;
+    font-weight: bold;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.form-section button:hover {
+    background-color: gold;
+}
+
+.success-message {
+    color: green;
+    font-weight: bold;
+    margin-top: 15px;
+    font-size: 16px;
+}
+
     </style>
 </head>
 <body>
-   <!-- NAVIGATION BAR -->
-   
+    
+ <!-- NAVIGATION BAR -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
 <div class="navbar" id="navbar">
     <div class="dropdown">
         <button class="dropbtn">
             <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
         </button>
         <div class="dropdown-content">
-            <a href="about.php">About Us</a>
-            <a href="contact.php">Contact Us</a>
-            <a href="FAQ.php">FAQs</a>
+            <a href="about.php"><i class="fas fa-info-circle"></i> About Us</a>
+            <a href="contact.php"><i class="fas fa-envelope"></i> Contact Us</a>
+            <a href="FAQ.php"><i class="fas fa-question-circle"></i> FAQs</a>
+            <a href="returns.php"><i class="fas fa-undo-alt"></i> Returns</a>
+            <a href="javascript:void(0);" id="darkModeToggle">
+                <i class="fas fa-moon"></i> <span>Dark Mode</span>
+            </a>
         </div>
     </div>
-    <a href="homepage.php">HOME</a>
-    <a href="products_page.php">PRODUCTS</a>
+    <a href="homepage.php"><i class="fas fa-home"></i> HOME</a>
+    <a href="products_page.php"><i class="fas fa-box-open"></i> PRODUCTS</a>
     <div class="navbar-logo">
         <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
     </div>
     <?php if (isset($_SESSION['user_id'])): ?>
-        <a href="profile.php">PROFILE</a>
-        <a href="logout.php">LOGOUT</a>
+        <a href="profile.php"><i class="fas fa-user"></i> PROFILE</a>
+        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+    <?php elseif (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+        <a href="admin_page.php"><i class="fas fa-user-shield"></i> ADMIN</a>
+        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
     <?php else: ?>
-        <a href="login.php">LOGIN</a>
+        <a href="login.php"><i class="fas fa-sign-in-alt"></i> LOGIN</a>
     <?php endif; ?>
-    <a href="checkout.php">BASKET</a>
-    <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-        <a href="admin_page.php">ADMIN</a>
-    <?php endif; ?>
-</div>
-    <!-- NAVIGATION BAR END! -->
-    
-</div>
+    <a href="cart.php"><i class="fas fa-shopping-basket"></i> BASKET</a>
 
-    <script>
-        let prevScrollpos = window.pageYOffset;
-        let debounce;
+    </div>
+
+<!-- NAVIGATION BAR END! -->
     
-        window.onscroll = function() {
-            clearTimeout(debounce);
-    
-            debounce = setTimeout(function() {
-                let currentScrollPos = window.pageYOffset;
-                if (prevScrollpos > currentScrollPos) {
-                    document.getElementById("navbar").style.top = "0";
-                } else {
-                    document.getElementById("navbar").style.top = "-50px";
-                }
-                prevScrollpos = currentScrollPos;
-            }, 100); 
-        }
-    </script>
-    
+</div>
     
 </body>
 </html>
@@ -287,48 +321,105 @@ session_start();
     left: 1000px;
     top: 200px;
 }
+
+/* Dark Mode Styles */
+.dark-mode {
+    background-color: #1e1e1e; /* Dark background for the entire body */
+    color: white; /* Light text color */
+}
+
+/* Dark Mode Styles for the Form Section */
+.dark-mode .form-section {
+    background-color: #2d2d2d;
+    color: white;
+    border-color: #d4af37;
+}
+
+.dark-mode .form-section h1 {
+    color: #d4af37;
+}
+
+.dark-mode .form-section p {
+    color: #ccc;
+}
+
+.dark-mode .form-section label {
+    color: #d4af37;
+}
+
+.dark-mode .form-section input,
+.dark-mode .form-section textarea {
+    color: black;
+    border-color: #555;
+}
+
+.dark-mode .form-section button {
+    background-color: #d4af37;
+    color: black;
+}
+
+.dark-mode .form-section button:hover {
+    background-color: gold;
+}
+
 </style>
 
-   <!-- Contact Section -->
-   <section class="form-section">
+  <!--  Contact Form Section -->
+<section class="form-section">
     <h1>Contact Us</h1>
-    <p>We’d love to hear from you! If you have questions, feedback, or need assistance, please use the form below to get in touch with us. Our team will respond within 1-2 business days.</p>
-    <form action="action_page.php" method="post" style="display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 400px;">
-        <!-- Email Address -->
-        <label for="email" style="color: gold; align-self: flex-start;">Email Address:</label>
-        <input type="email" id="email" name="email" placeholder="e.g., example@example.com" required style="width: 100%; padding: 10px; margin-bottom: 15px;">
+    <p>We’d love to hear from you! If you have questions, feedback, or need assistance, please use the form below. Our team will respond within 1-2 business days.</p>
 
-        <!-- Subject -->
-        <label for="subject" style="color: gold; align-self: flex-start;">Subject:</label>
-        <input type="text" id="subject" name="subject" placeholder="What can we help you with?" required style="width: 100%; padding: 10px; margin-bottom: 15px;">
+    <?php if (isset($_SESSION['success_message'])): ?>
+        <p class="success-message"><?= $_SESSION['success_message']; ?></p>
+        <?php unset($_SESSION['success_message']); ?>
+    <?php endif; ?>
 
-        <!-- Message -->
-        <label for="message" style="color: gold; align-self: flex-start;">Message:</label>
-        <textarea id="message" name="message" placeholder="Write your message here..." rows="6" required style="width: 100%; padding: 10px; margin-bottom: 15px;"></textarea>
+    <form action="contact_form_handler.php" method="POST">
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" name="email" placeholder="e.g., example@example.com" required>
 
-        <!-- Submit Button -->
-        <button type="submit" style="padding: 10px 20px; background-color: #363636; color: white; border: none; cursor: pointer;">Send Message</button>
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" name="subject" placeholder="What can we help you with?" required>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" placeholder="Write your message here..." rows="6" required></textarea>
+
+        <button type="submit">Send Message</button>
     </form>
 </section>
 
-    <!-- JavaScript for Navbar Scroll Effect -->
-    <script>
-        let prevScrollpos = window.pageYOffset;
-        let debounce;
 
-        window.onscroll = function() {
-            clearTimeout(debounce);
 
-            debounce = setTimeout(function() {
-                let currentScrollPos = window.pageYOffset;
-                if (prevScrollpos > currentScrollPos) {
-                    document.getElementById("navbar").style.top = "0";
-                } else {
-                    document.getElementById("navbar").style.top = "-75px";
-                }
-                prevScrollpos = currentScrollPos;
-            }, 100);
-        };
-    </script>
+   
+ <script>
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+    const darkModeIcon = document.querySelector('#darkModeToggle i');
+    const darkModeText = darkModeToggle.querySelector('span'); 
+    const savedTheme = localStorage.getItem('theme');
+
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        darkModeIcon.classList.remove('fa-moon');
+        darkModeIcon.classList.add('fa-sun');
+        darkModeText.textContent = 'Light Mode'; 
+    }
+
+    darkModeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+
+        if (body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            darkModeIcon.classList.remove('fa-moon');
+            darkModeIcon.classList.add('fa-sun');
+            darkModeText.textContent = 'Light Mode'; 
+        } else {
+            localStorage.setItem('theme', 'light');
+            darkModeIcon.classList.remove('fa-sun');
+            darkModeIcon.classList.add('fa-moon');
+            darkModeText.textContent = 'Dark Mode'; 
+        }
+    });
+</script>
 </body>
 </html>
