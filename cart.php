@@ -327,10 +327,10 @@ th:nth-child(5), td:nth-child(5) {
     padding: 10px;
     font-size: 16px;
     cursor: pointer;
-    position:relative;
+    position:absolute;
     left:0;
     text-decoration:none;
-    margin: 80px auto;
+    margin-top:20px;
     text-align: center;
     padding-top: 10px;
     border-radius: 1px;
