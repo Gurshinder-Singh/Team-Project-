@@ -355,48 +355,48 @@ try {
 
     /* Dark Mode Specific Changes */
     .dark-mode .singleProductName {
-        color: white; /* Text turns white in dark mode */
+        color: white; 
     }
 
     .dark-mode .productDescription,
     .dark-mode .productBrand,
     .dark-mode .productColor {
-        color: white; /* Text turns white in dark mode */
+        color: white;
     }
 
     .dark-mode .singleProductPrice {
-        color: #D4AF37; /* Price stays gold */
+        color: #D4AF37; 
     }
 
     .dark-mode .saveToWishlist,
     .dark-mode .addToCart {
-        background-color: #444; /* Dark background for buttons */
-        color: white; /* White text */
+        background-color: #444; 
+        color: white; 
     }
 
     .dark-mode .customerReview,
     .dark-mode .adminReply {
-        background-color: #000; /* Black background for reviews */
-        color: white; /* White text */
+        background-color: #000; 
+        color: white; 
     }
 
     
 
     .dark-mode .navbar a {
-        color: white; /* White text in navbar */
+        color: white; 
     }
 
     .dark-mode .dropdown-content a {
-        color: white; /* White text in dropdown */
+        color: white;
     }
 
     .dark-mode .zoom-btn {
-        background-color: rgba(0, 0, 0, 0.7); /* Dark zoom button */
+        background-color: rgba(0, 0, 0, 0.7); 
         color: white;
     }
 
     .dark-mode .zoom-btn:hover {
-        background-color: rgba(0, 0, 0, 0.9); /* Dark hover for zoom button */
+        background-color: rgba(0, 0, 0, 0.9); 
     }
 </style>
 
