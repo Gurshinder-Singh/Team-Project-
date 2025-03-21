@@ -301,19 +301,20 @@ try {
             white-space: nowrap;
         }
 
+         .wishlist:hover {
+    	 background-color: goldenrod;
+    	 color: black;
+		}
 
-.wishlist:hover {
-    background-color: goldenrod;
-    color: black;
-}
-.wishlist{
-position:relative;
-float:right;
-}
-.search{
-position:relative;
-float:right;
-}
+		.wishlist{
+		position:relative;
+		float:right;
+		}
+
+		.search{
+		position:relative;
+		float:right;
+		}
         .searchBar{
                     width: 200px;
             padding: 5px;
@@ -332,6 +333,59 @@ float:right;
             color:white;
 
         }
+
+/* Dark Mode Styles */
+.dark-mode {
+    background-color: #1e1e1e;
+    color: white;
+}
+
+.dark-mode .productCard {
+    background-color: #1e1e1e;
+    color: white;
+    border-color: #555;
+}
+
+.dark-mode .footer {
+    background-color: #111;
+    color: gold;
+}
+
+.dark-mode .productPrice {
+    color: #FFD700;
+}
+
+.dark-mode .productLink {
+    color: #FFD700;
+}
+
+.dark-mode .filterOptions {
+    background-color: #1e1e1e;
+    color: white;
+}
+
+.dark-mode .productCard button, .singleProduct button {
+    color: #FFD700;
+}
+
+.dark-mode .footer {
+    background-color: #111;
+}
+
+#darkModeToggle {
+    background-color: transparent;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    padding: 10px 15px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+
+
 
     </style>
     <!-- NavBar Icons-->
@@ -352,6 +406,7 @@ float:right;
             <a href="returns.php"><i class="fas fa-undo-alt"></i> Returns</a>
         </div>
     </div>
+    <button id="darkModeToggle">Toggle Dark Mode</button>
     <a href="homepage.php"><i class="fas fa-home"></i> HOME</a>
     <a href="products_page.php"><i class="fas fa-box-open"></i> PRODUCTS</a>
     <div class="navbar-logo">
@@ -377,7 +432,7 @@ float:right;
     <h1>Product Catalogue</h1>
     <div id="filterSortBar">
         <form method="post" action="products_page.php"> <!-- Set your action script for processing the filter -->
-            <div class="dropdownFilter">
+                    <div class="dropdownFilter">
                 <button class="dropbutton">Brand &#8595</button>
                 <div class="filterOptions">
                     <div>
@@ -566,8 +621,15 @@ float:right;
                 }
             });
         });
+
+document.getElementById('darkModeToggle').addEventListener('click', function() {
+    document.body.classList.toggle('dark-mode');
+});
+
     </script>
 
+    
+    
 
     <footer class="footer">
         <div class="footer-content">
