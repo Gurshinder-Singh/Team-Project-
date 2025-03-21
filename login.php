@@ -216,58 +216,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 /* Dark Mode Styles for Login Container */
 .dark-mode .login-container {
-    background-color: #333; /* Dark background for the login form */
-    color: white; /* White text for login container */
+    background-color: #333;
+    color: white;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Add subtle shadow */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .dark-mode .login-container h1 {
-    color: white; /* White text for the heading */
+    color: white; 
 }
 
 .dark-mode .login-container label {
-    color: white; /* White labels for input fields */
+    color: white;
 }
 
 .dark-mode .login-container input {
-    background-color: #444; /* Dark background for input fields */
-    border: 1px solid #888; /* Light border for input fields */
-    color: white; /* White text inside input fields */
+    background-color: #444;
+    border: 1px solid #888;
+    color: white;
     padding: 10px;
     border-radius: 4px;
     margin-bottom: 10px;
 }
 
 .dark-mode .login-container input:focus {
-    border-color: goldenrod; /* Highlighted border on focus */
-    outline: goldenrod; /* Outline when input is focused */
+    border-color: goldenrod;
+    outline: goldenrod;
 }
 
 .dark-mode .login-container button {
-    background-color: #444; /* Dark button background */
-    color: white; /* White text on button */
-    border: 1px solid goldenrod; /* Golden border for button */
+    background-color: #444;
+    color: white;
+    border: 1px solid goldenrod; 
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
 }
 
 .dark-mode .login-container button:hover {
-    background-color: #555; /* Lighter background on hover */
+    background-color: #555;
 }
 
 .dark-mode .signup-link a {
-    color: gold; /* Gold color for the signup link */
+    color: gold;
 }
 
 .dark-mode .signup-link a:hover {
-    text-decoration: underline; /* Underline on hover for links */
+    text-decoration: underline;
 }
 
 .dark-mode .error {
-    color: #d9534f; /* Red error message color */
+    color: #d9534f;
 }
 
  
