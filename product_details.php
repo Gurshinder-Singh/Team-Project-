@@ -83,16 +83,17 @@ try {
             background-color: #363636;
             transition: top 0.3s ease-in-out;
             will-change: transform;
-            z-index: 1000;
+    		z-index 1000;
         }
 
-        .navbar a,
+        .navbar a, 
         .navbar-logo {
             color: white;
             text-decoration: none;
             padding: 14px 20px;
             flex: 1;
             text-align: center;
+            transform: translateX(-100px);
         }
 
         .navbar-logo {
@@ -341,18 +342,6 @@ try {
         color: gold;
     }
 
-    #darkModeToggle {
-        background-color: transparent;
-        color: white;
-        font-size: 16px;
-        font-weight: bold;
-        border: none;
-        padding: 10px 15px;
-        text-decoration: none;
-        cursor: pointer;
-        transition: color 0.3s ease;
-    }
-
     /* Dark Mode Specific Changes */
     .dark-mode .singleProductName {
         color: white; 
@@ -380,24 +369,6 @@ try {
         color: white; 
     }
 
-    
-
-    .dark-mode .navbar a {
-        color: white; 
-    }
-
-    .dark-mode .dropdown-content a {
-        color: white;
-    }
-
-    .dark-mode .zoom-btn {
-        background-color: rgba(0, 0, 0, 0.7); 
-        color: white;
-    }
-
-    .dark-mode .zoom-btn:hover {
-        background-color: rgba(0, 0, 0, 0.9); 
-    }
 </style>
 
 
@@ -417,10 +388,12 @@ try {
             <a href="contact.php"><i class="fas fa-envelope"></i> Contact Us</a>
             <a href="FAQ.php"><i class="fas fa-question-circle"></i> FAQs</a>
             <a href="returns.php"><i class="fas fa-undo-alt"></i> Returns</a>
+			<a href="javascript:void(0);" id="darkModeToggle">
+                <i class="fas fa-moon"></i> <span>Dark Mode</span>
+            </a>
         </div>
     </div>
-    <button id="darkModeToggle">Toggle Dark Mode</button>
-    <a href="homepage.php"><i class="fas fa-home"></i> HOME</a>
+      <a href="homepage.php"><i class="fas fa-home"></i> HOME</a>
     <a href="products_page.php"><i class="fas fa-box-open"></i> PRODUCTS</a>
     <div class="navbar-logo">
         <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
@@ -569,9 +542,34 @@ try {
         }
     });
 
-document.getElementById("darkModeToggle").addEventListener("click", function() {
-    document.body.classList.toggle("dark-mode");
-});
+const darkModeToggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+    const darkModeIcon = document.querySelector('#darkModeToggle i');
+    const darkModeText = darkModeToggle.querySelector('span'); 
+    const savedTheme = localStorage.getItem('theme');
+
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        darkModeIcon.classList.remove('fa-moon');
+        darkModeIcon.classList.add('fa-sun');
+        darkModeText.textContent = 'Light Mode'; 
+    }
+
+    darkModeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+
+        if (body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            darkModeIcon.classList.remove('fa-moon');
+            darkModeIcon.classList.add('fa-sun');
+            darkModeText.textContent = 'Light Mode'; 
+        } else {
+            localStorage.setItem('theme', 'light');
+            darkModeIcon.classList.remove('fa-sun');
+            darkModeIcon.classList.add('fa-moon');
+            darkModeText.textContent = 'Dark Mode'; 
+        }
+    });
 
 </script>
 
