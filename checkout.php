@@ -2,6 +2,8 @@
 session_start();
 include('db.php');
 
+
+
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['confirm_checkout'])) {
     if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
         die("Your cart is empty. Cannot proceed with checkout.");
@@ -16,16 +18,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['confirm_checkout'])) 
             $total_price += $price * $item['quantity'];
         }
 
-        $user_id = $_SESSION['user_id'];
+		$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
         $status = 'Pending';
 
         $stmt = $conn->prepare("INSERT INTO orders (user_id, total_price, status, created_at) 
-                                VALUES (:user_id, :total_price, :status, NOW())");
-        $stmt->execute([
-            ':user_id' => $user_id,
-            ':total_price' => $total_price,
-            ':status' => $status
-        ]);
+                        VALUES (:user_id, :total_price, :status, NOW())");
+
+			$stmt->bindValue(':user_id', $user_id, $user_id === null ? PDO::PARAM_NULL : PDO::PARAM_INT);
+			$stmt->bindValue(':total_price', $total_price);
+			$stmt->bindValue(':status', $status);
+			$stmt->execute();
+
 
         $order_id = $conn->lastInsertId();
 
@@ -75,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['confirm_checkout'])) 
 
         $conn->commit();
 
-        header("Location: order_confirmation_page.html");
+        header("Location: order_confirmation_page.php");
         exit;
 
     } catch (PDOException $e) {
@@ -94,6 +97,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['confirm_checkout'])) 
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="stylesheet.css"/>
+
+    <script src="https://www.paypal.com/sdk/js?client-id=Aapvn9e6Yygpk75aM9RZZNzMhcCqJr6ns9tD_f6tK29SUVd5YZXEECpI6C5SOrzTRYuWAANDFHsq8sZQ&currency=GBP"></script>
+
     <style>
       
         h2 {
@@ -114,6 +120,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['confirm_checkout'])) 
         body, html {
             height: 100%;
             margin: 0;
+            overflow:auto;
+        
         }
 
         .main-container {
@@ -333,37 +341,47 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['confirm_checkout'])) 
             }
         }   
     </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
 </head>
 
 <header>
-    <!-- Navigation bar -->
-    <div class="navbar" id="navbar">
-        <div class="dropdown">
-            <button class="dropbtn">
-                <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
-            </button>
-            <div class="dropdown-content">
-                <a href="about.php">About Us</a>
-                <a href="contact.php">Contact Us</a>
-                <a href="FAQ.php">FAQs</a>
+
+<div class="navbar" id="navbar">
+            <div class="dropdown">
+                <button class="dropbtn">
+                    <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
+                </button>
+                <div class="dropdown-content">
+                    <a href="about.php"><i class="fas fa-info-circle"></i> About Us</a>
+                    <a href="contact.php"><i class="fas fa-envelope"></i> Contact Us</a>
+                    <a href="FAQ.php"><i class="fas fa-question-circle"></i> FAQs</a>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <a href="returns.php"><i class="fas fa-undo-alt"></i> Returns</a>
+                        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+                    <?php endif; ?>
+                    <a href="javascript:void(0);" id="darkModeToggle">
+                        <i class="fas fa-moon"></i> <span>Dark Mode</span>
+                    </a>
+                </div>
             </div>
+            <a href="homepage.php"><i class="fas fa-home"></i> HOME</a>
+            <a href="products_page.php"><i class="fas fa-box-open"></i> PRODUCTS</a>
+            <div class="navbar-logo">
+                <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
+            </div>
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <a href="profile.php"><i class="fas fa-user"></i> PROFILE</a>
+            <?php elseif (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+                <a href="admin_page.php"><i class="fas fa-user-shield"></i> ADMIN</a>
+                <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+            <?php else: ?>
+                <a href="login.php"><i class="fas fa-sign-in-alt"></i> LOGIN</a>
+            <?php endif; ?>
+            <?php if (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']): ?>
+                <a href="cart.php"><i class="fas fa-shopping-basket"></i> BASKET</a>
+            <?php endif; ?>
         </div>
-        <a href="homepage.php">HOME</a>
-        <a href="products_page.php">PRODUCTS</a>
-        <div class="navbar-logo">
-            <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
-        </div>
-        <?php if (isset($_SESSION['user_id'])): ?>
-            <a href="profile.php">PROFILE</a>
-            <a href="logout.php">LOGOUT</a>
-        <?php else: ?>
-            <a href="login.php">LOGIN</a>
-        <?php endif; ?>
-        <a href="cart.php">BASKET</a>
-        <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-            <a href="admin_page.php">ADMIN</a>
-        <?php endif; ?>
-    </div>
 </header>
 
 <body>
@@ -390,7 +408,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['confirm_checkout'])) 
 
                 <div class="form-group">
                     <label for="city">City:</label>
-                    <input type="text" id="city" name="city" placeholder="New York" required>
+                    <input type="text" id="city" name="city" placeholder="Birmingham" required>
                 </div>
 
                 <div class="form-group">
@@ -401,6 +419,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['confirm_checkout'])) 
                 <div class="form-group">
                     <label for="country">Country:</label>
                     <select id="country" name="country" required>
+                        <option value="GB">United Kingdom</option>
                         <option value="AF">Afghanistan</option>
                         <option value="AL">Albania</option>
                         <option value="DZ">Algeria</option>
@@ -427,7 +446,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['confirm_checkout'])) 
                         <option value="SE">Sweden</option>
                         <option value="CH">Switzerland</option>
                         <option value="US">United States</option>
-                        <option value="GB">United Kingdom</option>
+                        
                     </select>
                 </div>
             </section>
@@ -440,6 +459,36 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['confirm_checkout'])) 
                         <option value="mastercard">MasterCard</option>
                         <option value="paypal">PayPal</option>
                     </select>
+                    <div id="paypal-button-container"></div>
+
+<script>
+    //PAYPAL API 
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: '<?php echo number_format($total, 2); ?>'
+                    }
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                alert('Transaction completed by ' + details.payer.name.given_name);
+                window.location.href = "order_confirmation_page.php";  
+            });
+        },
+        onCancel: function (data) {
+            alert('Transaction was cancelled.');
+        },
+        onError: function (err) {
+            console.error(err);
+            alert('An error occurred during the transaction.');
+        }
+    }).render('#paypal-button-container');
+</script>
+
                 </div>
 
                 <div class="form-group">
@@ -461,6 +510,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['confirm_checkout'])) 
             <button type="submit" name="confirm_checkout" class="submit-btn">Confirm Purchase</button>
         </form>
     </div>
+                    
 
     <div class="cart-section">
         <h2>Your Cart</h2>
@@ -486,14 +536,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['confirm_checkout'])) 
         } else {
             echo "<p>Your cart is empty.</p>";
         }
-        ?>
-    </div>
-</div>
-
+    
+?>
 <script>
 document.getElementById("checkout").addEventListener("submit", function(event) {
     setTimeout(function() {
-        window.location.href = "order_confirmation_page.html";  
+        window.location.href = "order_confirmation_page.php";  
     }, 3000); 
 });
 </script>
