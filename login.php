@@ -72,42 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!-- NAVIGATION BAR -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-<<<<<<< HEAD
-<div class="navbar" id="navbar">
-    <div class="dropdown">
-        <button class="dropbtn">
-            <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
-        </button>
-        <div class="dropdown-content">
-            <a href="about.php"><i class="fas fa-info-circle"></i> About Us</a>
-            <a href="contact.php"><i class="fas fa-envelope"></i> Contact Us</a>
-            <a href="FAQ.php"><i class="fas fa-question-circle"></i> FAQs</a>
-            <a href="returns.php"><i class="fas fa-undo-alt"></i> Returns</a>
-            <a href="javascript:void(0);" id="darkModeToggle">
-                <i class="fas fa-moon"></i> <span>Dark Mode</span>
-            </a>
-        </div>
-    </div>
-    <a href="homepage.php"><i class="fas fa-home"></i> HOME</a>
-    <a href="products_page.php"><i class="fas fa-box-open"></i> PRODUCTS</a>
-    <div class="navbar-logo">
-        <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
-    </div>
-    <?php if (isset($_SESSION['user_id'])): ?>
-        <a href="profile.php"><i class="fas fa-user"></i> PROFILE</a>
-        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
-    <?php elseif (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-        <a href="admin_page.php"><i class="fas fa-user-shield"></i> ADMIN</a>
-        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
-    <?php else: ?>
-        <a href="login.php"><i class="fas fa-sign-in-alt"></i> LOGIN</a>
-    <?php endif; ?>
-    <a href="cart.php"><i class="fas fa-shopping-basket"></i> BASKET</a>
-
-    </div>
-
-<!-- NAVIGATION BAR END! -->
-=======
  <div class="navbar" id="navbar">
             <div class="dropdown">
                 <button class="dropbtn">
@@ -143,7 +107,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <a href="cart.php"><i class="fas fa-shopping-basket"></i> BASKET</a>
             <?php endif; ?>
         </div>
->>>>>>> 25c06a6eef5b0198942d07aaa52b832f469f1db6
     
 </body>
 </html>
@@ -160,9 +123,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background-color: #363636;
             transition: top 0.3s ease-in-out;
             will-change: transform;
+            z-index: 1000;
         }
 
-        .navbar a, 
+        .navbar a,
         .navbar-logo {
             color: white;
             text-decoration: none;
@@ -226,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             text-decoration: none;
             display: block;
             text-align: left;
-            transform: translateX(0);
+        	transform: translateX(0);
             transition: transform 0.3s ease-in-out;
         }
 
@@ -252,10 +216,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             left: 1000px;
             top: 200px;
         }
-<<<<<<< HEAD
-=======
 
->>>>>>> 25c06a6eef5b0198942d07aaa52b832f469f1db6
 .error {
     color: red;
     font-weight: bold;
@@ -347,8 +308,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         </div>
     </div>
-<<<<<<< HEAD
-=======
     <!-- FOOTER -->
 <footer style="
             background-color: #2c2c2c;
@@ -369,7 +328,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <p style="margin: 0;">&copy; <?= date("Y") ?> LUXUS. All rights reserved.</p>
         </footer>
->>>>>>> 25c06a6eef5b0198942d07aaa52b832f469f1db6
 <!-- JS Script for light & dark mode button -->
     <script>
     const darkModeToggle = document.getElementById('darkModeToggle');
