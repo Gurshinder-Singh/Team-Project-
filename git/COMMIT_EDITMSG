@@ -1,0 +1,60 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch main
+# Your branch and 'origin/main' have diverged,
+# and have 3 and 19 different commits each, respectively.
+#   (use "git pull" to merge the remote branch into yours)
+#
+# Changes to be committed:
+#	modified:   FAQ.php
+#	deleted:    about.css
+#	modified:   about.php
+#	modified:   action_page.php
+#	modified:   add_to_cart.php
+#	deleted:    admin.html
+#	modified:   admin_page.php
+#	new file:   asset/24-60-674_grey.jpg
+#	new file:   asset/Tag_Heuer.jpg
+#	new file:   asset/bv.avif
+#	new file:   asset/o-watch.avif
+#	new file:   asset/omega.jpg
+#	new file:   asset/t-watch.avif
+#	deleted:    billing_info.php
+#	modified:   cart.php
+#	deleted:    checkout.css
+#	deleted:    checkout.html
+#	modified:   checkout.php
+#	deleted:    contact.css
+#	modified:   contact.php
+#	deleted:    dashboard.php
+#	new file:   feedback.css
+#	deleted:    feedback_manager.html
+#	new file:   feedback_manager.php
+#	new file:   feedback_script.js
+#	new file:   forgot_password.php
+#	modified:   homepage.php
+#	modified:   inventorymanagement.php
+#	modified:   login.php
+#	modified:   logout.php
+#	deleted:    loyalty_manager.html
+#	new file:   loyalty_manager.php
+#	modified:   navbar.js
+#	modified:   order_confirmation_page.html
+#	deleted:    product.php
+#	new file:   product_details.php
+#	new file:   products_page.php
+#	deleted:    profile.css
+#	deleted:    profile.html
+#	modified:   profile.php
+#	new file:   reset_password.php
+#	modified:   search.php
+#	modified:   sign_up.php
+#	deleted:    styles.css
+#	modified:   stylesheet.css
+#	new file:   wishlist.php
+#
+# Changes not staged for commit:
+#	modified:   products_page.php
+#
