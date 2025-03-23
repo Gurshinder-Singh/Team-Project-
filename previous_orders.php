@@ -2,28 +2,32 @@
 session_start();
 require 'db.php';
 
-// Ensure user is logged in
 if (!isset($_SESSION['user_id'])) {
     die("Please log in to view your orders.");
 }
 
 $user_id = $_SESSION['user_id'];
 
-// Fetch user's orders
-$orderQuery = "SELECT order_id, total_price, created_at FROM orders WHERE user_id = :user_id ORDER BY created_at DESC";
+$orderQuery = "
+    SELECT o.order_id, o.total_price, o.created_at, p.name AS product_name
+    FROM orders o
+    JOIN order_items oi ON o.order_id = oi.order_id
+    JOIN products p ON oi.product_id = p.product_id
+    WHERE o.user_id = :user_id
+    ORDER BY o.created_at DESC
+";
 $orderStmt = $conn->prepare($orderQuery);
 $orderStmt->bindParam(':user_id', $user_id);
 $orderStmt->execute();
 $orders = $orderStmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Fetch return statuses for user orders
+
 $returnQuery = "SELECT order_id, status FROM returns WHERE user_id = :user_id";
 $returnStmt = $conn->prepare($returnQuery);
 $returnStmt->bindParam(':user_id', $user_id);
 $returnStmt->execute();
 $returns = $returnStmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Map return status to orders
 $returnStatuses = [];
 foreach ($returns as $return) {
     $returnStatuses[$return['order_id']] = $return['status'];
@@ -39,14 +43,12 @@ foreach ($returns as $return) {
     <link rel="stylesheet" href="stylesheet.css">
     <style>
         body {
-            background-color: #5c4033;
-            color: white;
+          
             font-family: 'Century Gothic', sans-serif;
             margin: 0;
             padding: 0;
         }
 
-        /* NAVIGATION BAR */
         .navbar {
             height: 75px;
             display: flex;
@@ -57,16 +59,18 @@ foreach ($returns as $return) {
             background-color: #363636;
             transition: top 0.3s ease-in-out;
             will-change: transform;
-            z-index: 1000;
+			z-index: 1000;
         }
 
-        .navbar a, .navbar-logo {
+        .navbar a, 	
+		.navbar-logo {
             color: white;
             text-decoration: none;
             padding: 14px 20px;
             flex: 1;
             text-align: center;
-            font-weight: bold;
+            transform: translatex(-100px);
+        	
         }
 
         .navbar-logo img {
@@ -78,22 +82,25 @@ foreach ($returns as $return) {
         .dropdown {
             position: relative;
             display: inline-block;
+        	flex: 1;
         }
 
         .dropbtn {
             background-color: #363636;
+            color: white;
+            padding: 14px 20px;
+            width: 70px;
+            height: 70px;
             border: none;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 10px; /* Adjusted padding */
         }
 
         .menu-icon {
-            height: 18px; /* SIGNIFICANTLY SMALLER */
-            width: 18px;  /* Ensuring uniform size */
-            cursor: pointer;
+            height: 50px;
+            width: auto;
         }
 
         .dropdown-content {
@@ -101,8 +108,9 @@ foreach ($returns as $return) {
             position: absolute;
             background-color: #363636;
             min-width: 160px;
-            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
+            transition: transform 0.3s ease-in-out;
         }
 
         .dropdown-content a {
@@ -111,6 +119,8 @@ foreach ($returns as $return) {
             text-decoration: none;
             display: block;
             text-align: left;
+            transform: translateX(0);
+            transition: transform 0.3s ease-in-out;
         }
 
         .dropdown-content a:hover {
@@ -123,23 +133,20 @@ foreach ($returns as $return) {
         }
 
         .container {
-            max-width: 800px;
+            padding: 40px;
+            max-width: 700px;
             margin: 100px auto;
-            background: #412920;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            background-color:white;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
             text-align: center;
         }
-
-        h2 {
-            color: #f0c14b;
-        }
+      
 
         table {
             width: 100%;
             border-collapse: collapse;
-            background: white;
+            background: #e6e6e6;
             color: black;
             margin-top: 20px;
             border-radius: 10px;
@@ -153,8 +160,8 @@ foreach ($returns as $return) {
         }
 
         th {
-            background-color: #f0c14b;
-            color: black;
+            background-color: goldenrod;
+            color: #5c4033;
         }
 
         .return-status {
@@ -178,36 +185,98 @@ foreach ($returns as $return) {
         .no-return {
             color: grey;
         }
+		
+		
+		.dark-mode {
+    	background-color: #1e1e1e; 
+		}
+
+.dark-mode .container {
+    background-color: #2d2d2d;
+    color: white;
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode table {
+    background-color: #363636;
+    color: white;
+}
+
+.dark-mode th {
+    background-color: #d4af37; 
+    color: #1e1e1e; 
+}
+
+.dark-mode td {
+    border-color: #555;
+}
+
+.dark-mode .return-status.approved {
+    color: #4caf50; 
+}
+
+.dark-mode .return-status.rejected {
+    color: #ff4d4d; 
+}
+
+.dark-mode .return-status.pending {
+    color: #ffa500; 
+}
+
+.dark-mode .return-status.no-return {
+    color: #ccc; 
+}
+
+.dark-mode .feedback-link {
+    color: #d4af37; 
+}
+
+.dark-mode .feedback-link:hover {
+    color: #ffd700; 
+}
+	
     </style>
 </head>
 <body>
 
 <!-- NAVIGATION BAR -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
 <div class="navbar" id="navbar">
-    <div class="dropdown">
-        <button class="dropbtn">
-            <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
-        </button>
-        <div class="dropdown-content">
-            <a href="about.php">ABOUT US</a>
-            <a href="contact.php">CONTACT US</a>
-            <a href="FAQ.php">FAQs</a>
-            <a href="returns.php">RETURNS</a>
+            <div class="dropdown">
+                <button class="dropbtn">
+                    <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
+                </button>
+                <div class="dropdown-content">
+                    <a href="about.php"><i class="fas fa-info-circle"></i> About Us</a>
+                    <a href="contact.php"><i class="fas fa-envelope"></i> Contact Us</a>
+                    <a href="FAQ.php"><i class="fas fa-question-circle"></i> FAQs</a>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <a href="returns.php"><i class="fas fa-undo-alt"></i> Returns</a>
+                        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+                    <?php endif; ?>
+                    <a href="javascript:void(0);" id="darkModeToggle">
+                        <i class="fas fa-moon"></i> <span>Dark Mode</span>
+                    </a>
+                </div>
+            </div>
+            <a href="homepage.php"><i class="fas fa-home"></i> HOME</a>
+            <a href="products_page.php"><i class="fas fa-box-open"></i> PRODUCTS</a>
+            <div class="navbar-logo">
+                <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
+            </div>
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <a href="profile.php"><i class="fas fa-user"></i> PROFILE</a>
+            <?php elseif (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+                <a href="admin_page.php"><i class="fas fa-user-shield"></i> ADMIN</a>
+                <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+            <?php else: ?>
+                <a href="login.php"><i class="fas fa-sign-in-alt"></i> LOGIN</a>
+            <?php endif; ?>
+            <?php if (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']): ?>
+                <a href="cart.php"><i class="fas fa-shopping-basket"></i> BASKET</a>
+            <?php endif; ?>
         </div>
-    </div>
-    <a href="homepage.php">HOME</a>
-    <a href="products_page.php">PRODUCTS</a>
-    <div class="navbar-logo">
-        <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
-    </div>
-    <?php if (isset($_SESSION['user_id'])): ?>
-        <a href="profile.php">PROFILE</a>
-        <a href="logout.php">LOGOUT</a>
-    <?php else: ?>
-        <a href="login.php">LOGIN</a>
-    <?php endif; ?>
-    <a href="checkout.php">BASKET</a>
-</div>
 
 <div class="container">
     <h2>Your Previous Orders</h2>
@@ -215,20 +284,23 @@ foreach ($returns as $return) {
     <table>
         <thead>
             <tr>
-                <th>Order ID</th>
-                <th>Total Price</th>
-                <th>Order Date</th>
-                <th>Return Status</th>
+            <th>Order ID</th>
+            <th>Product Name</th>
+            <th>Total Price</th>
+            <th>Order Date</th>
+            <th>Return Status</th>
+            <th>Review</th>
             </tr>
         </thead>
         <tbody>
             <?php if (!empty($orders)): ?>
                 <?php foreach ($orders as $order): ?>
                     <tr>
-                        <td><?= htmlspecialchars($order['order_id']) ?></td>
-                        <td>£<?= htmlspecialchars($order['total_price']) ?></td>
-                        <td><?= htmlspecialchars($order['created_at']) ?></td>
-                        <td>
+                       <td><?= htmlspecialchars($order['order_id']) ?></td>
+                       <td><?= htmlspecialchars($order['product_name']) ?></td>
+                       <td>£<?= htmlspecialchars($order['total_price']) ?></td>
+                       <td><?= htmlspecialchars($order['created_at']) ?></td>
+                       <td>
                             <?php if (isset($returnStatuses[$order['order_id']])): ?>
                                 <?php if ($returnStatuses[$order['order_id']] === 'Approved'): ?>
                                     <span class="return-status approved">Approved</span>
@@ -241,6 +313,8 @@ foreach ($returns as $return) {
                                 <span class="return-status no-return">No Return</span>
                             <?php endif; ?>
                         </td>
+                        <td> <a href="Feedback.php?order_id=<?= htmlspecialchars($order['order_id']) ?>" class="feedback-link">Leave Feedback</a></td>
+
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>
@@ -250,7 +324,63 @@ foreach ($returns as $return) {
             <?php endif; ?>
         </tbody>
     </table>
+            
 </div>
+<!-- FOOTER -->
+<footer style="
+            background-color: #2c2c2c;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            font-size: 13px;
+            margin-top: 50px;
+            position: relative;
+            width: 100%;
+            z-index: 2;
+        ">
+            <div style="margin-bottom: 10px; font-size: 18px;">
+                <a href="#" style="color: white; margin: 0 8px;"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" style="color: white; margin: 0 8px;"><i class="fab fa-twitter"></i></a>
+                <a href="#" style="color: white; margin: 0 8px;"><i class="fab fa-instagram"></i></a>
+                <a href="#" style="color: white; margin: 0 8px;"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <p style="margin: 0;">&copy; <?= date("Y") ?> LUXUS. All rights reserved.</p>
+        </footer>
+
+
+
+
+<!-- JS Script for light & dark mode button -->
+    <script>
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+    const darkModeIcon = document.querySelector('#darkModeToggle i');
+    const darkModeText = darkModeToggle.querySelector('span'); 
+    const savedTheme = localStorage.getItem('theme');
+
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        darkModeIcon.classList.remove('fa-moon');
+        darkModeIcon.classList.add('fa-sun');
+        darkModeText.textContent = 'Light Mode'; 
+    }
+
+    darkModeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+
+        if (body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            darkModeIcon.classList.remove('fa-moon');
+            darkModeIcon.classList.add('fa-sun');
+            darkModeText.textContent = 'Light Mode'; 
+        } else {
+            localStorage.setItem('theme', 'light');
+            darkModeIcon.classList.remove('fa-sun');
+            darkModeIcon.classList.add('fa-moon');
+            darkModeText.textContent = 'Dark Mode'; 
+        }
+    });
+</script>
 
 </body>
 </html>
