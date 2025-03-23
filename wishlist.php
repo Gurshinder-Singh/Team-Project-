@@ -53,6 +53,7 @@ try {
             height: 100%;
             margin: 0;
             font-family:'Poppins',sans-serif;
+            background-color:#e6e6e6;
         }
 
         .main-container {
@@ -156,7 +157,75 @@ try {
         .dropdown:hover .dropdown-content {
             display: block;
         }
- 
+
+ .products_page {
+    background-color: #363636;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    position:relative;
+    left:0;
+    text-decoration:none;
+    margin: 80px auto;
+    text-align: center;
+    padding-top: 10px;
+    border-radius: 1px;
+}
+.products_page:hover{
+background-color:goldenrod;
+}
+         .productLink{
+            color:#363636;
+            padding:0;
+            margin-top:10px;
+         overflow: hidden;
+        text-overflow: ellipsis;
+        display:-webkit-box;
+        -webkit-line-clamp:2;
+        line-clamp:2;
+        -webkit-box-orient:vertical;
+        height:15%
+        }
+        .productPrice{
+            color:goldenrod;
+            margin-top:5px;
+            height:5%;
+            
+        }
+        .productCard{
+            height:550px;
+            border:2px solid goldenrod;
+            box-shadow:5px 0 5px 5px lightgrey;
+            background-color:white;
+        }
+        .productImage{
+            width:auto;
+            height:auto;
+            max-width:300px;
+            max-height:50%;
+            object-fit:cover;
+        }
+        .productImage img{
+           height:300px;
+           object-fit:cover;
+        }
+        .productCard button{
+           background-color:white;
+           width:auto;
+           display:initial;
+           margin-bottom:10px;
+        }
+        .pcBtns{
+           height:25%;
+           
+        }
+        .pageTitle{
+        position:absolute;
+        right:45%;
+        text-decoration:none;
+        font-size:45px;
+        }
     </style>
 </head>
 
@@ -194,6 +263,8 @@ try {
 </header>
 <body>
     <h1>Wishlist</h1>
+    <h2 class="pageTitle">My wishlist</h2>
+    <a class="products_page" href="products_page.php">←Back to products page</a>
     <div class="productGrid">
         <?php if (!empty($wishlist_items)): ?>
             <?php foreach ($wishlist_items as $item): ?>
@@ -225,5 +296,5 @@ try {
         <?php endif; ?>
     </div>
 </body>
-<a class="products_page" href="products_page.php">Back to products page</a>
+
 </html>
