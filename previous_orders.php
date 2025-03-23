@@ -8,10 +8,6 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-<<<<<<< HEAD
-// Fetch user's orders
-=======
->>>>>>> 25c06a6eef5b0198942d07aaa52b832f469f1db6
 $orderQuery = "
     SELECT o.order_id, o.total_price, o.created_at, p.name AS product_name
     FROM orders o
@@ -26,10 +22,6 @@ $orderStmt->execute();
 $orders = $orderStmt->fetchAll(PDO::FETCH_ASSOC);
 
 
-<<<<<<< HEAD
-// Fetch return statuses for user orders
-=======
->>>>>>> 25c06a6eef5b0198942d07aaa52b832f469f1db6
 $returnQuery = "SELECT order_id, status FROM returns WHERE user_id = :user_id";
 $returnStmt = $conn->prepare($returnQuery);
 $returnStmt->bindParam(':user_id', $user_id);
@@ -193,21 +185,12 @@ foreach ($returns as $return) {
         .no-return {
             color: grey;
         }
-		
-<<<<<<< HEAD
-		/* Dark Mode Styles */
-		.dark-mode {
-    	background-color: #1e1e1e; /* Dark background for the entire body */
-		}
-
-/* Dark Mode Styles for the Previous Orders Page */
-=======
+		sdfsdfsdf
 		
 		.dark-mode {
     	background-color: #1e1e1e; 
 		}
 
->>>>>>> 25c06a6eef5b0198942d07aaa52b832f469f1db6
 .dark-mode .container {
     background-color: #2d2d2d;
     color: white;
@@ -220,13 +203,8 @@ foreach ($returns as $return) {
 }
 
 .dark-mode th {
-<<<<<<< HEAD
-    background-color: #d4af37; /* Gold */
-    color: #1e1e1e; /* Dark text for contrast */
-=======
     background-color: #d4af37; 
     color: #1e1e1e; 
->>>>>>> 25c06a6eef5b0198942d07aaa52b832f469f1db6
 }
 
 .dark-mode td {
