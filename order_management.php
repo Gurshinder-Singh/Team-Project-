@@ -311,7 +311,7 @@ $_SESSION['last_activity'] = time();
                     <?php foreach ($orders as $order): ?>
                         <tr>
                             <td><?= $order['order_id']; ?></td>
-                            <td><?= htmlspecialchars($order['user_id']); ?></td>
+							<td><?= htmlspecialchars($order['user_id'] ?? 'Guest'); ?></td>
                             <td>£<?= htmlspecialchars($order['total_price']); ?></td>
                             <td class="status-<?= strtolower($order['status']); ?>">
                                 <?= htmlspecialchars($order['status']); ?>
