@@ -1,9 +1,9 @@
-<?php 
+<?php
 session_start();
-require 'db.php'; 
+require 'db.php';
 
 try {
-    $sql = "SELECT product_id, name, stock FROM products"; 
+    $sql = "SELECT product_id, name, stock FROM products";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -31,9 +31,10 @@ if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']) {
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="stylesheet.css">
-       <style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
         body {
-			font-family: 'Poppins', sans-serif;
+            font-family: 'Poppins', sans-serif;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -56,9 +57,10 @@ if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']) {
             background-color: #363636;
             transition: top 0.3s ease-in-out;
             will-change: transform;
+            z-index: 100;
         }
 
-        .navbar a, 
+        .navbar a,
         .navbar-logo {
             color: white;
             text-decoration: none;
@@ -149,141 +151,197 @@ if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']) {
             top: 200px;
         }
 
-        .footer {
-            background-color: #363636;
-            color: gold;
-            text-align: center;
-            padding: 20px;
-            width: 100%;
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .video-container video {
             position: absolute;
-            bottom: 0;
+            top: 50%;
+            left: 50%;
+            width: auto;
+            min-width: 100%;
+            min-height: 100%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
         }
 
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
+        .page-container {
+            position: relative;
+            min-height: 100vh;
         }
 
-        .social-icons {
-            margin-top: 10px;
+        .content1 {
+            position: relative;
+            min-height: 100vh;
+            z-index: 1;
+            padding-bottom: 200px;
         }
 
-        .social-icon {
-            color: gold;
-            margin: 0 10px;
-            text-decoration: none;
+        #notification-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 200;
+        }
+
+        #notification-container.show {
+            display: block;
+            opacity: 1;
         }
     </style>
 </head>
 <body>
-
-    <div class="gold-shape"></div>
-    <div class="luxus-text">LUXUS</div>
-    <div class="catchphrase-text">OF THE ESSENCE</div>
-    <div class="catchphrase2-text">TIME WAITS FOR NO ONE</div>
-    <div class="catchphrase3-text">LET OUR EXPERTS FIND YOUR FIT</div>
-
-    <div class="content">
-      
-<!-- NAVIGATION BAR -->
-<div class="navbar" id="navbar">
-    <div class="dropdown">
-        <button class="dropbtn">
-            <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
-        </button>
-        <div class="dropdown-content">
-            <a href="about.php">About Us</a>
-            <a href="contact.php">Contact Us</a>
-            <a href="FAQ.php">FAQs</a>
+<div class="page-container">
+    <div class="content1">
+        <div class="luxus-text">LUXUS</div>
+        <div class="catchphrase-text">OF THE ESSENCE</div>
+        <div class="catchphrase2-text">TIME WAITS FOR NO ONE</div>
+        <div class="catchphrase3-text">LET OUR EXPERTS FIND YOUR FIT</div>
+        <div class="video-container">
+            <video autoplay loop muted>
+                <source src="asset/hero.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
         </div>
     </div>
 
-    <a href="homepage.php">HOME</a>
-    <a href="products_page.php">PRODUCTS</a>
+    <div class="content">
+    <!-- NAVIGATION BAR -->
 
-    <div class="navbar-logo">
-        <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
-    </div>
-
-    <?php if (isset($_SESSION['user_id'])): ?>
-    <a href="profile.php">PROFILE</a>
-    <a href="previous_orders.php">PREVIOUS ORDERS</a> <!-- NEW LINK -->
-    <a href="current_orders.php">CURRENT ORDERS</a> <!-- NEW LINK -->
-    <a href="logout.php">LOGOUT</a>
-<?php else: ?>
-    <a href="login.php">LOGIN</a>
-<?php endif; ?>
-
-
-    <?php if (!empty($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-        <a href="admin_page.php">ADMIN</a>
-    <?php endif; ?>
-</div>
-<!-- NAVIGATION BAR END! -->
-
+        <div class="navbar" id="navbar">
+            <div class="dropdown">
+                <button class="dropbtn">
+                    <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
+                </button>
+                <div class="dropdown-content">
+                    <a href="about.php"><i class="fas fa-info-circle"></i> About Us</a>
+                    <a href="contact.php"><i class="fas fa-envelope"></i> Contact Us</a>
+                    <a href="FAQ.php"><i class="fas fa-question-circle"></i> FAQs</a>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <a href="returns.php"><i class="fas fa-undo-alt"></i> Returns</a>
+                        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+                    <?php endif; ?>
+                    <a href="javascript:void(0);" id="darkModeToggle">
+                        <i class="fas fa-moon"></i> <span>Dark Mode</span>
+                    </a>
+                </div>
+            </div>
+            <a href="homepage.php"><i class="fas fa-home"></i> HOME</a>
+            <a href="products_page.php"><i class="fas fa-box-open"></i> PRODUCTS</a>
+            <div class="navbar-logo">
+                <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
+            </div>
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <a href="profile.php"><i class="fas fa-user"></i> PROFILE</a>
+            <?php elseif (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+                <a href="admin_page.php"><i class="fas fa-user-shield"></i> ADMIN</a>
+                <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+            <?php else: ?>
+                <a href="login.php"><i class="fas fa-sign-in-alt"></i> LOGIN</a>
+            <?php endif; ?>
+            <?php if (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']): ?>
+                <a href="cart.php"><i class="fas fa-shopping-basket"></i> BASKET</a>
+            <?php endif; ?>
+        </div>
+            
+    <!-- NOTIFICATION -->
+        <div id="notification-container">
+            <div id="notification" style="background-color: white; border: 1px solid #ccc; padding: 15px; width: 300px; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);">
+                <div style="display: flex; align-items: center;">
+                    <div>
+                        <h3 id="notification-title" style="margin: 0; color: red"></h3>
+                        <ul id="notification-message" style="margin: 5px 0 0; padding: 0; list-style: none; color: black"></ul>
+                    </div>
+                </div>
+                <button id="close-notification" style="margin-top: 10px;">Close</button>
+            </div>
         </div>
 
         <script>
-            let prevScrollpos = window.pageYOffset;
-            let debounce;
-
-            window.onscroll = function() {
-                clearTimeout(debounce);
-
-                debounce = setTimeout(function() {
-                    let currentScrollPos = window.pageYOffset;
-                    if (prevScrollpos > currentScrollPos) {
-                        document.getElementById("navbar").style.top = "0";
-                    } else {
-                        document.getElementById("navbar").style.top = "-50px";
-                    }
-                    prevScrollpos = currentScrollPos;
-                }, 100);
+            function showNotification(title, message) {
+                const container = document.getElementById('notification-container');
+                document.getElementById('notification-title').textContent = title;
+                document.getElementById('notification-message').innerHTML = '<li>' + message.split("<br>").join('</li><li>') + '</li>';
+                container.classList.add('show');
             }
-        </script>
 
-        <div id="notification-container" style="position: fixed; bottom: 20px; right: 20px; display: none;">
-    <div id="notification" style="background-color: white; border: 1px solid #ccc; padding: 15px; width: 300px; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);">
-        <div style="display: flex; align-items: center;">
-            <div>
-                <h3 id="notification-title" style="margin: 0;"></h3>
-                <ul id="notification-message" style="margin: 5px 0 0; padding: 0; list-style: none;">
-                    </ul>
+            document.getElementById('close-notification').addEventListener('click', function () {
+                document.getElementById('notification-container').classList.remove('show');
+            });
+
+            window.addEventListener('DOMContentLoaded', function () {
+                <?php if (!empty($lowStockItems)): ?>
+                showNotification(
+                    'Low Stock Alert',
+                    '<?= implode("<br>", $lowStockItems); ?> - Low Stock! Check Inventory'
+                );
+                <?php endif; ?>
+            });
+        </script>
+        
+    <!-- DARKMODE -->
+        <script>
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const body = document.body;
+            const darkModeIcon = document.querySelector('#darkModeToggle i');
+            const darkModeText = darkModeToggle.querySelector('span');
+            const savedTheme = localStorage.getItem('theme');
+
+            if (savedTheme === 'dark') {
+                body.classList.add('dark-mode');
+                darkModeIcon.classList.remove('fa-moon');
+                darkModeIcon.classList.add('fa-sun');
+                darkModeText.textContent = 'Light Mode';
+            }
+
+            darkModeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+
+                if (body.classList.contains('dark-mode')) {
+                    localStorage.setItem('theme', 'dark');
+                    darkModeIcon.classList.remove('fa-moon');
+                    darkModeIcon.classList.add('fa-sun');
+                    darkModeText.textContent = 'Light Mode';
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    darkModeIcon.classList.remove('fa-sun');
+                    darkModeIcon.classList.add('fa-moon');
+                    darkModeText.textContent = 'Dark Mode';
+                }
+            });
+        </script>
+        
+    <!-- FOOTER -->
+        <footer style="
+            background-color: #2c2c2c;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            font-size: 13px;
+            margin-top: auto;
+            position: relative;
+            width: 100%;
+            z-index: 2;
+        ">
+            <div style="margin-bottom: 10px; font-size: 18px;">
+                <a href="#" style="color: white; margin: 0 8px;"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" style="color: white; margin: 0 8px;"><i class="fab fa-twitter"></i></a>
+                <a href="#" style="color: white; margin: 0 8px;"><i class="fab fa-instagram"></i></a>
+                <a href="#" style="color: white; margin: 0 8px;"><i class="fab fa-linkedin-in"></i></a>
             </div>
-        </div>
-        <button id="close-notification" style="margin-top: 10px;">Close</button>
+            <p style="margin: 0;">&copy; <?= date("Y") ?> LUXUS. All rights reserved.</p>
+        </footer>
     </div>
 </div>
-       <script>
-    function showNotification(title, message) {
-        document.getElementById('notification-title').textContent = title;
-        document.getElementById('notification-message').innerHTML = message;
-        document.getElementById('notification-container').style.display = 'block';
-    }
-
-    document.getElementById('close-notification').addEventListener('click', function() {
-        document.getElementById('notification-container').style.display = 'none';
-    });
-
-    <?php if (!empty($lowStockItems)): ?>
-        showNotification(
-            'Low Stock Alert',
-            '<?= implode("<br>", $lowStockItems); ?> - Low Stock! Check Inventory'
-        );
-    <?php endif; ?>
-</script>
-
-    </div> <footer class="footer">
-        <div class="footer-content">
-            <p>&copy; 2024 LUXUS. All rights reserved.</p>
-            <p>Follow us on social media!</p>
-            <div class="social-icons">
-                <a href="#" class="social-icon">Facebook</a>
-                <a href="#" class="social-icon">Instagram</a>
-                <a href="#" class="social-icon">Twitter</a>
-            </div>
-        </div>
-    </footer>
-
 </body>
 </html>

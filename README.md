@@ -1,7 +1,8 @@
 <h1 align="center">Welcome to LUXUS (Team 30)</h1>
 <h3 align="center">On our website you can buy authentic timepieces.</h3>
 Access our website ---> https://cs2team30.cs2410-web01pvm.aston.ac.uk/homepage.php
-<h3 align="left">About:</h3>
+<h3 align="left">About: We are Group 30 and this is our website for our team project moudule</h3>
+<h4> On our website you can view it as a user. Why not have a look at our watches or you can sign up and place an order*.</h4>
 <p align="left">
 </p>
 

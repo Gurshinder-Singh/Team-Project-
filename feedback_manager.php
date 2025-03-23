@@ -38,27 +38,62 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_feedback'])) {
         }
     }
 }
+if (isset($_SESSION['last_activity']) && time() - $_SESSION['last_activity'] > 600) {
+    session_destroy();
+    header("Location: login.php");
+    exit();
+}
+
+$_SESSION['last_activity'] = time();
 ?>
+
+<script>
+    setTimeout(function() {
+        window.location.href = 'login.php';
+    }, 600000); // 600000ms = 10 minutes
+</script>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Feedback Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="stylesheet.css">
+<title>Admin - Feedback Manager</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: white;
-            margin: 0;
-            padding: 0;
+        .container {
+            padding: 20px;
         }
-        header {
-            background-color: #f4f4f4;
+        table {
+            background:white;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
             padding: 10px;
-            text-align: center;
+            text-align: left;
         }
-        .navbar {
+        th {
+            background-color: #f4f4f4;
+        }
+        .action-box {
+            display: flex;
+            gap: 10px;
+        }
+        .action-box input[type="checkbox"] {
+            margin: 0;
+        }
+        .comment-box {
+            margin-top: 5px;
+        }
+      
+
+.navbar {
             height: 75px;
             display: flex;
             align-items: center;
@@ -68,16 +103,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_feedback'])) {
             background-color: #363636;
             transition: top 0.3s ease-in-out;
             will-change: transform;
-            z-index: 1000;
+            z-index: 100;
         }
 
-        .navbar a, 
+        .navbar a,
         .navbar-logo {
             color: white;
             text-decoration: none;
             padding: 14px 20px;
             flex: 1;
             text-align: center;
+            transform: translateX(-100px);
         }
 
         .navbar-logo {
@@ -127,13 +163,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_feedback'])) {
             z-index: 1;
             transition: transform 0.3s ease-in-out;
         }
-
         .dropdown-content a {
             color: white;
             padding: 12px 16px;
             text-decoration: none;
             display: block;
             text-align: left;
+            transform: translateX(0);
             transition: transform 0.3s ease-in-out;
         }
 
@@ -146,84 +182,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_feedback'])) {
             display: block;
         }
 
-        .container {
-            padding: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        .action-box {
-            display: flex;
-            gap: 10px;
-        }
-        .action-box input[type="checkbox"] {
-            margin: 0;
-        }
-        .comment-box {
-            margin-top: 5px;
-        }
-        .footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #f4f4f4;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
     </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
-    <header>
+<header>
         <h1>Admin - Feedback Manager</h1>
     </header>
 
-    <div class="navbar" id="navbar">
-        <div class="dropdown">
-            <button class="dropbtn">
-                <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
-            </button>
-            <div class="dropdown-content">
-                <a href="about.php">About Us</a>
-                <a href="contact.php">Contact Us</a>
-                <a href="FAQ.php">FAQs</a>
+    <div class="content">
+    
+    <!-- NAV BAR -->
+         <div class="navbar" id="navbar">
+            <div class="dropdown">
+                <button class="dropbtn">
+                    <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
+                </button>
+                <div class="dropdown-content">
+                    <a href="about.php"><i class="fas fa-info-circle"></i> About Us</a>
+                    <a href="contact.php"><i class="fas fa-envelope"></i> Contact Us</a>
+                    <a href="FAQ.php"><i class="fas fa-question-circle"></i> FAQs</a>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <a href="returns.php"><i class="fas fa-undo-alt"></i> Returns</a>
+                        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+                    <?php endif; ?>
+                    <a href="javascript:void(0);" id="darkModeToggle">
+                        <i class="fas fa-moon"></i> <span>Dark Mode</span>
+                    </a>
+                </div>
             </div>
+            <a href="homepage.php"><i class="fas fa-home"></i> HOME</a>
+            <a href="products_page.php"><i class="fas fa-box-open"></i> PRODUCTS</a>
+            <div class="navbar-logo">
+                <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
+            </div>
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <a href="profile.php"><i class="fas fa-user"></i> PROFILE</a>
+            <?php elseif (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+                <a href="admin_page.php"><i class="fas fa-user-shield"></i> ADMIN</a>
+                <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+            <?php else: ?>
+                <a href="login.php"><i class="fas fa-sign-in-alt"></i> LOGIN</a>
+            <?php endif; ?>
+            <?php if (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']): ?>
+                <a href="cart.php"><i class="fas fa-shopping-basket"></i> BASKET</a>
+            <?php endif; ?>
         </div>
 
-        <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-            <a href="homepage.php">HOME</a>
-            <a href="loyalty_manager.php">LOYALTY MANAGER</a>
-        <?php else: ?>
-            <a href="homepage.php">HOME</a>
-            <a href="products_page.php">PRODUCTS</a>
-        <?php endif; ?>
 
-        <div class="navbar-logo">
-            <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
-        </div>
 
-        <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-            <a href="feedback_manager.php">FEEDBACK MANAGER</a>
-            <a href="inventorymanagement.php">INVENTORY MANAGER</a>
-        <?php endif; ?>
-
-        <?php if (isset($_SESSION['user_id'])): ?>
-            <a href="profile.php">PROFILE</a>
-            <a href="logout.php">LOGOUT</a>
-        <?php elseif (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']): ?>
-            <a href="login.php">LOGIN</a>
-        <?php endif; ?>
-    </div>
 
     <div class="container">
         <h2>Feedback Manager</h2>
@@ -269,15 +277,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_feedback'])) {
             </tbody>
         </table>
 
-        <h3>Manage Feedback Rules</h3>
-        <form method="POST">
-            <label for="filter_words">Filter Words (comma-separated):</label>
-            <input type="text" id="filter_words" name="filter_words" placeholder="e.g., bad, inappropriate">
-            <button type="submit" name="update_rules">Update Rules</button>
-        </form>
     </div>
-    <div class="footer">
-        © 2025 Luxus. All rights reserved.
-    </div>
+    <!-- FOOTER -->
+<footer style="
+            background-color: #2c2c2c;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            font-size: 13px;
+            margin-top: 50px;
+            position: relative;
+            width: 100%;
+            z-index: 2;
+        ">
+            <div style="margin-bottom: 10px; font-size: 18px;">
+                <a href="#" style="color: white; margin: 0 8px;"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" style="color: white; margin: 0 8px;"><i class="fab fa-twitter"></i></a>
+                <a href="#" style="color: white; margin: 0 8px;"><i class="fab fa-instagram"></i></a>
+                <a href="#" style="color: white; margin: 0 8px;"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <p style="margin: 0;">&copy; <?= date("Y") ?> LUXUS. All rights reserved.</p>
+        </footer>
+
 </body>
 </html>

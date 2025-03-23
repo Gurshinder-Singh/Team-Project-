@@ -83,6 +83,10 @@ try {
 }
 ?>
 
+<?php
+$darkMode = isset($_COOKIE['darkmode']) && $_COOKIE['darkmode'] == 'true';
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -93,7 +97,13 @@ try {
     <title>Luxus Product Catalogue</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+ 	<link rel="icon" type="image/favicon" href="/asset/LUXUS_logo.png"> 
     <link rel="stylesheet" href="pp.css" />
+
+	<link rel="stylesheet" href="stylesheet.css">
+    <?php if (!$darkMode): ?>
+        <link rel="stylesheet" href="pp.css">
+    <?php endif; ?>
     <style>
 .navbar {
             height: 75px;
@@ -115,6 +125,7 @@ try {
             padding: 14px 20px;
             flex: 1;
             text-align: center;
+            transform: translateX(-100px);
         }
 
         .navbar-logo {
@@ -171,6 +182,8 @@ try {
             text-decoration: none;
             display: block;
             text-align: left;
+        	transform: translateX(0);
+            transition: transform 0.3s ease-in-out;
         }
 
         .dropdown-content a:hover {
@@ -198,7 +211,7 @@ try {
         }
 
         body {
-    background-color:rgb(255, 255, 255); /* Creme white color */
+    background-color:white;
     font-family: 'Poppins', sans-serif;
     margin: 0;
 }
@@ -216,30 +229,18 @@ try {
             text-align: center;
         }
 
-        .footer {
-            background-color: #363636;
-            color: gold;
-            text-align: center;
-            height: auto;
-            padding: 20px;
-            width: 100%;
-            position: relative;
-            bottom: 0;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
         .filter,.wishlist{
             padding: 5px 10px;
             border: 1px solid #ccc;
-            border-radius: 0 5px 5px 0;
+            border-radius: 5px;
             background-color: #333;
             color: #fff;
             cursor: pointer;
+            display:inline-block;
 
+        }
+        .filter{
+         width:75px;
         }
 
         .filter button:hover {
@@ -247,10 +248,8 @@ try {
             color: #fff;
         }
 
-        .dropdownFilter {
-         
+        .dropdownFilter { 
             display: inline-block;
-            margin-right: 5px;
             box-shadow: 100px;  
         margin-left:5px;        
         position:relative;
@@ -307,37 +306,100 @@ try {
 		}
 
 		.wishlist{
-		position:relative;
-		float:right;
+        position:absolute;
+        right:20px;
+        top:100px;
+        border-radius:0;
+        text-decoration:none;
 		}
 
-		.search{
-		position:relative;
-		float:right;
-		}
+		.search {  
+
+        float:none;
+        
+        margin-left:0;
+        }
+
         .searchBar{
-                    width: 200px;
+            max-width:400px;
+            width: 600px;
             padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px 0 0 5px;
-
+            border: 2px solid #363636;
+            border-radius: 5px;
+            text-align:center;
+            margin-right:0;
+            margin-left:600px;
+            display:inline-block;vertical-align:middle;
         }
 
         .searchBtn {
+
             padding: 5px 10px;
-            border: 1px solid #ccc;
-            border-left: none;
-            border-radius: 0 5px 5px 0;
+            border-radius: 5px;
             cursor: pointer;
             background-color:#363636;
             color:white;
+            margin:0;
+            max-width:50px;display:inline-block;vertical-align:middle;
+        }
+        .searchBtn:hover{
+            background-color:goldenrod;
+        }
 
+        .productLink{
+            color:#363636;
+            padding:0;
+            margin-top:10px;
+         overflow: hidden;
+        text-overflow: ellipsis;
+        display:-webkit-box;
+        -webkit-line-clamp:2;
+        line-clamp:2;
+        -webkit-box-orient:vertical;
+        height:15%
+        }
+        .productPrice{
+            color:goldenrod;
+            margin-top:5px;
+            height:5%;
+            
+        }
+        .productCard{
+            height:550px;
+            border:2px solid goldenrod;
+            box-shadow:5px 0 5px 5px lightgrey;
+            background-color:white;
+        }
+        .productImage{
+            width:auto;
+            height:auto;
+            max-width:300px;
+            max-height:50%;
+            object-fit:cover;
+        }
+        .productImage img{
+           height:300px;
+           object-fit:cover;
+        }
+        .productCard button{
+           background-color:white;
+           width:auto;
+           display:initial;
+           margin-bottom:10px;
+        }
+        .pcBtns{
+           height:25%;
+           
+        }
+        .productGrid{
+           margin-top:100px;
         }
 
 /* Dark Mode Styles */
 .dark-mode {
     background-color: #1e1e1e;
     color: white;
+    margin-top:0;
 }
 
 .dark-mode .productCard {
@@ -365,6 +427,7 @@ try {
 }
 
 .dark-mode .productCard button, .singleProduct button {
+    background-color:#1e1e1e;
     color: #FFD700;
 }
 
@@ -372,66 +435,64 @@ try {
     background-color: #111;
 }
 
-#darkModeToggle {
-    background-color: transparent;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    padding: 10px 15px;
-    text-decoration: none;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-
-
-
     </style>
     <!-- NavBar Icons-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 
+ 
+    
 <header>
 <!-- NAVIGATION BAR -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <div class="navbar" id="navbar">
-    <div class="dropdown">
-        <button class="dropbtn">
-            <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
-        </button>
-        <div class="dropdown-content">
-            <a href="about.php"><i class="fas fa-info-circle"></i> About Us</a>
-            <a href="contact.php"><i class="fas fa-envelope"></i> Contact Us</a>
-            <a href="FAQ.php"><i class="fas fa-question-circle"></i> FAQs</a>
-            <a href="returns.php"><i class="fas fa-undo-alt"></i> Returns</a>
+            <div class="dropdown">
+                <button class="dropbtn">
+                    <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
+                </button>
+                <div class="dropdown-content">
+                    <a href="about.php"><i class="fas fa-info-circle"></i> About Us</a>
+                    <a href="contact.php"><i class="fas fa-envelope"></i> Contact Us</a>
+                    <a href="FAQ.php"><i class="fas fa-question-circle"></i> FAQs</a>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <a href="returns.php"><i class="fas fa-undo-alt"></i> Returns</a>
+                        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+                    <?php endif; ?>
+                    <a href="javascript:void(0);" id="darkModeToggle">
+                        <i class="fas fa-moon"></i> <span>Dark Mode</span>
+                    </a>
+                </div>
+            </div>
+            <a href="homepage.php"><i class="fas fa-home"></i> HOME</a>
+            <a href="products_page.php"><i class="fas fa-box-open"></i> PRODUCTS</a>
+            <div class="navbar-logo">
+                <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
+            </div>
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <a href="profile.php"><i class="fas fa-user"></i> PROFILE</a>
+            <?php elseif (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+                <a href="admin_page.php"><i class="fas fa-user-shield"></i> ADMIN</a>
+                <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+            <?php else: ?>
+                <a href="login.php"><i class="fas fa-sign-in-alt"></i> LOGIN</a>
+            <?php endif; ?>
+            <?php if (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']): ?>
+                <a href="cart.php"><i class="fas fa-shopping-basket"></i> BASKET</a>
+            <?php endif; ?>
         </div>
-    </div>
-    <button id="darkModeToggle">Toggle Dark Mode</button>
-    <a href="homepage.php"><i class="fas fa-home"></i> HOME</a>
-    <a href="products_page.php"><i class="fas fa-box-open"></i> PRODUCTS</a>
-    <div class="navbar-logo">
-        <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
-    </div>
-    <?php if (isset($_SESSION['user_id'])): ?>
-        <a href="profile.php"><i class="fas fa-user"></i> PROFILE</a>
-        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
-    <?php else: ?>
-        <a href="login.php"><i class="fas fa-sign-in-alt"></i> LOGIN</a>
-    <?php endif; ?>
-    <a href="cart.php"><i class="fas fa-shopping-basket"></i> BASKET</a>
-    <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-        <a href="admin_page.php"><i class="fas fa-user-shield"></i> ADMIN</a>
-    <?php endif; ?>
-</div>
-<!-- NAVIGATION BAR END! -->
+
 </header>
 
+    
+    
+    
 <body>
     
+<!--SEARCH AND FILTER-->
 
     <h1>Product Catalogue</h1>
     <div id="filterSortBar">
-        <form method="post" action="products_page.php"> <!-- Set your action script for processing the filter -->
+        <form method="post" action="products_page.php"> 
                     <div class="dropdownFilter">
                 <button class="dropbutton">Brand &#8595</button>
                 <div class="filterOptions">
@@ -527,16 +588,17 @@ try {
                         <label for="price6">£10000-£12000</label>
                     </div>    
                 </div>
+                
             </div>
             <button type="submit" class="filter">FILTER</button>
             <div class="search">
             <form method="POST" action="" class="search-bar">
                 <input type="text" name="search" class="searchBar" placeholder="Search for a product..."
                     value="<?= htmlspecialchars($search); ?>" />
-                <button type="submit" class="searchBtn">Search</button>
+                <button type="submit" class="searchBtn">⌕</button>
             </form>
             </div>
-            <a class="wishlist" href="wishlist.php">WISHLIST</a>
+            <a class="wishlist" href="wishlist.php">✩WISHLIST✩</a>
 
             <?php if (isset($_GET['wishlist'])): ?>
                 <?php if ($_GET['wishlist'] == 'success'): ?>
@@ -545,7 +607,8 @@ try {
                     <p style="color: red; text-align: center;">This product is already in your wishlist!</p>
                 <?php endif; ?>
             <?php endif; ?>
-            <!-- Product Grid -->
+            
+<!-- Product Grid -->
             <div class="productGrid">
                 <?php if (!empty($products)): ?>
                     <?php foreach ($products as $product): ?>
@@ -558,7 +621,8 @@ try {
                                 <h3><?= htmlspecialchars($product['name']); ?></h3>
                             </a>
                             <p class="productPrice"><?= htmlspecialchars($product['price']); ?></p>
-                            <form method="POST" action="add_to_cart.php">
+                      <div class="pcBtns">      
+                    <form method="POST" action="add_to_cart.php">
                                 <input type="hidden" name="product_id" value="<?= $product['product_id']; ?>">
                                 <input type="hidden" name="name" value="<?= htmlspecialchars($product['name']); ?>">
                                 <input type="hidden" name="price" value="<?= htmlspecialchars($product['price']); ?>">
@@ -580,7 +644,7 @@ try {
                                 <input type="hidden" name="image" value="<?= htmlspecialchars($product['image']); ?>">
                                 <button type="submit">Add to Wishlist</button>
                             </form>
-
+                            </div>
 
                         </div>
                     <?php endforeach; ?>
@@ -589,15 +653,34 @@ try {
                 <?php endif; ?>
             </div>
     </div>
+<footer style="
+            background-color: #2c2c2c;
+            color: white;
+            padding: 10px 15px;
+            margin-top: 50px;
+            text-align: center;
+            font-size: 13px;
+            position: relative;
+            width: 100%;
+            z-index: 2;
+        ">
+            <div style="margin-bottom: 10px; font-size: 18px;">
+                <a href="#" style="color: white; margin: 0 8px;"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" style="color: white; margin: 0 8px;"><i class="fab fa-twitter"></i></a>
+                <a href="#" style="color: white; margin: 0 8px;"><i class="fab fa-instagram"></i></a>
+                <a href="#" style="color: white; margin: 0 8px;"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <p style="margin: 0;">&copy; <?= date("Y") ?> LUXUS. All rights reserved.</p>
+        </footer>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // Select all dropdown buttons
+            
             const filterButtons = document.querySelectorAll(".dropbutton");
 
             filterButtons.forEach(button => {
                 button.addEventListener("click", function (event) {
-                    event.preventDefault(); // Prevent form submission
+                    event.preventDefault(); 
 
                     let filterOptions = this.nextElementSibling;
 
@@ -607,12 +690,12 @@ try {
                         }
                     });
 
-                    // Toggle cur	rent dropdown
+                  
                     filterOptions.style.display = (filterOptions.style.display === "block") ? "none" : "block";
                 });
             });
 
-            // Close filters when outside
+            
             document.addEventListener("click", function (event) {
                 if (!event.target.closest(".dropdownFilter")) {
                     document.querySelectorAll(".filterOptions").forEach(option => {
@@ -622,20 +705,36 @@ try {
             });
         });
 
-document.getElementById('darkModeToggle').addEventListener('click', function() {
-    document.body.classList.toggle('dark-mode');
-});
+const darkModeToggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+    const darkModeIcon = document.querySelector('#darkModeToggle i');
+    const darkModeText = darkModeToggle.querySelector('span'); 
+    const savedTheme = localStorage.getItem('theme');
+
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        darkModeIcon.classList.remove('fa-moon');
+        darkModeIcon.classList.add('fa-sun');
+        darkModeText.textContent = 'Light Mode'; 
+    }
+
+    darkModeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+
+        if (body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            darkModeIcon.classList.remove('fa-moon');
+            darkModeIcon.classList.add('fa-sun');
+            darkModeText.textContent = 'Light Mode'; 
+        } else {
+            localStorage.setItem('theme', 'light');
+            darkModeIcon.classList.remove('fa-sun');
+            darkModeIcon.classList.add('fa-moon');
+            darkModeText.textContent = 'Dark Mode'; 
+        }
+    });
 
     </script>
-
-    
-    
-
-    <footer class="footer">
-        <div class="footer-content">
-            <p>&copy; 2024 LUXUS. All rights reserved.</p>
-        </div>
-    </footer>
 
 </body>
 
