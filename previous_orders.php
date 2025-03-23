@@ -234,29 +234,6 @@ foreach ($returns as $return) {
 }
 
 .dark-mode .return-status.approved {
-<<<<<<< HEAD
-    color: #4caf50; /* Green */
-}
-
-.dark-mode .return-status.rejected {
-    color: #ff4d4d; /* Red */
-}
-
-.dark-mode .return-status.pending {
-    color: #ffa500; /* Orange */
-}
-
-.dark-mode .return-status.no-return {
-    color: #ccc; /* Light gray */
-}
-
-.dark-mode .feedback-link {
-    color: #d4af37; /* Gold */
-}
-
-.dark-mode .feedback-link:hover {
-    color: #ffd700; /* Lighter gold on hover */
-=======
     color: #4caf50; 
 }
 
@@ -278,7 +255,6 @@ foreach ($returns as $return) {
 
 .dark-mode .feedback-link:hover {
     color: #ffd700; 
->>>>>>> 25c06a6eef5b0198942d07aaa52b832f469f1db6
 }
 	
     </style>
@@ -289,41 +265,6 @@ foreach ($returns as $return) {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
 <div class="navbar" id="navbar">
-<<<<<<< HEAD
-    <div class="dropdown">
-        <button class="dropbtn">
-            <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
-        </button>
-        <div class="dropdown-content">
-            <a href="about.php"><i class="fas fa-info-circle"></i> About Us</a>
-            <a href="contact.php"><i class="fas fa-envelope"></i> Contact Us</a>
-            <a href="FAQ.php"><i class="fas fa-question-circle"></i> FAQs</a>
-            <a href="returns.php"><i class="fas fa-undo-alt"></i> Returns</a>
-            <a href="javascript:void(0);" id="darkModeToggle">
-                <i class="fas fa-moon"></i> <span>Dark Mode</span>
-            </a>
-        </div>
-    </div>
-    <a href="homepage.php"><i class="fas fa-home"></i> HOME</a>
-    <a href="products_page.php"><i class="fas fa-box-open"></i> PRODUCTS</a>
-    <div class="navbar-logo">
-        <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
-    </div>
-    <?php if (isset($_SESSION['user_id'])): ?>
-        <a href="profile.php"><i class="fas fa-user"></i> PROFILE</a>
-        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
-    <?php elseif (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-        <a href="admin_page.php"><i class="fas fa-user-shield"></i> ADMIN</a>
-        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
-    <?php else: ?>
-        <a href="login.php"><i class="fas fa-sign-in-alt"></i> LOGIN</a>
-    <?php endif; ?>
-    <a href="cart.php"><i class="fas fa-shopping-basket"></i> BASKET</a>
-
-    </div>
-
-<!-- NAVIGATION BAR END! -->
-=======
             <div class="dropdown">
                 <button class="dropbtn">
                     <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
@@ -358,7 +299,6 @@ foreach ($returns as $return) {
                 <a href="cart.php"><i class="fas fa-shopping-basket"></i> BASKET</a>
             <?php endif; ?>
         </div>
->>>>>>> 25c06a6eef5b0198942d07aaa52b832f469f1db6
 
 <div class="container">
     <h2>Your Previous Orders</h2>
