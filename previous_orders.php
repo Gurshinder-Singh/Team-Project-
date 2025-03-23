@@ -185,7 +185,7 @@ foreach ($returns as $return) {
         .no-return {
             color: grey;
         }
-		sdfsdfsdf
+		
 		
 		.dark-mode {
     	background-color: #1e1e1e; 
