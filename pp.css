@@ -1,0 +1,873 @@
+/* General Form Styling */
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-color: #e6e6e6;
+    font-family: 'Century Gothic', sans-serif;
+    font-weight: bold;
+    position: relative;
+}
+
+
+h1 {
+    font-family: 'Century Gothic', sans-serif; 
+    font-weight: bold; 
+}
+
+.navbar {
+    height: 100px; 
+    display: flex;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background-color: #363636;
+    transition: top 0.3s ease-in-out;
+    will-change: transform; 
+    z-index: 1000; 
+}
+
+.navbar a {
+    padding: 0 15px; 
+    text-decoration: none; 
+    color: black; 
+    font-weight: bold; 
+    text-transform: uppercase; 
+}
+
+.navbar a:hover {
+    color: gray;
+}
+
+.navbar img {
+    height: 100%;
+    max-height: 100%;
+    margin-left: center; 
+}
+
+/* Image Container Styles */
+.image-container {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+}
+
+.image-container img {
+    width: 650px; 
+    height: auto; 
+    position: absolute;
+    left: 800px; 
+    top: 100px;
+}
+
+/* Text Styles */
+.luxus-text {
+    font-family: 'DM Serif Display', serif; 
+    font-size: 150px;
+    color: white;
+    position: fixed;
+    top: 90px;
+    left: 60px;
+    z-index: 1000; 
+    font-weight: normal;
+}
+
+.catchphrase-text {
+    font-family: 'DM Serif Display', serif; 
+    font-size: 35px;
+    color: white;
+    position: fixed;
+    top: 250px; 
+    left: 60px;
+    z-index: 1000; 
+    font-weight: normal;
+}
+
+.catchphrase2-text {
+    font-family: 'Poppins', sans-serif; 
+    font-size: 28px;
+    color: gold;
+    position: fixed;
+    top: 500px; 
+    left: 60px;
+    z-index: 1000; 
+    font-weight: 835;
+    font-style: italic;
+}
+
+.catchphrase3-text {
+    font-family: 'Poppins', serif; 
+    font-size: 28px;
+    color: rgb(255, 255, 255);
+    position: fixed;
+    top: 530px; 
+    left: 60px;
+    z-index: 1000;
+    font-weight: 400;
+    font-style: italic;
+}
+
+/* LOGIN & SIGNUP FORM CSS */
+
+.login-container {
+    background: white; 
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); 
+    width: 90%;
+    max-width: 400px; 
+    margin: 120px auto; 
+    text-align: center;
+}
+
+.login-container h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #222; 
+    font-weight: bold;
+    
+}
+
+form label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+    display: block;
+    text-align: left;
+    max-width: 300px;
+    margin: 10px auto 5px; 
+}
+
+form input {
+    width: 90%;
+    max-width: 300px;  
+    padding: 12px;
+    margin: 10px auto; 
+    border: 1px solid #ddd;  
+    border-radius: 8px;
+    background-color: #fff;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    display: block;
+}
+
+form input:focus {
+    border-color: #d4af37;  
+    box-shadow: 0 0 5px rgba(212, 175, 55, 0.4);  
+    outline: none;
+}
+
+form button {
+    width: 90%;
+    max-width: 300px;  
+    padding: 12px;
+    background-color: #333;  
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 15px auto;  
+    display: block;
+}
+
+form button:hover {
+    background-color: #555;    
+    transform: scale(1.02);  
+}
+
+.signup-link p {
+    font-size: 14px;
+    color: #555;
+    margin-top: 10px;
+}
+
+.signup-link a {
+    color: #d4af37; 
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup-link a:hover {
+    text-decoration: underline; 
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        margin: 60px auto;  
+        padding: 20px;  /* General Form Styling */
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-color: #e6e6e6;
+    font-family: 'Century Gothic', sans-serif;
+    font-weight: bold;
+    position: relative;
+}
+
+
+h1 {
+    font-family: 'Century Gothic', sans-serif; 
+    font-weight: bold; 
+}
+
+.navbar {
+    height: 100px; 
+    display: flex;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background-color: #363636;
+    transition: top 0.3s ease-in-out;
+    will-change: transform; 
+    z-index: 1000; 
+}
+
+.navbar a {
+    padding: 0 15px; 
+    text-decoration: none; 
+    color: black; 
+    font-weight: bold; 
+    text-transform: uppercase; 
+}
+
+.navbar a:hover {
+    color: gray;
+}
+
+.navbar img {
+    height: 100%;
+    max-height: 100%;
+    margin-left: center; 
+}
+
+/* Image Container Styles */
+.image-container {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+}
+
+.image-container img {
+    width: 650px; 
+    height: auto; 
+    position: absolute;
+    left: 800px; 
+    top: 100px;
+}
+
+/* Text Styles */
+.luxus-text {
+    font-family: 'DM Serif Display', serif; 
+    font-size: 150px;
+    color: white;
+    position: fixed;
+    top: 90px;
+    left: 60px;
+    z-index: 1000; 
+    font-weight: normal;
+}
+
+.catchphrase-text {
+    font-family: 'DM Serif Display', serif; 
+    font-size: 35px;
+    color: white;
+    position: fixed;
+    top: 250px; 
+    left: 60px;
+    z-index: 1000; 
+    font-weight: normal;
+}
+
+.catchphrase2-text {
+    font-family: 'Poppins', sans-serif; 
+    font-size: 28px;
+    color: gold;
+    position: fixed;
+    top: 500px; 
+    left: 60px;
+    z-index: 1000; 
+    font-weight: 835;
+    font-style: italic;
+}
+
+.catchphrase3-text {
+    font-family: 'Poppins', serif; 
+    font-size: 28px;
+    color: rgb(255, 255, 255);
+    position: fixed;
+    top: 530px; 
+    left: 60px;
+    z-index: 1000;
+    font-weight: 400;
+    font-style: italic;
+}
+
+/* LOGIN & SIGNUP FORM CSS */
+
+.login-container {
+    background: white; 
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); 
+    width: 90%;
+    max-width: 400px; 
+    margin: 120px auto; 
+    text-align: center;
+    border: 3px solid #D4AF37;
+}
+
+.login-container h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #222; 
+    font-weight: bold;
+    
+}
+
+form label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+    display: block;
+    text-align: left;
+    max-width: 300px;
+    margin: 10px auto 5px; 
+}
+
+form input {
+    width: 90%;
+    max-width: 300px;  
+    padding: 12px;
+    margin: 10px auto; 
+    border: 1px solid #ddd;  
+    border-radius: 8px;
+    background-color: #fff;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    display: block;
+}
+
+form input:focus {
+    border-color: #d4af37;  
+    box-shadow: 0 0 5px rgba(212, 175, 55, 0.4);  
+    outline: none;
+}
+
+form button {
+    width: 90%;
+    max-width: 300px;  
+    padding: 12px;
+    background-color: #333;  
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 15px auto;  
+    display: block;
+}
+
+form button:hover {
+    background-color: #555;    
+    transform: scale(1.02);  
+}
+
+.signup-link p {
+    font-size: 14px;
+    color: #555;
+    margin-top: 10px;
+}
+
+.signup-link a {
+    color: #d4af37; 
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup-link a:hover {
+    text-decoration: underline; 
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        margin: 60px auto;  
+        padding: 20px;  
+    }
+
+    form input,
+    form button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+
+/*Product page*/
+
+/* General Layout Improvements */
+.productGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    justify-content: center;
+    align-items: stretch;
+    margin-top: 200px;
+}
+
+.productCard {
+    width: 50%;
+    max-width: 300px;
+    max-height: 600px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px 5px #15140f;
+    margin: auto;
+    background-color: transparent;
+    text-align: center;
+    align-items: stretch;
+    transition: transform 0.3s ease-in-out;
+}
+
+.productCard:hover {
+    transform: scale(1.05);
+}
+
+.productImage img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.productImage:hover img {
+    transform: scale(1.2);
+}
+
+/* Text and Link Styling */
+.productLink {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 30px;
+    padding: 5px 0;
+    display: block;
+}
+
+.productLink:hover {
+    text-decoration: underline;
+    color: black;
+}
+
+.productPrice {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 10px;
+}
+
+/* Buttons Styling */
+.productCard button, .singleProduct button {
+    padding: 10px 20px;
+    margin: 6px;
+    background-color: none;
+    border: 2px solid #d4af37;
+    font-weight: bold;
+    color: #d4af37;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.productCard button:hover, .singleProduct button:hover {
+    background-color: #d4af37;
+    color: white;
+}
+
+/* Dropdowns and Filters */
+.dropdownFilter, .sortBy {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbutton {
+    border: none;
+    width: 90%;
+    max-width: 300px;
+    padding: 12px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 15px auto;
+}
+
+.dropbutton:hover {
+    background-color: gold;
+}
+
+.filterOptions, .sort {
+    display: none;
+    position: absolute;
+    color: white;
+    background-color: #363636;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.filterOptions a, .sort a {
+    display: block;
+    padding: 10px;
+}
+
+.filterOptions:hover, .sortBy:hover {
+    display: block;
+}
+
+.filterOptions label, .sort label {
+    font-weight: bold;
+}
+
+.filterOptions p, .sort label {
+    font-size: 14px;
+    padding: 10px;
+}
+
+#filterSubmit:hover {
+    background-color: gold;
+}
+
+#filterSubmit {
+    max-width: 50px;
+    margin: 30px;
+    float: left;
+}
+
+/* Search Bar */
+.search {
+    float: right;
+    margin-left: 0;
+}
+
+/* Single Product Page */
+.singleProduct {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.topHalf {
+    display: flex;
+    height: 70%;
+}
+
+.firstCol {
+    flex: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.secondCol {
+    flex: 60%;
+}
+
+.singleProductImage img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.singleProductName {
+    margin: 20px 0;
+    font-size: 40px;
+    color: #333;
+}
+
+.singleProductPrice {
+    font-weight: bold;
+    font-size: 24px;
+    color: #d4af37;
+}
+
+.productDescription {
+    font-size: 16px;
+    color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .productGrid {
+        margin-top: 100px;
+    }
+
+    .productCard {
+        width: 100%;
+    }
+
+    .dropbutton, .filterOptions, .sort {
+        width: 100%;
+    }
+
+    .singleProduct {
+        flex-direction: column;
+    }
+
+    .topHalf {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .firstCol, .secondCol {
+        flex: 100%;
+        margin-bottom: 20px;
+    }
+}
+
+    }
+
+    form input,
+    form button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+
+/*Product page*/
+
+/* General Layout Improvements */
+.productGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    justify-content: center;
+    align-items: stretch;
+    margin-top: 200px;
+}
+
+.productCard {
+    width: 50%;
+    max-width: 300px;
+    max-height: 600px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px 5px #15140f;
+    margin: auto;
+    background-color: transparent;
+    text-align: center;
+    align-items: stretch;
+    transition: transform 0.3s ease-in-out;
+}
+
+.productCard:hover {
+    transform: scale(1.05);
+}
+
+.productImage img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.productImage:hover img {
+    transform: scale(1.2);
+}
+
+/* Text and Link Styling */
+.productLink {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 30px;
+    padding: 5px 0;
+    display: block;
+}
+
+.productLink:hover {
+    text-decoration: underline;
+    color: black;
+}
+
+.productPrice {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 10px;
+}
+
+/* Buttons Styling */
+.productCard button, .singleProduct button {
+    padding: 10px 20px;
+    margin: 6px;
+    background-color: none;
+    border: 2px solid #d4af37;
+    font-weight: bold;
+    color: #d4af37;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.productCard button:hover, .singleProduct button:hover {
+    background-color: #d4af37;
+    color: white;
+}
+
+/* Dropdowns and Filters */
+.dropdownFilter, .sortBy {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbutton {
+    border: none;
+    width: 90%;
+    max-width: 300px;
+    padding: 12px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 15px auto;
+}
+
+.dropbutton:hover {
+    background-color: gold;
+}
+
+.filterOptions, .sort {
+    display: none;
+    position: absolute;
+    color: white;
+    background-color: #363636;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.filterOptions a, .sort a {
+    display: block;
+    padding: 10px;
+}
+
+.filterOptions:hover, .sortBy:hover {
+    display: block;
+}
+
+.filterOptions label, .sort label {
+    font-weight: bold;
+}
+
+.filterOptions p, .sort label {
+    font-size: 14px;
+    padding: 10px;
+}
+
+#filterSubmit:hover {
+    background-color: gold;
+}
+
+#filterSubmit {
+    max-width: 50px;
+    margin: 30px;
+    float: left;
+}
+
+/* Search Bar */
+.search {
+    float: right;
+    margin-left: 0;
+}
+
+/* Single Product Page */
+.singleProduct {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.topHalf {
+    display: flex;
+    height: 70%;
+}
+
+.firstCol {
+    flex: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.secondCol {
+    flex: 60%;
+}
+
+.singleProductImage img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.singleProductName {
+    margin: 20px 0;
+    font-size: 40px;
+    color: #333;
+}
+
+.singleProductPrice {
+    font-weight: bold;
+    font-size: 24px;
+    color: #d4af37;
+}
+
+.productDescription {
+    font-size: 16px;
+    color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .productGrid {
+        margin-top: 100px;
+    }
+
+    .productCard {
+        width: 100%;
+    }
+
+    .dropbutton, .filterOptions, .sort {
+        width: 100%;
+    }
+
+    .singleProduct {
+        flex-direction: column;
+    }
+
+    .topHalf {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .firstCol, .secondCol {
+        flex: 100%;
+        margin-bottom: 20px;
+    }
+}
