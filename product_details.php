@@ -83,16 +83,17 @@ try {
             background-color: #363636;
             transition: top 0.3s ease-in-out;
             will-change: transform;
-            z-index: 1000;
+    		z-index 1000;
         }
 
-        .navbar a,
+        .navbar a, 
         .navbar-logo {
             color: white;
             text-decoration: none;
             padding: 14px 20px;
             flex: 1;
             text-align: center;
+            transform: translateX(-100px);
         }
 
         .navbar-logo {
@@ -178,13 +179,12 @@ try {
         margin: 0 auto;
     }
 
-    /* Background color fix to match screenshot */
     body, html {
         height: 100%;
         margin: 0;
         font-family: 'Poppins', sans-serif;
         background-color: #e6e6e6;
-        color: black; /* Default text color */
+        color: black; 
     }
     
     .singleProduct {
@@ -192,7 +192,6 @@ try {
         top: 100px;
     }
 
-    /* Product Image Container */
     .singleProductImage {
         position: relative;
         text-align: center;
@@ -209,7 +208,6 @@ try {
         margin: 0 auto;
     }
 
-    /* Magnifying Glass Button */
     .zoom-btn {
         position: absolute;
         top: 10px;
@@ -233,7 +231,6 @@ try {
         background-color: rgba(0, 0, 0, 0.9);
     }
 
-    /* Magnifier Glass Effect */
     .img-magnifier-container {
         position: relative;
         display: inline-block;
@@ -241,7 +238,7 @@ try {
 
     .img-magnifier-glass {
         position: absolute;
-        border: 3px solid #fff; /* White border for magnifier */
+        border: 3px solid #fff; 
         border-radius: 0;
         cursor: none;
         width: 200px;
@@ -249,29 +246,29 @@ try {
         display: none;
         background-repeat: no-repeat;
         background-size: 200% 200%;
-        pointer-events: none; /* Ensures the glass does not interfere with cursor events */
-        transform: translate(-50%, -50%); /* Centers the magnifier over the cursor */
+        pointer-events: none; 
+        transform: translate(-50%, -50%); 
     }
 
     img {
         display: block;
-        width: 400px; /* Adjust image size as needed */
+        width: 400px; 
     }
 
-    /* Ensure Product Name & Other Text is White */
+    
     .singleProductName {
-        color: black; /* Default text color */
+        color: black; 
     }
     
     .productDescription,
     .productBrand,
     .productColor {
         font-weight: normal;
-        color: #363636; /* Default text color */
+        color: #363636;
     }
 
     .singleProductPrice {
-        color: #D4AF37; /* Keep price in gold */
+        color: #D4AF37; 
         outline: 5px #363636;
     }
 
@@ -299,7 +296,7 @@ try {
 
     .customerReview, .adminReply {
         background-color: white;
-        color: #363636; /* Default text color for reviews */
+        color: #363636; 
         box-shadow: 1px grey;
         padding: 5px;
         margin: 0;
@@ -330,10 +327,9 @@ try {
         }
     }
 
-    /* Dark Mode Styles */
     .dark-mode {
         background-color: #1e1e1e;
-        color: white; /* Dark mode text color */
+        color: white; 
     }
 
     .dark-mode .footer {
@@ -341,63 +337,33 @@ try {
         color: gold;
     }
 
-    #darkModeToggle {
-        background-color: transparent;
-        color: white;
-        font-size: 16px;
-        font-weight: bold;
-        border: none;
-        padding: 10px 15px;
-        text-decoration: none;
-        cursor: pointer;
-        transition: color 0.3s ease;
-    }
-
-    /* Dark Mode Specific Changes */
+ 
     .dark-mode .singleProductName {
-        color: white; /* Text turns white in dark mode */
+        color: white; 
     }
 
     .dark-mode .productDescription,
     .dark-mode .productBrand,
     .dark-mode .productColor {
-        color: white; /* Text turns white in dark mode */
+        color: white;
     }
 
     .dark-mode .singleProductPrice {
-        color: #D4AF37; /* Price stays gold */
+        color: #D4AF37; 
     }
 
     .dark-mode .saveToWishlist,
     .dark-mode .addToCart {
-        background-color: #444; /* Dark background for buttons */
-        color: white; /* White text */
+        background-color: #444; 
+        color: white; 
     }
 
     .dark-mode .customerReview,
     .dark-mode .adminReply {
-        background-color: #000; /* Black background for reviews */
-        color: white; /* White text */
+        background-color: #000; 
+        color: white; 
     }
 
-    
-
-    .dark-mode .navbar a {
-        color: white; /* White text in navbar */
-    }
-
-    .dark-mode .dropdown-content a {
-        color: white; /* White text in dropdown */
-    }
-
-    .dark-mode .zoom-btn {
-        background-color: rgba(0, 0, 0, 0.7); /* Dark zoom button */
-        color: white;
-    }
-
-    .dark-mode .zoom-btn:hover {
-        background-color: rgba(0, 0, 0, 0.9); /* Dark hover for zoom button */
-    }
 </style>
 
 
@@ -408,38 +374,44 @@ try {
 <header>
 <!-- NAVIGATION BAR -->
 <div class="navbar" id="navbar">
-    <div class="dropdown">
-        <button class="dropbtn">
-            <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
-        </button>
-        <div class="dropdown-content">
-            <a href="about.php"><i class="fas fa-info-circle"></i> About Us</a>
-            <a href="contact.php"><i class="fas fa-envelope"></i> Contact Us</a>
-            <a href="FAQ.php"><i class="fas fa-question-circle"></i> FAQs</a>
-            <a href="returns.php"><i class="fas fa-undo-alt"></i> Returns</a>
+            <div class="dropdown">
+                <button class="dropbtn">
+                    <img src="asset/menu_icon.png" alt="Menu Icon" class="menu-icon">
+                </button>
+                <div class="dropdown-content">
+                    <a href="about.php"><i class="fas fa-info-circle"></i> About Us</a>
+                    <a href="contact.php"><i class="fas fa-envelope"></i> Contact Us</a>
+                    <a href="FAQ.php"><i class="fas fa-question-circle"></i> FAQs</a>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <a href="returns.php"><i class="fas fa-undo-alt"></i> Returns</a>
+                        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+                    <?php endif; ?>
+                    <a href="javascript:void(0);" id="darkModeToggle">
+                        <i class="fas fa-moon"></i> <span>Dark Mode</span>
+                    </a>
+                </div>
+            </div>
+            <a href="homepage.php"><i class="fas fa-home"></i> HOME</a>
+            <a href="products_page.php"><i class="fas fa-box-open"></i> PRODUCTS</a>
+            <div class="navbar-logo">
+                <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
+            </div>
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <a href="profile.php"><i class="fas fa-user"></i> PROFILE</a>
+            <?php elseif (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+                <a href="admin_page.php"><i class="fas fa-user-shield"></i> ADMIN</a>
+                <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+            <?php else: ?>
+                <a href="login.php"><i class="fas fa-sign-in-alt"></i> LOGIN</a>
+            <?php endif; ?>
+            <?php if (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']): ?>
+                <a href="cart.php"><i class="fas fa-shopping-basket"></i> BASKET</a>
+            <?php endif; ?>
         </div>
-    </div>
-    <button id="darkModeToggle">Toggle Dark Mode</button>
-    <a href="homepage.php"><i class="fas fa-home"></i> HOME</a>
-    <a href="products_page.php"><i class="fas fa-box-open"></i> PRODUCTS</a>
-    <div class="navbar-logo">
-        <img src="asset/LUXUS_logo.png" alt="LUXUS_logo" id="luxusLogo">
-    </div>
-    <?php if (isset($_SESSION['user_id'])): ?>
-        <a href="profile.php"><i class="fas fa-user"></i> PROFILE</a>
-        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
-    <?php else: ?>
-        <a href="login.php"><i class="fas fa-sign-in-alt"></i> LOGIN</a>
-    <?php endif; ?>
-    <a href="cart.php"><i class="fas fa-shopping-basket"></i> BASKET</a>
-    <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-        <a href="admin_page.php"><i class="fas fa-user-shield"></i> ADMIN</a>
-    <?php endif; ?>
-</div>
-<!-- NAVIGATION BAR END! -->
 </header>
     
 <body>
+<!-- PRODUCT DISPLAY-->
 
 <div class="singleProduct">
     <div class="topHalf">
@@ -479,7 +451,15 @@ try {
                         <button class="addToCart" type="button" disabled>Out of Stock</button>
                     <?php endif; ?>
                 </form>
-                <button type="button" class="saveToWishlist">Save to wishlist</button>
+                <form action="add_to_wishlist.php" method="POST">
+                                <input type="hidden" name="product_id" value="<?= $product['product_id']; ?>">
+                                <input type="hidden" name="name" value="<?= htmlspecialchars($product['name']); ?>">
+                                <input type="hidden" name="price" value="<?= htmlspecialchars($product['price']); ?>">
+                                <input type="hidden" name="description"
+                                    value="<?= htmlspecialchars($product['description']); ?>">
+                                <input type="hidden" name="image" value="<?= htmlspecialchars($product['image']); ?>">
+                                <button type="submit">Add to Wishlist</button>
+                            </form>
             </div>
         </div>
     </div>
@@ -510,7 +490,30 @@ try {
             <?php endforeach; ?>
         </div>
     </div>
+            <footer style="
+            background-color: #2c2c2c;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            font-size: 13px;
+            margin-top: auto;
+            position: relative;
+            width: 100%;
+            z-index: 2;
+        ">
+            <div style="margin-bottom: 10px; font-size: 18px;">
+                <a href="#" style="color: white; margin: 0 8px;"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" style="color: white; margin: 0 8px;"><i class="fab fa-twitter"></i></a>
+                <a href="#" style="color: white; margin: 0 8px;"><i class="fab fa-instagram"></i></a>
+                <a href="#" style="color: white; margin: 0 8px;"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <p style="margin: 0;">&copy; <?= date("Y") ?> LUXUS. All rights reserved.</p>
+        </footer>
+
+
+
 </div>
+            
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -569,9 +572,34 @@ try {
         }
     });
 
-document.getElementById("darkModeToggle").addEventListener("click", function() {
-    document.body.classList.toggle("dark-mode");
-});
+const darkModeToggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+    const darkModeIcon = document.querySelector('#darkModeToggle i');
+    const darkModeText = darkModeToggle.querySelector('span'); 
+    const savedTheme = localStorage.getItem('theme');
+
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        darkModeIcon.classList.remove('fa-moon');
+        darkModeIcon.classList.add('fa-sun');
+        darkModeText.textContent = 'Light Mode'; 
+    }
+
+    darkModeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+
+        if (body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            darkModeIcon.classList.remove('fa-moon');
+            darkModeIcon.classList.add('fa-sun');
+            darkModeText.textContent = 'Light Mode'; 
+        } else {
+            localStorage.setItem('theme', 'light');
+            darkModeIcon.classList.remove('fa-sun');
+            darkModeIcon.classList.add('fa-moon');
+            darkModeText.textContent = 'Dark Mode'; 
+        }
+    });
 
 </script>
 
